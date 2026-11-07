@@ -37,8 +37,13 @@ abstract final class PrefsKeys {
   static const locale = 'settings.locale';
   static const todos = 'todos.items';
 
+  /// true cuando el usuario ya vio (o saltó) el onboarding.
+  static const onboardingDone = 'onboarding.done';
+
   /// Todas las claves que la app puede leer/escribir.
-  static const all = <String>{themeMode, locale, todos};
+  /// ⚠️ Si añades una clave nueva y no la incluyes aquí, leerla o guardarla
+  /// lanzará un error (la allowList la bloquea).
+  static const all = <String>{themeMode, locale, todos, onboardingDone};
 }
 
 /// Crea la instancia de almacenamiento. Se llama una vez en main().

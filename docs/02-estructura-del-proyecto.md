@@ -64,7 +64,7 @@ Archivos que terminan en `_test.dart`. Se ejecutan con `flutter test`. Guía: [t
 
 ### `pubspec.yaml` — el "package.json" de Flutter
 
-> 📂 **En este proyecto:** [versión](../pubspec.yaml#L32 "→ version: 1.0.0+1") · [dependencias](../pubspec.yaml#L52 "→ dependencies:") · [dependencias de desarrollo](../pubspec.yaml#L91 "→ dev_dependencies:") · [generación de traducciones](../pubspec.yaml#L147 "→ generate: true") .
+> 📂 **En este proyecto:** [versión](../pubspec.yaml#L32 "→ version: 1.0.0+1") · [dependencias](../pubspec.yaml#L52 "→ dependencies:") · [dependencias de desarrollo](../pubspec.yaml#L130 "→ dev_dependencies:") · [generación de traducciones](../pubspec.yaml#L186 "→ generate: true") .
 Define:
 - `name`, `description`, `version` (ej. `1.0.0+1` → versión `1.0.0`, build `1`).
 - `environment.sdk` → versión de Dart compatible.
@@ -92,7 +92,7 @@ Flutter genera un **proyecto nativo real** para cada plataforma. Ese proyecto "e
 
 ### `android/` — proyecto Android (Gradle + Kotlin)
 
-> 📂 **En este proyecto:** [applicationId](../android/app/build.gradle.kts#L42 "→ applicationId =") · [nombre visible](../android/app/src/main/AndroidManifest.xml#L34 "→ android:label=") · [permiso INTERNET](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") · [canal nativo en Kotlin](../android/app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt#L30 "→ override fun configureFlutterEngine") .
+> 📂 **En este proyecto:** [applicationId](../android/app/build.gradle.kts#L42 "→ applicationId =") · [nombre visible](../android/app/src/main/AndroidManifest.xml#L42 "→ android:label=") · [permiso INTERNET](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") · [canal nativo en Kotlin](../android/app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt#L30 "→ override fun configureFlutterEngine") .
 Guía detallada: [android/README.md](../android/README.md).
 
 | Ruta | Para qué |

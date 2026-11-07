@@ -13,6 +13,8 @@
   "levelBasic": "Básico",
   "levelIntermediate": "Intermedio",
   "levelAdvanced": "Avanzado",
+  "levelProduct": "Apps reales",
+  "levelPackages": "Librerías populares",
 
   "greeting": "¡Hola, {name}!",
   "@greeting": {

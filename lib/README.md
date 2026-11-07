@@ -26,6 +26,10 @@ lib/
 │   ├── posts/                 API REST: modelo, repositorio + providers, pantallas
 │   ├── advanced/              Animaciones, responsive, código nativo, isolates
 │   ├── auth/                  Sesión simulada + pantallas login/privada
+│   ├── onboarding/            Bienvenida de primer uso (docs/13)
+│   ├── payments/              Checkout, validación de tarjetas, pasarela y paywall (docs/14)
+│   ├── ai/                    Cliente de Claude, Estudio IA y agente con herramientas (docs/15)
+│   ├── packages/              Librerías populares: mapas, Dio, imágenes en caché, enlaces (docs/12)
 │   ├── todos/                 Pestaña "Tareas": modelo, controller, pantalla
 │   └── settings/              Pestaña "Ajustes"
 └── l10n/                  Traducciones

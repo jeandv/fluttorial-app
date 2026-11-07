@@ -79,30 +79,46 @@ class LevelColors extends ThemeExtension<LevelColors> {
     required this.basic,
     required this.intermediate,
     required this.advanced,
+    required this.product,
+    required this.packages,
   });
 
   final Color basic;
   final Color intermediate;
   final Color advanced;
+  final Color product;
+  final Color packages;
 
   static const light = LevelColors(
     basic: Color(0xFF2E7D32), // verde
     intermediate: Color(0xFFEF6C00), // naranja
     advanced: Color(0xFFC62828), // rojo
+    product: Color(0xFF6A1B9A), // morado
+    packages: Color(0xFF00838F), // turquesa
   );
 
   static const dark = LevelColors(
     basic: Color(0xFF81C784),
     intermediate: Color(0xFFFFB74D),
     advanced: Color(0xFFE57373),
+    product: Color(0xFFCE93D8),
+    packages: Color(0xFF4DD0E1),
   );
 
   @override
-  LevelColors copyWith({Color? basic, Color? intermediate, Color? advanced}) {
+  LevelColors copyWith({
+    Color? basic,
+    Color? intermediate,
+    Color? advanced,
+    Color? product,
+    Color? packages,
+  }) {
     return LevelColors(
       basic: basic ?? this.basic,
       intermediate: intermediate ?? this.intermediate,
       advanced: advanced ?? this.advanced,
+      product: product ?? this.product,
+      packages: packages ?? this.packages,
     );
   }
 
@@ -113,6 +129,8 @@ class LevelColors extends ThemeExtension<LevelColors> {
       basic: Color.lerp(basic, other.basic, t)!,
       intermediate: Color.lerp(intermediate, other.intermediate, t)!,
       advanced: Color.lerp(advanced, other.advanced, t)!,
+      product: Color.lerp(product, other.product, t)!,
+      packages: Color.lerp(packages, other.packages, t)!,
     );
   }
 }

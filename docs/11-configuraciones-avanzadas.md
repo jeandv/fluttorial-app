@@ -1,6 +1,6 @@
 # 11 · Configuraciones avanzadas
 
-> Anterior: [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md) · Volver al [índice](../README.md)
+> Anterior: [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md) · Volver al [índice](../README.md) · Siguiente: [12 · Librerías más usadas](12-librerias-mas-usadas.md)
 
 Cómo está montada la "infraestructura" de esta app y cómo replicarla en tus proyectos. Cada sección enlaza al código real (los enlaces `#L` abren la línea exacta).
 
@@ -38,17 +38,17 @@ lib/
 
 | Configuración | Dónde |
 |---|---|
-| Router dentro de un Provider (para leer otros providers) | [routerProvider](../lib/core/router/app_router.dart#L60 "→ final routerProvider") |
+| Router dentro de un Provider (para leer otros providers) | [routerProvider](../lib/core/router/app_router.dart#L70 "→ final routerProvider") |
 | Conectarlo a la app | [routerConfig](../lib/app.dart#L60 "→ routerConfig: router") |
-| Pestañas con historial propio (`StatefulShellRoute.indexedStack`) | [StatefulShellRoute](../lib/core/router/app_router.dart#L104 "→ StatefulShellRoute.indexedStack(") |
+| Pestañas con historial propio (`StatefulShellRoute.indexedStack`) | [StatefulShellRoute](../lib/core/router/app_router.dart#L136 "→ StatefulShellRoute.indexedStack(") |
 | Barra inferior que cambia de rama (`goBranch`) | [_onTabSelected](../lib/features/shell/home_shell.dart#L31 "→ void _onTabSelected") |
-| Rutas hijas (path relativo) | [contador](../lib/core/router/app_router.dart#L119 "→ path: 'contador'") |
-| Parámetros de ruta y de consulta | [detalle/:id](../lib/core/router/app_router.dart#L148 "→ path: 'detalle/:id'") |
-| Rutas a pantalla completa (`parentNavigatorKey`) | [login](../lib/core/router/app_router.dart#L85 "→ path: AppRoutes.login") |
-| Rutas protegidas (`redirect`) | [redirect](../lib/core/router/app_router.dart#L78 "→ redirect: (context, state)") |
-| Re-evaluar el redirect al cambiar la sesión (`refreshListenable`) | [authListenable](../lib/core/router/app_router.dart#L63 "→ final authListenable") |
-| Página 404 | [errorBuilder](../lib/core/router/app_router.dart#L97 "→ errorBuilder:") |
-| Logs de navegación en consola | [debugLogDiagnostics](../lib/core/router/app_router.dart#L74 "→ debugLogDiagnostics: true") |
+| Rutas hijas (path relativo) | [contador](../lib/core/router/app_router.dart#L151 "→ path: 'contador'") |
+| Parámetros de ruta y de consulta | [detalle/:id](../lib/core/router/app_router.dart#L180 "→ path: 'detalle/:id'") |
+| Rutas a pantalla completa (`parentNavigatorKey`) | [login](../lib/core/router/app_router.dart#L117 "→ path: AppRoutes.login") |
+| Rutas protegidas (`redirect`) | [redirect](../lib/core/router/app_router.dart#L98 "→ redirect: (context, state)") |
+| Re-evaluar el redirect al cambiar la sesión (`refreshListenable`) | [authListenable](../lib/core/router/app_router.dart#L73 "→ final authListenable") |
+| Página 404 | [errorBuilder](../lib/core/router/app_router.dart#L129 "→ errorBuilder:") |
+| Logs de navegación en consola | [debugLogDiagnostics](../lib/core/router/app_router.dart#L93 "→ debugLogDiagnostics: true") |
 
 ### API de navegación
 ```dart
@@ -63,7 +63,7 @@ GoRouterState.of(context).uri;              // URL actual
 ### Deep links (abrir la app desde una URL)
 Como cada pantalla tiene URL, solo falta registrar un esquema en cada plataforma:
 
-**Android** → en [AndroidManifest.xml](../android/app/src/main/AndroidManifest.xml#L66 "→ android.intent.category.LAUNCHER"), dentro de `<activity>`:
+**Android** → en [AndroidManifest.xml](../android/app/src/main/AndroidManifest.xml#L74 "→ android.intent.category.LAUNCHER"), dentro de `<activity>`:
 ```xml
 <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
 <intent-filter>
@@ -107,7 +107,7 @@ Para enlaces `https://` (Universal Links / App Links) también hay que publicar 
 1. **`ProviderScope`** envuelve la app → [main.dart](../lib/main.dart#L47 "→ ProviderScope(") .
 2. **`ref.watch`** dentro de `build` (redibuja) · **`ref.read`** en callbacks (una vez) → [TodosScreen](../lib/features/todos/todos_screen.dart#L69 "→ final todos = ref.watch") .
 3. **Nunca mutes el estado**: crea uno nuevo → [add](../lib/features/todos/todos_controller.dart#L68 "→ state = [todo, ...state]") .
-4. **`ref.listen`** para reaccionar sin redibujar (navegar, mostrar SnackBars) → [ref.listen](../lib/core/router/app_router.dart#L64 "→ ref.listen(") .
+4. **`ref.listen`** para reaccionar sin redibujar (navegar, mostrar SnackBars) → [ref.listen](../lib/core/router/app_router.dart#L74 "→ ref.listen(") .
 5. **`.select`** para redibujar solo si cambia una parte → [select](../lib/features/todos/todos_screen.dart#L73 "→ todosProvider.select") .
 6. **`ref.onDispose`** para liberar recursos → [ApiClient](../lib/core/network/api_client.dart#L93 "→ ref.onDispose(client.close)") .
 
@@ -120,7 +120,7 @@ Para enlaces `https://` (Universal Links / App Links) también hay que publicar 
 
 ### Inyectar objetos asíncronos (patrón override)
 Un provider que lanza error y se sobrescribe en `main` con el objeto ya inicializado:
-[sharedPreferencesProvider](../lib/core/storage/preferences.dart#L59 "→ final sharedPreferencesProvider") → [overrideWithValue en main](../lib/main.dart#L50 "→ overrideWithValue(preferences)") → [y en los tests](../test/helpers/test_helpers.dart#L50 "→ sharedPreferencesProvider.overrideWithValue(prefs)") .
+[sharedPreferencesProvider](../lib/core/storage/preferences.dart#L64 "→ final sharedPreferencesProvider") → [overrideWithValue en main](../lib/main.dart#L50 "→ overrideWithValue(preferences)") → [y en los tests](../test/helpers/test_helpers.dart#L55 "→ sharedPreferencesProvider.overrideWithValue(prefs)") .
 
 > Alternativas a Riverpod: **Bloc/Cubit** (`flutter_bloc`), **Provider**, **Signals**, **GetX** (no recomendado). Los conceptos (estado inmutable, separar lógica y UI, inyección) son los mismos.
 
@@ -147,7 +147,7 @@ Fuentes personalizadas: [`google_fonts`](https://pub.dev/packages/google_fonts) 
 | Paso | Archivo |
 |---|---|
 | 1. Dependencias `flutter_localizations` + `intl` | [pubspec.yaml](../pubspec.yaml#L83 "→ flutter_localizations:") |
-| 2. Activar la generación (`generate: true`) | [pubspec.yaml](../pubspec.yaml#L147 "→ generate: true") |
+| 2. Activar la generación (`generate: true`) | [pubspec.yaml](../pubspec.yaml#L186 "→ generate: true") |
 | 3. Configuración | [l10n.yaml](../l10n.yaml) |
 | 4. Textos (plantilla en español) | [app_es.arb](../lib/l10n/app_es.arb) · [app_en.arb](../lib/l10n/app_en.arb) |
 | 5. Registrar en MaterialApp | [localizationsDelegates](../lib/app.dart#L55 "→ localizationsDelegates:") |
@@ -176,7 +176,7 @@ flutter gen-l10n        # regenerar a mano (también se hace en flutter run / pu
 | Configuración | Dónde |
 |---|---|
 | Claves centralizadas + `allowList` | [PrefsKeys](../lib/core/storage/preferences.dart#L35 "→ abstract final class PrefsKeys") |
-| `SharedPreferencesWithCache` (lecturas síncronas) | [createPreferences](../lib/core/storage/preferences.dart#L45 "→ Future<SharedPreferencesWithCache> createPreferences") |
+| `SharedPreferencesWithCache` (lecturas síncronas) | [createPreferences](../lib/core/storage/preferences.dart#L50 "→ Future<SharedPreferencesWithCache> createPreferences") |
 | Guardar objetos como JSON | [_save](../lib/features/todos/todos_controller.dart#L51 "→ Future<void> _save") |
 | Almacenamiento en memoria para tests | [createTestPreferences](../test/helpers/test_helpers.dart#L31 "→ Future<SharedPreferencesWithCache> createTestPreferences") |
 
@@ -201,10 +201,10 @@ flutter run --dart-define=API_URL=https://staging.miapi.com --dart-define=FLAVOR
 ```
 | Configuración | Dónde |
 |---|---|
-| Leer valores (`String.fromEnvironment`) | [apiBaseUrl](../lib/core/config/env.dart#L34 "→ static const apiBaseUrl") |
+| Leer valores (`String.fromEnvironment`) | [apiBaseUrl](../lib/core/config/env.dart#L36 "→ static const apiBaseUrl") |
 | Usarlo en el cliente HTTP | [ApiClient](../lib/core/network/api_client.dart#L52 "→ _baseUrl = baseUrl ?? Env.apiBaseUrl") |
-| Mostrarlo en Ajustes | [Entorno](../lib/features/settings/settings_screen.dart#L102 "→ Env.flavor") |
-| `kDebugMode` / `kProfileMode` / `kReleaseMode` | [buildMode](../lib/features/settings/settings_screen.dart#L29 "→ final buildMode") |
+| Mostrarlo en Ajustes | [Entorno](../lib/features/settings/settings_screen.dart#L115 "→ Env.flavor") |
+| `kDebugMode` / `kProfileMode` / `kReleaseMode` | [buildMode](../lib/features/settings/settings_screen.dart#L32 "→ final buildMode") |
 | Perfiles de VS Code con variables | [launch.json](../.vscode/launch.json) |
 
 ⚠️ No guardes **secretos** aquí: se pueden extraer del binario.

@@ -2,7 +2,7 @@
 
 Este proyecto es a la vez **una app Flutter real** y **una guía de referencia** para aprender a crear, ejecutar, simular, probar y publicar apps móviles con Flutter desde una Mac.
 
-La app es un **catálogo interactivo de 13 demos** (básicas, intermedias y avanzadas) más una mini-app de **tareas** y una pantalla de **ajustes**. Todo el código está **comentado en español**: qué hace cada parte, cómo funciona y cómo se hace. La documentación enlaza directamente a las **líneas de código** de cada concepto.
+La app es un **catálogo interactivo de 22 demos** (básicas, intermedias, avanzadas, de apps reales —onboarding, pagos e IA— y de las librerías más usadas) más una mini-app de **tareas** y una pantalla de **ajustes**. Todo el código está **comentado en español**: qué hace cada parte, cómo funciona y cómo se hace. La documentación enlaza directamente a las **líneas de código** de cada concepto.
 
 ---
 
@@ -41,9 +41,18 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
 | 🔴 Avanzado | Código nativo | `MethodChannel` Dart ↔ Kotlin ↔ Swift | [native_channel.dart](lib/features/advanced/native_channel.dart) |
 | 🔴 Avanzado | Isolates | Trabajo pesado sin congelar la interfaz | [isolates_screen.dart](lib/features/advanced/isolates_screen.dart) |
 | ✅ Pestaña | Tareas | Riverpod `Notifier`, persistencia, deshacer, filtros | [lib/features/todos/](lib/features/todos/) |
+| 🟣 Apps reales | Onboarding | Bienvenida de primer uso con redirect, indicador y parallax | [lib/features/onboarding/](lib/features/onboarding/) |
+| 🟣 Apps reales | Pago (checkout) | Carrito, tarjeta con validación en vivo, Apple/Google Pay, recibo | [lib/features/payments/](lib/features/payments/) |
+| 🟣 Apps reales | Suscripción (paywall) | Planes, prueba gratis, restaurar compras, textos legales | [paywall_screen.dart](lib/features/payments/paywall_screen.dart) |
+| 🟣 Apps reales | Estudio IA | Claude: consejos en streaming, documentos y SVG | [lib/features/ai/](lib/features/ai/) |
+| 🟣 Apps reales | Agente IA | Agente con herramientas que gestiona tus tareas | [todo_agent.dart](lib/features/ai/todo_agent.dart) |
+| 🔷 Librerías | Mapas | flutter_map + OpenStreetMap, marcadores, rutas, tu ubicación (geolocator) | [lib/features/packages/maps/](lib/features/packages/maps/) |
+| 🔷 Librerías | Dio | Cliente HTTP profesional: interceptores, errores, cancelación | [lib/features/packages/dio/](lib/features/packages/dio/) |
+| 🔷 Librerías | Imágenes en caché | cached_network_image + shimmer | [images_screen.dart](lib/features/packages/images_screen.dart) |
+| 🔷 Librerías | Enlaces y compartir | url_launcher + share_plus | [links_share_screen.dart](lib/features/packages/links_share_screen.dart) |
 | ⚙️ Pestaña | Ajustes | Tema claro/oscuro e idioma persistidos, entorno | [settings_screen.dart](lib/features/settings/settings_screen.dart) |
 
-**Infraestructura:** go_router con pestañas y redirects · Riverpod 3 · tema Material 3 con `ThemeExtension` · i18n es/en · `shared_preferences` · cliente HTTP con errores tipados · `--dart-define` · 21 tests · CI en GitHub Actions.
+**Infraestructura:** go_router con pestañas y redirects · Riverpod 3 · tema Material 3 con `ThemeExtension` · i18n es/en · `shared_preferences` · cliente HTTP con errores tipados · `--dart-define` · 60 tests · CI en GitHub Actions.
 
 ---
 
@@ -62,6 +71,10 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
 | 09 | [Solución de problemas](docs/09-solucion-de-problemas.md) | Errores comunes de instalación, iOS, Android, Dart y cómo resolverlos |
 | 10 | [**Funcionalidades de la app**](docs/10-funcionalidades-de-la-app.md) | Cada demo, concepto por concepto, con enlace a la línea de código |
 | 11 | [**Configuraciones avanzadas**](docs/11-configuraciones-avanzadas.md) | Arquitectura, go_router, Riverpod, tema, i18n, persistencia, entornos, red, código nativo, codegen, tests, CI |
+| 12 | [**Librerías más usadas y demandadas**](docs/12-librerias-mas-usadas.md) | Investigación con datos de pub.dev: 86 librerías analizadas por categoría, demanda laboral, qué aprender primero, mapas en detalle |
+| 13 | [**Onboarding**](docs/13-onboarding.md) | Tipos de onboarding, flujo de primer uso con el router, buenas prácticas, librerías |
+| 14 | [**Pagos**](docs/14-pagos.md) | Compra integrada vs. pasarela, interfaz de checkout, Stripe, Apple/Google Pay, suscripciones con RevenueCat |
+| 15 | [**IA y agentes**](docs/15-ia-y-agentes.md) | Claude por API, seguridad de la API key, streaming, documentos, imágenes, agentes con herramientas, costes |
 
 > 🔗 **Enlaces al código:** en los documentos, los recuadros **📂 En este proyecto** y las tablas enlazan a la línea exacta (`archivo.dart#L42`). Funcionan en GitHub y en VS Code (vista previa del Markdown: `Cmd+Shift+V`). Si el código cambia: `dart run tool/update_doc_links.dart`.
 
@@ -102,7 +115,7 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
  3. Encender los simuladores   xcrun simctl boot / flutter emulators  → docs/04
  4. Ejecutar                   flutter run                            → docs/04
  5. Programar las pantallas    lib/ + hot reload (r)                  → docs/05, 06, 10
- 6. Añadir paquetes            flutter pub add <paquete>              → docs/06, 11
+ 6. Elegir y añadir paquetes   flutter pub add <paquete>              → docs/06, 11, 12
  7. Probar                     flutter analyze && flutter test        → docs/07
  8. Probar en un teléfono real flutter run -d <id> --release          → docs/04
  9. Preparar la publicación    icono, nombre, versión, firma          → docs/08
@@ -118,7 +131,7 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
 |---|---|
 | Repositorio | `jeandv/fluttorial-app` |
 | Flutter / Dart | 3.47.9 / 3.13.7 (canal stable) |
-| Paquetes principales | go_router 18 · flutter_riverpod 3 · http 1 · shared_preferences 2 · intl 0.20 |
+| Paquetes principales | go_router 18 · flutter_riverpod 3 · http 1 · dio 5 · shared_preferences 2 · intl 0.20 · flutter_map 8 · geolocator 14 · cached_network_image 4 · url_launcher 6 · share_plus 13 · flutter_svg 2 · smooth_page_indicator 3 · flutter_markdown_plus 1 |
 | Nombre del paquete | `mi_primera_app` |
 | Nombre visible | Mi Primera App |
 | ID en Android | `com.jeanrondon.mi_primera_app` |

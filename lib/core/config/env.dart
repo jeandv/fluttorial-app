@@ -16,6 +16,8 @@
 //   ejecutar `flutter run` (hot reload/restart NO las recargan).
 //   ⚠️ NO pongas secretos aquí (claves privadas): cualquiera puede extraerlos
 //   del binario de la app. Los secretos deben vivir en tu backend.
+//   (Única excepción didáctica: ANTHROPIC_API_KEY para probar la IA en tu
+//   ordenador; ver la sección IA al final.)
 //
 // CÓMO SE USA
 //   import 'package:mi_primera_app/core/config/env.dart';
@@ -45,4 +47,28 @@ abstract final class Env {
   /// Muestra la franja "DEBUG" (solo se ve en modo debug).
   /// Actívala con --dart-define=SHOW_DEBUG_BANNER=true
   static const showDebugBanner = bool.fromEnvironment('SHOW_DEBUG_BANNER');
+
+  // --------------------------------------------------------------- IA
+  // Ver docs/15-ia-y-agentes.md. Hay DOS formas de conectar la IA:
+  //
+  // 1. AI_PROXY_URL (✅ la correcta en producción): la app llama a TU
+  //    servidor, y el servidor añade la API key y llama a Anthropic. La key
+  //    nunca está en el teléfono.
+  //
+  // 2. ANTHROPIC_API_KEY (⚠️ SOLO para aprender en tu ordenador): la key
+  //    viaja dentro de la app. Cualquiera que descargue el binario podría
+  //    extraerla y gastar tu saldo. NUNCA publiques una app así.
+  //    Ponla en config/secrets.json (ignorado por git) y ejecuta:
+  //      flutter run --dart-define-from-file=config/secrets.json
+  //
+  // Sin ninguna de las dos, la app usa un modo DEMO con respuestas de ejemplo.
+
+  /// URL de tu backend que reenvía a la API de Anthropic (recomendado).
+  static const aiProxyUrl = String.fromEnvironment('AI_PROXY_URL');
+
+  /// API key de Anthropic. Solo para desarrollo local (ver arriba).
+  static const anthropicApiKey = String.fromEnvironment('ANTHROPIC_API_KEY');
+
+  /// true si hay alguna forma de llamar a la IA real.
+  static const aiEnabled = aiProxyUrl != '' || anthropicApiKey != '';
 }

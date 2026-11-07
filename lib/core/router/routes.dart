@@ -52,7 +52,21 @@ abstract final class AppRoutes {
   static const nativeChannel = '$examples/nativo';
   static const isolates = '$examples/isolates';
 
+  // Apps reales (docs/13, 14, 15)
+  static const checkout = '$examples/pagos';
+  static const paywall = '$examples/suscripcion';
+  static const aiStudio = '$examples/ia';
+  static const agent = '$examples/agente';
+
+  // Librerías populares (docs/12)
+  static const maps = '$examples/mapas';
+  static const dio = '$examples/dio';
+  static const images = '$examples/imagenes';
+  static const linksShare = '$examples/enlaces';
+
   // Rutas fuera de las pestañas
   static const login = '/login';
+  static const onboarding = '/onboarding';
+  static const onboardingDemo = '/onboarding?demo=1';
   static const private = '/privado';
 }

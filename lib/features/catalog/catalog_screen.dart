@@ -40,6 +40,8 @@ class CatalogScreen extends StatelessWidget {
         levelColors.intermediate,
       ),
       DemoLevel.advanced: (l10n.levelAdvanced, levelColors.advanced),
+      DemoLevel.product: (l10n.levelProduct, levelColors.product),
+      DemoLevel.packages: (l10n.levelPackages, levelColors.packages),
     };
 
     return Scaffold(

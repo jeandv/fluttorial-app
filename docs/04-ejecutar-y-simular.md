@@ -155,7 +155,7 @@ Este proyecto incluye [`.vscode/launch.json`](../.vscode/launch.json) con perfil
 
 ## 7. Herramientas de depuración
 
-> 📂 **En este proyecto:** [debugPrint en initState](../lib/features/basics/counter_screen.dart#L61 "→ debugPrint('CounterScreen.initState')") · [logs de navegación de go_router](../lib/core/router/app_router.dart#L74 "→ debugLogDiagnostics: true") · [errores nativos capturados](../lib/features/advanced/native_channel.dart#L77 "→ on PlatformException catch") .
+> 📂 **En este proyecto:** [debugPrint en initState](../lib/features/basics/counter_screen.dart#L61 "→ debugPrint('CounterScreen.initState')") · [logs de navegación de go_router](../lib/core/router/app_router.dart#L93 "→ debugLogDiagnostics: true") · [errores nativos capturados](../lib/features/advanced/native_channel.dart#L77 "→ on PlatformException catch") .
 
 | Herramienta | Cómo abrirla | Para qué |
 |---|---|---|
@@ -196,7 +196,7 @@ Este proyecto incluye [`.vscode/launch.json`](../.vscode/launch.json) con perfil
 
 ## 9. Variables de entorno al ejecutar (`--dart-define`)
 
-> 📂 **En este proyecto:** [env.dart](../lib/core/config/env.dart#L34 "→ static const apiBaseUrl") · [config/dev.json](../config/dev.json) · [perfil de VS Code con variables](../.vscode/launch.json#L61 "→ --dart-define=API_URL") · se muestran en [Ajustes](../lib/features/settings/settings_screen.dart#L102 "→ Env.flavor") .
+> 📂 **En este proyecto:** [env.dart](../lib/core/config/env.dart#L36 "→ static const apiBaseUrl") · [config/dev.json](../config/dev.json) · [perfil de VS Code con variables](../.vscode/launch.json#L61 "→ --dart-define=API_URL") · se muestran en [Ajustes](../lib/features/settings/settings_screen.dart#L115 "→ Env.flavor") .
 
 ```bash
 flutter run --dart-define=API_URL=https://dev.miapi.com --dart-define=DEBUG_LOGS=true

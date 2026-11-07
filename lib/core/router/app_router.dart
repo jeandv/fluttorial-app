@@ -35,6 +35,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mi_primera_app/core/router/routes.dart';
 import 'package:mi_primera_app/features/advanced/animations_screen.dart';
+import 'package:mi_primera_app/features/ai/agent_screen.dart';
+import 'package:mi_primera_app/features/ai/ai_studio_screen.dart';
 import 'package:mi_primera_app/features/advanced/isolates_screen.dart';
 import 'package:mi_primera_app/features/advanced/native_channel.dart';
 import 'package:mi_primera_app/features/advanced/responsive_screen.dart';
@@ -48,6 +50,14 @@ import 'package:mi_primera_app/features/intermediate/async_screen.dart';
 import 'package:mi_primera_app/features/intermediate/forms_screen.dart';
 import 'package:mi_primera_app/features/intermediate/localization_screen.dart';
 import 'package:mi_primera_app/features/intermediate/navigation_screens.dart';
+import 'package:mi_primera_app/features/onboarding/onboarding_controller.dart';
+import 'package:mi_primera_app/features/onboarding/onboarding_screen.dart';
+import 'package:mi_primera_app/features/packages/dio/dio_demo_screen.dart';
+import 'package:mi_primera_app/features/packages/images_screen.dart';
+import 'package:mi_primera_app/features/packages/links_share_screen.dart';
+import 'package:mi_primera_app/features/packages/maps/map_screen.dart';
+import 'package:mi_primera_app/features/payments/checkout_screen.dart';
+import 'package:mi_primera_app/features/payments/paywall_screen.dart';
 import 'package:mi_primera_app/features/posts/posts_screens.dart';
 import 'package:mi_primera_app/features/settings/settings_screen.dart';
 import 'package:mi_primera_app/features/shell/home_shell.dart';
@@ -58,8 +68,8 @@ import 'package:mi_primera_app/features/todos/todos_screen.dart';
 final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final routerProvider = Provider<GoRouter>((ref) {
-  // Puente Riverpod → Listenable: cuando cambia la sesión, notificamos al
-  // router para que vuelva a evaluar `redirect`.
+  // Puente Riverpod → Listenable: cuando cambia la sesión o el estado del
+  // onboarding, notificamos al router para que vuelva a evaluar `redirect`.
   final authListenable = ValueNotifier<bool>(ref.read(authProvider));
   ref.listen(
     authProvider,
@@ -67,17 +77,39 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
   ref.onDispose(authListenable.dispose);
 
+  final onboardingListenable = ValueNotifier<bool>(
+    ref.read(onboardingDoneProvider),
+  );
+  ref.listen(
+    onboardingDoneProvider,
+    (_, done) => onboardingListenable.value = done,
+  );
+  ref.onDispose(onboardingListenable.dispose);
+
   final router = GoRouter(
     navigatorKey: _rootKey,
     initialLocation: AppRoutes.examples,
     // Muestra en la consola cada navegación (útil para aprender y depurar).
     debugLogDiagnostics: true,
-    refreshListenable: authListenable,
+    // Listenable.merge: escucha VARIOS Listenable a la vez.
+    refreshListenable: Listenable.merge([authListenable, onboardingListenable]),
 
     // ----------------------------------------------------------- REDIRECT
     redirect: (context, state) {
       final isLoggedIn = ref.read(authProvider);
+      final onboardingDone = ref.read(onboardingDoneProvider);
       final location = state.matchedLocation;
+
+      // 0. Primera vez que se abre la app → onboarding.
+      if (!onboardingDone && location != AppRoutes.onboarding) {
+        return AppRoutes.onboarding;
+      }
+      // Ya lo vio y está en /onboarding (sin ?demo) → a la app.
+      if (onboardingDone &&
+          location == AppRoutes.onboarding &&
+          !state.uri.queryParameters.containsKey('demo')) {
+        return AppRoutes.examples;
+      }
 
       // 1. Ruta protegida sin sesión → login (recordando a dónde iba).
       if (location == AppRoutes.private && !isLoggedIn) {
@@ -191,6 +223,40 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'isolates',
                     builder: (context, state) => const IsolatesScreen(),
                   ),
+                  // ---- Apps reales: pagos e IA (docs/14, docs/15) ----
+                  GoRoute(
+                    path: 'pagos',
+                    builder: (context, state) => const CheckoutScreen(),
+                  ),
+                  GoRoute(
+                    path: 'suscripcion',
+                    builder: (context, state) => const PaywallScreen(),
+                  ),
+                  GoRoute(
+                    path: 'ia',
+                    builder: (context, state) => const AiStudioScreen(),
+                  ),
+                  GoRoute(
+                    path: 'agente',
+                    builder: (context, state) => const AgentScreen(),
+                  ),
+                  // ---- Librerías populares (docs/12) ----
+                  GoRoute(
+                    path: 'mapas',
+                    builder: (context, state) => const MapScreen(),
+                  ),
+                  GoRoute(
+                    path: 'dio',
+                    builder: (context, state) => const DioDemoScreen(),
+                  ),
+                  GoRoute(
+                    path: 'imagenes',
+                    builder: (context, state) => const ImagesScreen(),
+                  ),
+                  GoRoute(
+                    path: 'enlaces',
+                    builder: (context, state) => const LinksShareScreen(),
+                  ),
                 ],
               ),
             ],
@@ -217,6 +283,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
 
       // ------------------------------------- RUTAS A PANTALLA COMPLETA
+      GoRoute(
+        path: AppRoutes.onboarding,
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => OnboardingScreen(
+          demoMode: state.uri.queryParameters.containsKey('demo'),
+        ),
+      ),
       GoRoute(
         path: AppRoutes.login,
         parentNavigatorKey: _rootKey,

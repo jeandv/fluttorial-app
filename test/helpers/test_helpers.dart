@@ -43,7 +43,12 @@ Future<void> pumpApp(
   Map<String, Object> initialData = const {},
   List<Override> overrides = const [],
 }) async {
-  final prefs = await createTestPreferences(initialData);
+  // Por defecto marcamos el onboarding como visto, para que los tests
+  // arranquen en el catálogo. Pásalo como false para probar el onboarding.
+  final prefs = await createTestPreferences({
+    PrefsKeys.onboardingDone: true,
+    ...initialData,
+  });
   await tester.pumpWidget(
     ProviderScope(
       overrides: [

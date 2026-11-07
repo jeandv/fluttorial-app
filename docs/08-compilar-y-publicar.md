@@ -25,7 +25,7 @@
 
 ### Nombre visible (el que aparece bajo el icono)
 
-> 📂 **En este proyecto:** [android:label](../android/app/src/main/AndroidManifest.xml#L34 "→ android:label=") · [CFBundleDisplayName](../ios/Runner/Info.plist#L9 "→ CFBundleDisplayName") .
+> 📂 **En este proyecto:** [android:label](../android/app/src/main/AndroidManifest.xml#L42 "→ android:label=") · [CFBundleDisplayName](../ios/Runner/Info.plist#L9 "→ CFBundleDisplayName") .
 | Plataforma | Archivo | Campo |
 |---|---|---|
 | Android | [`android/app/src/main/AndroidManifest.xml`](../android/app/src/main/AndroidManifest.xml) | `android:label="Mi Primera App"` |

@@ -25,7 +25,7 @@ Ese es exactamente el árbol de [`lib/main.dart`](../lib/main.dart).
 
 ### `StatelessWidget` vs `StatefulWidget`
 
-> 📂 **En este proyecto:** Stateless: [_DemoTile](../lib/features/catalog/catalog_screen.dart#L102 "→ class _DemoTile extends StatelessWidget") · Stateful: [CounterScreen](../lib/features/basics/counter_screen.dart#L34 "→ class CounterScreen extends StatefulWidget") · con Riverpod: [ConsumerWidget](../lib/features/posts/posts_screens.dart#L33 "→ class PostsScreen extends ConsumerWidget") .
+> 📂 **En este proyecto:** Stateless: [_DemoTile](../lib/features/catalog/catalog_screen.dart#L104 "→ class _DemoTile extends StatelessWidget") · Stateful: [CounterScreen](../lib/features/basics/counter_screen.dart#L34 "→ class CounterScreen extends StatefulWidget") · con Riverpod: [ConsumerWidget](../lib/features/posts/posts_screens.dart#L33 "→ class PostsScreen extends ConsumerWidget") .
 
 | | `StatelessWidget` | `StatefulWidget` |
 |---|---|---|
@@ -201,7 +201,7 @@ class ProductoCard extends StatelessWidget {
 
 ## 4. Navegación entre pantallas
 
-> 📂 **En este proyecto:** [todas las rutas](../lib/core/router/app_router.dart#L60 "→ final routerProvider") · [demo de navegación](../lib/features/intermediate/navigation_screens.dart) · [Navigator.push clásico](../lib/features/intermediate/navigation_screens.dart#L107 "→ MaterialPageRoute<void>(") .
+> 📂 **En este proyecto:** [todas las rutas](../lib/core/router/app_router.dart#L70 "→ final routerProvider") · [demo de navegación](../lib/features/intermediate/navigation_screens.dart) · [Navigator.push clásico](../lib/features/intermediate/navigation_screens.dart#L107 "→ MaterialPageRoute<void>(") .
 
 ### Opción simple: `Navigator`
 ```dart
@@ -305,6 +305,8 @@ flutter pub outdated             # ver actualizaciones
 ```
 
 ### Paquetes más usados
+
+> 📊 **Investigación completa con datos reales de pub.dev**, demanda laboral y cuándo elegir cada uno: [12 · Librerías más usadas y demandadas](12-librerias-mas-usadas.md).
 | Necesidad | Paquete |
 |---|---|
 | Peticiones HTTP | `http` (simple) · `dio` (avanzado: interceptores, timeouts) |
@@ -455,7 +457,7 @@ La documentación de cada paquete en pub.dev indica qué permisos requiere.
 
 ## 10. Tema, colores y modo oscuro
 
-> 📂 **En este proyecto:** [AppTheme](../lib/core/theme/app_theme.dart#L27 "→ abstract final class AppTheme") · [extensión de tema propia](../lib/core/theme/app_theme.dart#L77 "→ class LevelColors") · [aplicado en MaterialApp](../lib/app.dart#L47 "→ theme: AppTheme.light()") · [selector en Ajustes](../lib/features/settings/settings_screen.dart#L45 "→ SegmentedButton<ThemeMode>") .
+> 📂 **En este proyecto:** [AppTheme](../lib/core/theme/app_theme.dart#L27 "→ abstract final class AppTheme") · [extensión de tema propia](../lib/core/theme/app_theme.dart#L77 "→ class LevelColors") · [aplicado en MaterialApp](../lib/app.dart#L47 "→ theme: AppTheme.light()") · [selector en Ajustes](../lib/features/settings/settings_screen.dart#L48 "→ SegmentedButton<ThemeMode>") .
 
 ```dart
 MaterialApp(

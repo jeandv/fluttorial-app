@@ -10,6 +10,8 @@
   "levelBasic": "Basic",
   "levelIntermediate": "Intermediate",
   "levelAdvanced": "Advanced",
+  "levelProduct": "Real-world apps",
+  "levelPackages": "Popular packages",
 
   "greeting": "Hello, {name}!",
 

@@ -31,6 +31,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get levelAdvanced => 'Advanced';
 
   @override
+  String get levelProduct => 'Real-world apps';
+
+  @override
+  String get levelPackages => 'Popular packages';
+
+  @override
   String greeting(String name) {
     return 'Hello, $name!';
   }

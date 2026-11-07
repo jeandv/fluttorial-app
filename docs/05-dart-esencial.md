@@ -168,7 +168,7 @@ class Pato extends Animal with Volador {
 
 ### Enums
 
-> 📂 **En este proyecto:** [DemoLevel](../lib/features/catalog/demo_catalog.dart#L22 "→ enum DemoLevel") · [TodoFilter](../lib/features/todos/todo.dart#L64 "→ enum TodoFilter") · [buscar un enum por nombre](../lib/core/settings/settings_controller.dart#L60 "→ ThemeMode.values.firstWhere") .
+> 📂 **En este proyecto:** [DemoLevel](../lib/features/catalog/demo_catalog.dart#L24 "→ enum DemoLevel") · [TodoFilter](../lib/features/todos/todo.dart#L64 "→ enum TodoFilter") · [buscar un enum por nombre](../lib/core/settings/settings_controller.dart#L60 "→ ThemeMode.values.firstWhere") .
 ```dart
 enum Estado { cargando, exito, error }
 
@@ -237,7 +237,7 @@ print(ubicacion().lat);
 
 ### Pattern matching y `switch` como expresión
 
-> 📂 **En este proyecto:** [validar JSON con patrones](../lib/features/posts/post.dart#L40 "→ return switch (json)") · [`switch` sobre un enum](../lib/features/todos/todos_controller.dart#L124 "→ return switch (ref.watch(todoFilterProvider))") · [patrones en un `for`](../lib/features/catalog/catalog_screen.dart#L50 "→ for (final MapEntry(key: level") .
+> 📂 **En este proyecto:** [validar JSON con patrones](../lib/features/posts/post.dart#L40 "→ return switch (json)") · [`switch` sobre un enum](../lib/features/todos/todos_controller.dart#L124 "→ return switch (ref.watch(todoFilterProvider))") · [patrones en un `for`](../lib/features/catalog/catalog_screen.dart#L52 "→ for (final MapEntry(key: level") .
 ```dart
 String describir(Object valor) => switch (valor) {
       int n when n < 0 => 'Negativo',

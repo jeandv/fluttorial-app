@@ -108,7 +108,7 @@ flutter help -v           # incluye opciones poco comunes
 
 ## 🥉 Nivel 3 — Importantes para compilar y publicar
 
-> 📂 **En este proyecto:** `--dart-define-from-file=config/dev.json` usa [config/dev.json](../config/dev.json) / [config/prod.json](../config/prod.json), que se leen en [env.dart](../lib/core/config/env.dart#L31 "→ abstract final class Env") .
+> 📂 **En este proyecto:** `--dart-define-from-file=config/dev.json` usa [config/dev.json](../config/dev.json) / [config/prod.json](../config/prod.json), que se leen en [env.dart](../lib/core/config/env.dart#L33 "→ abstract final class Env") .
 
 | Comando | Qué produce |
 |---|---|

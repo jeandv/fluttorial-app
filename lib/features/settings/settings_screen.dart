@@ -12,8 +12,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mi_primera_app/core/config/env.dart';
+import 'package:mi_primera_app/core/router/routes.dart';
 import 'package:mi_primera_app/core/settings/settings_controller.dart';
+import 'package:mi_primera_app/features/onboarding/onboarding_controller.dart';
 import 'package:mi_primera_app/l10n/app_localizations.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -86,6 +89,16 @@ class SettingsScreen extends ConsumerWidget {
                 const RadioListTile(value: 'en', title: Text('English')),
               ],
             ),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            // Vuelve a mostrar el onboarding: borra la marca y navega a él.
+            onPressed: () async {
+              await ref.read(onboardingDoneProvider.notifier).reset();
+              if (context.mounted) context.go(AppRoutes.onboarding);
+            },
+            icon: const Icon(Icons.replay),
+            label: const Text('Ver el onboarding de nuevo'),
           ),
           const Divider(height: 32),
           Text('Compilación', style: Theme.of(context).textTheme.titleMedium),

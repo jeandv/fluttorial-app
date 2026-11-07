@@ -19,7 +19,9 @@ import 'package:flutter/material.dart';
 import 'package:mi_primera_app/core/router/routes.dart';
 
 /// Nivel de dificultad. Un `enum` es un conjunto cerrado de valores.
-enum DemoLevel { basic, intermediate, advanced }
+/// `product` = funcionalidades de apps reales: onboarding, pagos, IA (docs/13-15).
+/// `packages` = demos de las librerías más usadas (ver docs/12).
+enum DemoLevel { basic, intermediate, advanced, product, packages }
 
 /// Datos de una demo. Todas las propiedades son `final` y el constructor es
 /// `const`, así la lista completa puede ser una constante.
@@ -135,5 +137,75 @@ const demos = <Demo>[
     icon: Icons.speed,
     route: AppRoutes.isolates,
     level: DemoLevel.advanced,
+  ),
+
+  // ------------------------------------------------------------ APPS REALES
+  // Funcionalidades que casi toda app publicada necesita (docs/13, 14, 15).
+  Demo(
+    title: 'Onboarding',
+    description: 'Bienvenida con páginas, indicador, parallax y primer uso',
+    icon: Icons.waving_hand_outlined,
+    route: AppRoutes.onboardingDemo,
+    level: DemoLevel.product,
+  ),
+  Demo(
+    title: 'Pago (checkout)',
+    description: 'Carrito, tarjeta con validación, Apple/Google Pay, recibo',
+    icon: Icons.shopping_cart_checkout,
+    route: AppRoutes.checkout,
+    level: DemoLevel.product,
+  ),
+  Demo(
+    title: 'Suscripción (paywall)',
+    description: 'Planes, prueba gratis, restaurar compras, textos legales',
+    icon: Icons.workspace_premium_outlined,
+    route: AppRoutes.paywall,
+    level: DemoLevel.product,
+  ),
+  Demo(
+    title: 'Estudio IA',
+    description: 'Claude: consejos en streaming, documentos e ilustraciones',
+    icon: Icons.auto_awesome,
+    route: AppRoutes.aiStudio,
+    level: DemoLevel.product,
+  ),
+  Demo(
+    title: 'Agente IA',
+    description: 'Un agente que usa herramientas para gestionar tus tareas',
+    icon: Icons.smart_toy_outlined,
+    route: AppRoutes.agent,
+    level: DemoLevel.product,
+  ),
+
+  // ---------------------------------------------------- LIBRERÍAS POPULARES
+  // Elegidas por descargas y demanda laboral: ver docs/12.
+  Demo(
+    title: 'Mapas',
+    description:
+        'flutter_map + OpenStreetMap, marcadores, rutas y tu ubicación',
+    icon: Icons.map_outlined,
+    route: AppRoutes.maps,
+    level: DemoLevel.packages,
+  ),
+  Demo(
+    title: 'Dio',
+    description: 'Cliente HTTP profesional: interceptores, errores, cancelar',
+    icon: Icons.http,
+    route: AppRoutes.dio,
+    level: DemoLevel.packages,
+  ),
+  Demo(
+    title: 'Imágenes en caché',
+    description: 'cached_network_image + efecto shimmer de carga',
+    icon: Icons.photo_library_outlined,
+    route: AppRoutes.images,
+    level: DemoLevel.packages,
+  ),
+  Demo(
+    title: 'Enlaces y compartir',
+    description: 'url_launcher (web, teléfono, email, mapas) + share_plus',
+    icon: Icons.share_outlined,
+    route: AppRoutes.linksShare,
+    level: DemoLevel.packages,
   ),
 ];

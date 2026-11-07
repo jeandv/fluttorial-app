@@ -83,6 +83,45 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # ------------------------------------------------------------------------
+  # LIBRERÍAS POPULARES (demos de lib/features/packages/, guía: docs/12)
+  # ------------------------------------------------------------------------
+
+  # MAPAS con OpenStreetMap (sin API key). Uso: lib/features/packages/maps/
+  flutter_map: ^8.3.2
+  # Coordenadas (LatLng) y cálculo de distancias. Lo usa flutter_map.
+  latlong2: ^0.10.1
+  # UBICACIÓN GPS y permisos. Requiere permisos en Info.plist y AndroidManifest.
+  geolocator: ^14.1.2
+
+  # CLIENTE HTTP avanzado: interceptores, cancelación, errores tipados.
+  # Uso: lib/features/packages/dio/
+  dio: ^5.11.1
+
+  # IMÁGENES de internet guardadas en caché de disco.
+  # Uso: lib/features/packages/images_screen.dart
+  cached_network_image: ^4.0.6
+  # Efecto "brillo" de carga (skeleton loading).
+  shimmer: ^4.0.0
+
+  # ABRIR enlaces, teléfono, email, SMS y apps de mapas.
+  # Uso: lib/features/packages/links_share_screen.dart (+ <queries> en Android)
+  url_launcher: ^6.3.3
+  # Hoja nativa de COMPARTIR (WhatsApp, email, Telegram…).
+  share_plus: ^13.3.1
+
+  # ------------------------------------------------------------------------
+  # APPS REALES: onboarding e IA (docs/13 y docs/15)
+  # ------------------------------------------------------------------------
+
+  # Dibuja SVG (las ilustraciones que genera la IA). Uso: lib/features/ai/
+  flutter_svg: ^2.3.2
+  # Puntos indicadores de página del onboarding. Uso: lib/features/onboarding/
+  smooth_page_indicator: ^3.0.0
+  # Muestra Markdown como widgets (respuestas de la IA). Sucesor del
+  # descontinuado flutter_markdown.
+  flutter_markdown_plus: ^1.0.12
+
 # ----------------------------------------------------------------------------
 # DEPENDENCIAS DE DESARROLLO: solo se usan al programar (tests, lints,
 # generadores de código). NO se incluyen en la app final.

@@ -140,6 +140,18 @@ abstract class AppLocalizations {
   /// **'Avanzado'**
   String get levelAdvanced;
 
+  /// No description provided for @levelProduct.
+  ///
+  /// In es, this message translates to:
+  /// **'Apps reales'**
+  String get levelProduct;
+
+  /// No description provided for @levelPackages.
+  ///
+  /// In es, this message translates to:
+  /// **'Librerías populares'**
+  String get levelPackages;
+
   /// Saludo con un nombre. Ejemplo de texto con parámetro (placeholder)
   ///
   /// In es, this message translates to:

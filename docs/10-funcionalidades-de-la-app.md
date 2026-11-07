@@ -30,10 +30,10 @@ La app es un **catálogo interactivo**: cada pantalla enseña una funcionalidad 
 |---|---|
 | Arranque | [lib/main.dart](../lib/main.dart#L41 "→ Future<void> main") |
 | Widget raíz (tema, idioma, router) | [lib/app.dart](../lib/app.dart#L38 "→ MaterialApp.router") |
-| Todas las rutas | [lib/core/router/app_router.dart](../lib/core/router/app_router.dart#L60 "→ final routerProvider") |
+| Todas las rutas | [lib/core/router/app_router.dart](../lib/core/router/app_router.dart#L70 "→ final routerProvider") |
 | Constantes de rutas | [lib/core/router/routes.dart](../lib/core/router/routes.dart) |
 | Barra de pestañas | [lib/features/shell/home_shell.dart](../lib/features/shell/home_shell.dart) |
-| Lista de demos (datos) | [lib/features/catalog/demo_catalog.dart](../lib/features/catalog/demo_catalog.dart#L42 "→ const demos") |
+| Lista de demos (datos) | [lib/features/catalog/demo_catalog.dart](../lib/features/catalog/demo_catalog.dart#L44 "→ const demos") |
 | Pantalla del catálogo | [lib/features/catalog/catalog_screen.dart](../lib/features/catalog/catalog_screen.dart) |
 | Plantilla de cada demo (botón ⓘ) | [lib/core/widgets/demo_scaffold.dart](../lib/core/widgets/demo_scaffold.dart) |
 
@@ -119,11 +119,11 @@ La app es un **catálogo interactivo**: cada pantalla enseña una funcionalidad 
 | Concepto | Dónde verlo |
 |---|---|
 | `context.push` con parámetro de ruta y de consulta | [push detalle](../lib/features/intermediate/navigation_screens.dart#L68 "→ AppRoutes.navigationDetail(42") |
-| Leer los parámetros en el router | [detalle/:id](../lib/core/router/app_router.dart#L148 "→ path: 'detalle/:id'") |
+| Leer los parámetros en el router | [detalle/:id](../lib/core/router/app_router.dart#L180 "→ path: 'detalle/:id'") |
 | Esperar un resultado (`await push` / `pop(valor)`) | [_pickColor](../lib/features/intermediate/navigation_screens.dart#L41 "→ Future<void> _pickColor") · [pop(name)](../lib/features/intermediate/navigation_screens.dart#L201 "→ context.pop(name)") |
 | `context.go` (cambiar de sección) | [go Tareas](../lib/features/intermediate/navigation_screens.dart#L95 "→ context.go(AppRoutes.todos)") |
 | `Navigator.push` clásico | [MaterialPageRoute](../lib/features/intermediate/navigation_screens.dart#L107 "→ MaterialPageRoute<void>(") |
-| Ruta protegida (`redirect`) | [redirect](../lib/core/router/app_router.dart#L78 "→ redirect: (context, state)") · [auth.dart](../lib/features/auth/auth.dart) |
+| Ruta protegida (`redirect`) | [redirect](../lib/core/router/app_router.dart#L98 "→ redirect: (context, state)") · [auth.dart](../lib/features/auth/auth.dart) |
 
 ### 3.3 Asincronía
 📄 [lib/features/intermediate/async_screen.dart](../lib/features/intermediate/async_screen.dart) · Ruta `/ejemplos/asincronia`
@@ -214,6 +214,33 @@ ApiClient (http)  →  PostsRepository (JSON → Post)  →  postsProvider (cach
 
 ---
 
+## 4.4 🟣 Apps reales: onboarding, pagos e IA
+
+Funcionalidades que casi toda app publicada necesita. Cada una tiene su guía completa.
+
+| Demo | Ruta | Qué enseña | Código | Guía |
+|---|---|---|---|---|
+| Onboarding | `/onboarding` | Primer uso con redirect del router, `PageView`, indicador, parallax, personalización | [onboarding_screen.dart](../lib/features/onboarding/onboarding_screen.dart#L85 "→ class OnboardingScreen") | [docs/13](13-onboarding.md) |
+| Pago (checkout) | `/ejemplos/pagos` | Carrito, tarjeta visual, validación Luhn, Apple/Google Pay, recibo | [checkout_screen.dart](../lib/features/payments/checkout_screen.dart#L48 "→ class CheckoutScreen") | [docs/14](14-pagos.md) |
+| Suscripción | `/ejemplos/suscripcion` | Paywall: planes, prueba gratis, restaurar compras | [paywall_screen.dart](../lib/features/payments/paywall_screen.dart#L76 "→ class PaywallScreen") | [docs/14](14-pagos.md#4-demo-suscripciones-paywall) |
+| Estudio IA | `/ejemplos/ia` | Claude: consejos en streaming, documentos Markdown, SVG | [ai_studio_screen.dart](../lib/features/ai/ai_studio_screen.dart#L32 "→ class AiStudioScreen") | [docs/15](15-ia-y-agentes.md) |
+| Agente IA | `/ejemplos/agente` | Bucle de herramientas sobre tus tareas reales | [todo_agent.dart](../lib/features/ai/todo_agent.dart#L193 "→ class ClaudeTodoAgent") | [docs/15 §5](15-ia-y-agentes.md#5-agentes) |
+
+---
+
+## 4.5 🔷 Librerías populares
+
+Demos de las librerías más descargadas y demandadas. La investigación completa (métricas de pub.dev, demanda laboral y comparativas) está en [12 · Librerías más usadas](12-librerias-mas-usadas.md).
+
+| Demo | Ruta | Qué enseña | Código |
+|---|---|---|---|
+| Mapas | `/ejemplos/mapas` | flutter_map + OpenStreetMap, marcadores, ruta, círculo, tu ubicación con geolocator | [map_screen.dart](../lib/features/packages/maps/map_screen.dart#L49 "→ class MapScreen") · [map_data.dart](../lib/features/packages/maps/map_data.dart#L117 "→ class LocationService") |
+| Dio | `/ejemplos/dio` | Interceptores, GET/POST, errores tipados, cancelar peticiones | [dio_client.dart](../lib/features/packages/dio/dio_client.dart#L71 "→ Dio createDio") · [dio_demo_screen.dart](../lib/features/packages/dio/dio_demo_screen.dart#L18 "→ class DioDemoScreen") |
+| Imágenes en caché | `/ejemplos/imagenes` | cached_network_image, placeholder shimmer, imagen rota, vaciar caché | [images_screen.dart](../lib/features/packages/images_screen.dart#L31 "→ class ImagesScreen") |
+| Enlaces y compartir | `/ejemplos/enlaces` | url_launcher (web, teléfono, email, SMS, mapas) y share_plus | [links_share_screen.dart](../lib/features/packages/links_share_screen.dart#L32 "→ class LinksShareScreen") |
+
+---
+
 ## 5. Pestañas de la app
 
 ### ✅ Tareas: una mini-app completa con Riverpod
@@ -238,10 +265,10 @@ ApiClient (http)  →  PostsRepository (JSON → Post)  →  postsProvider (cach
 
 | Pieza | Dónde verlo |
 |---|---|
-| Tema claro/oscuro/sistema | [SegmentedButton<ThemeMode>](../lib/features/settings/settings_screen.dart#L45 "→ SegmentedButton<ThemeMode>") |
-| Idioma con `RadioGroup` | [RadioGroup](../lib/features/settings/settings_screen.dart#L74 "→ RadioGroup<String>(") |
-| Modo de compilación (`kReleaseMode`…) | [buildMode](../lib/features/settings/settings_screen.dart#L29 "→ final buildMode") |
-| Variables `--dart-define` | [Env](../lib/core/config/env.dart#L31 "→ abstract final class Env") |
+| Tema claro/oscuro/sistema | [SegmentedButton<ThemeMode>](../lib/features/settings/settings_screen.dart#L48 "→ SegmentedButton<ThemeMode>") |
+| Idioma con `RadioGroup` | [RadioGroup](../lib/features/settings/settings_screen.dart#L77 "→ RadioGroup<String>(") |
+| Modo de compilación (`kReleaseMode`…) | [buildMode](../lib/features/settings/settings_screen.dart#L32 "→ final buildMode") |
+| Variables `--dart-define` | [Env](../lib/core/config/env.dart#L33 "→ abstract final class Env") |
 | Controlador de ajustes (persistido) | [SettingsController](../lib/core/settings/settings_controller.dart#L47 "→ class SettingsController") |
 
 ---
@@ -250,6 +277,6 @@ ApiClient (http)  →  PostsRepository (JSON → Post)  →  postsProvider (cach
 
 1. Crea `lib/features/<nivel>/mi_demo_screen.dart` usando [DemoScaffold](../lib/core/widgets/demo_scaffold.dart#L22 "→ class DemoScaffold") como base.
 2. Añade la constante de ruta en [routes.dart](../lib/core/router/routes.dart).
-3. Registra la ruta como hija de `/ejemplos` en [app_router.dart](../lib/core/router/app_router.dart#L102 "→ routes: [") .
-4. Añade un `Demo(...)` a la lista [demos](../lib/features/catalog/demo_catalog.dart#L42 "→ const demos").
+3. Registra la ruta como hija de `/ejemplos` en [app_router.dart](../lib/core/router/app_router.dart#L134 "→ routes: [") .
+4. Añade un `Demo(...)` a la lista [demos](../lib/features/catalog/demo_catalog.dart#L44 "→ const demos").
 5. Hot restart (`R`) y aparecerá en el catálogo.
