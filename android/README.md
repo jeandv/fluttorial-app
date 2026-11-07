@@ -20,7 +20,7 @@ Es un **proyecto Android real** (Gradle + Kotlin) que Flutter generó para "envo
 
 | Archivo | Qué es |
 |---|---|
-| [`app/src/main/kotlin/.../MainActivity.kt`](app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt) | Activity nativa que aloja Flutter |
+| [`app/src/main/kotlin/.../MainActivity.kt`](app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt) | Activity nativa que aloja Flutter. **En este proyecto registra un `MethodChannel`** en [configureFlutterEngine](../android/app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt#L30 "→ override fun configureFlutterEngine") (demo *Código nativo*) |
 | `app/src/debug/AndroidManifest.xml` | Añade el permiso INTERNET solo en debug (para hot reload) |
 | `app/src/profile/AndroidManifest.xml` | Lo mismo para el modo profile |
 | `build.gradle.kts` | Configuración común a todos los módulos |
@@ -49,5 +49,6 @@ cd android && ./gradlew --stop               # parar procesos de Gradle
 ## Recuerda
 
 - 🔐 Nunca subas a git `key.properties`, `*.jks` ni `*.keystore` (ya están en `.gitignore`).
-- 🌐 Si la app usa internet, añade `<uses-permission android:name="android.permission.INTERNET"/>` en el manifest **main** (en debug funciona sin él, en release no).
+- 🌐 Si la app usa internet, hace falta `<uses-permission android:name="android.permission.INTERNET"/>` en el manifest **main** (en debug funciona sin él, en release no). En este proyecto [ya está añadido](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") .
+- ✍️ Antes de publicar, cambia la [firma de debug](../android/app/build.gradle.kts#L66 "→ signingConfig = signingConfigs.getByName(") por la tuya ([docs/08 §3](../docs/08-compilar-y-publicar.md#3--android--google-play)).
 - 📱 El emulador ve tu Mac en `10.0.2.2`, no en `localhost`.

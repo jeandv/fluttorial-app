@@ -1,0 +1,53 @@
+{
+  "@@locale": "es",
+
+  "appTitle": "Mi Primera App",
+  "@appTitle": {
+    "description": "Nombre de la app en el selector de apps del sistema"
+  },
+
+  "tabExamples": "Ejemplos",
+  "tabTodos": "Tareas",
+  "tabSettings": "Ajustes",
+
+  "levelBasic": "Básico",
+  "levelIntermediate": "Intermedio",
+  "levelAdvanced": "Avanzado",
+
+  "greeting": "¡Hola, {name}!",
+  "@greeting": {
+    "description": "Saludo con un nombre. Ejemplo de texto con parámetro (placeholder)",
+    "placeholders": {
+      "name": { "type": "String", "example": "Jean" }
+    }
+  },
+
+  "todosPending": "{count, plural, =0{No tienes tareas pendientes} =1{Tienes 1 tarea pendiente} other{Tienes {count} tareas pendientes}}",
+  "@todosPending": {
+    "description": "Número de tareas pendientes. Ejemplo de PLURALES",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "todayIs": "Hoy es {date}",
+  "@todayIs": {
+    "description": "Fecha actual. Ejemplo de FECHA formateada según el idioma",
+    "placeholders": {
+      "date": { "type": "DateTime", "format": "yMMMMEEEEd" }
+    }
+  },
+
+  "settingsTheme": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Oscuro",
+  "settingsLanguage": "Idioma",
+  "languageSystem": "Idioma del sistema",
+
+  "todosHint": "¿Qué tienes que hacer?",
+  "todosAdd": "Añadir",
+  "todosEmpty": "No hay tareas aquí. ¡Añade una arriba!",
+  "todosDeleted": "Tarea eliminada",
+  "undo": "Deshacer"
+}

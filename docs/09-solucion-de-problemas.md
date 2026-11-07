@@ -1,6 +1,6 @@
 # 09 · Solución de problemas
 
-> Anterior: [08 · Compilar y publicar](08-compilar-y-publicar.md) · Volver al [índice](../README.md)
+> Anterior: [08 · Compilar y publicar](08-compilar-y-publicar.md) · Volver al [índice](../README.md) · Siguiente: [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md)
 
 **Primero, siempre:**
 ```bash
@@ -70,9 +70,12 @@ Y lee el error **desde abajo hacia arriba**: la causa real suele estar en las ú
 
 ## 5. Dart / Flutter en tiempo de ejecución
 
+> 📂 **En este proyecto:** soluciones aplicadas en el código: [comprobar `mounted` tras un await](../lib/features/basics/widgets_screen.dart#L77 "→ if (!mounted") return;) · [no usar context tras un await](../lib/features/intermediate/async_screen.dart#L69 "→ no usamos `context` después") · [Expanded contra el overflow](../lib/features/basics/layout_screen.dart#L91 "→ Expanded(child: box('1'") · [GridView dentro de ListView](../lib/features/advanced/responsive_screen.dart#L101 "→ shrinkWrap: true") · [capturar MissingPluginException](../lib/features/advanced/native_channel.dart#L80 "→ on MissingPluginException") .
+
 | Error en pantalla/terminal | Significado | Solución |
 |---|---|---|
 | Franja amarilla y negra **`RenderFlex overflowed by X pixels`** | El contenido no cabe en `Row`/`Column` | Envolver en `Expanded`/`Flexible`, usar `SingleChildScrollView`, o reducir tamaños |
+| Pantalla roja **`Cannot interpolate between finite constraints and unbounded constraints`** | Una animación va hacia un tamaño infinito (`width: double.infinity` en `AnimatedContainer`) | Animar hacia un número real: medirlo con `LayoutBuilder` (`constraints.maxWidth`) → [ejemplo corregido](../lib/features/advanced/animations_screen.dart#L111 "→ width: _expanded ? constraints.maxWidth") |
 | `Vertical viewport was given unbounded height` | `ListView` dentro de `Column` sin altura | Envolver el `ListView` en `Expanded`, o `shrinkWrap: true` |
 | `Null check operator used on a null value` | Se usó `!` sobre algo `null` | Revisar la variable; usar `?.` / `??` |
 | `setState() called after dispose()` | `setState` tras salir de la pantalla (p. ej. al terminar un `Future`) | `if (!mounted) return;` antes de `setState` |

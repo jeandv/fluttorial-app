@@ -1,0 +1,47 @@
+# ============================================================================
+# .github/workflows/flutter-ci.yml — INTEGRACIÓN CONTINUA EN GITHUB ACTIONS
+# ============================================================================
+# En cada push o Pull Request a `main`, GitHub ejecuta en un servidor Linux:
+#   1. Instala Flutter (canal stable)
+#   2. flutter pub get
+#   3. Comprueba el formato (dart format)
+#   4. flutter analyze
+#   5. flutter test
+# Si algún paso falla, el commit aparece con una ❌ en GitHub.
+# Resultados: pestaña "Actions" del repositorio.
+#
+# 📚 Guía: docs/11-configuraciones-avanzadas.md (sección 11)
+# ============================================================================
+
+name: Flutter CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Dependencias
+        run: flutter pub get
+
+      - name: Formato
+        run: dart format --output=none --set-exit-if-changed lib test tool
+
+      - name: Análisis estático
+        run: flutter analyze
+
+      - name: Pruebas
+        run: flutter test

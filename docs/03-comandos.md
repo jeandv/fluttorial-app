@@ -19,6 +19,8 @@ flutter help -v           # incluye opciones poco comunes
 
 ## 🥇 Nivel 1 — Los que usarás todos los días
 
+> 📂 **En este proyecto:** `flutter test` ejecuta [estas pruebas](../test/) · `flutter analyze` aplica [estas reglas](../analysis_options.yaml) · los paquetes de `flutter pub add` quedan en [pubspec.yaml](../pubspec.yaml#L52 "→ dependencies:") .
+
 | Comando | Qué hace |
 |---|---|
 | `flutter run` | Compila en modo **debug**, instala y abre la app en el dispositivo. Activa hot reload |
@@ -106,6 +108,8 @@ flutter help -v           # incluye opciones poco comunes
 
 ## 🥉 Nivel 3 — Importantes para compilar y publicar
 
+> 📂 **En este proyecto:** `--dart-define-from-file=config/dev.json` usa [config/dev.json](../config/dev.json) / [config/prod.json](../config/prod.json), que se leen en [env.dart](../lib/core/config/env.dart#L31 "→ abstract final class Env") .
+
 | Comando | Qué produce |
 |---|---|
 | `flutter build apk` | APK release: `build/app/outputs/flutter-apk/app-release.apk` |
@@ -159,6 +163,8 @@ Opciones útiles para `build` (y `run`):
 | `flutter create --template=plugin mi_plugin` | Crea un plugin con código nativo |
 
 ### Dart
+
+> 📂 **En este proyecto:** `dart run tool/update_doc_links.dart` actualiza los enlaces de esta guía → [código del script](../tool/update_doc_links.dart#L98 "→ void main("). La generación de código con `build_runner` se explica en [docs/11 §9](11-configuraciones-avanzadas.md#9-generación-de-código-build_runner).
 | Comando | Para qué |
 |---|---|
 | `dart run` | Ejecuta `bin/` o un ejecutable de un paquete |
@@ -171,6 +177,8 @@ Opciones útiles para `build` (y `run`):
 ---
 
 ## 🍎 Comandos de iOS / Xcode (`xcrun simctl`)
+
+> 📂 **En este proyecto:** el Bundle ID para `simctl privacy`/`uninstall` es `com.jeanrondon.miPrimeraApp`. Para probar deep links con `openurl` ver [docs/11 §1](11-configuraciones-avanzadas.md#deep-links-abrir-la-app-desde-una-url).
 
 | Comando | Para qué |
 |---|---|

@@ -25,6 +25,8 @@ Ese es exactamente el árbol de [`lib/main.dart`](../lib/main.dart).
 
 ### `StatelessWidget` vs `StatefulWidget`
 
+> 📂 **En este proyecto:** Stateless: [_DemoTile](../lib/features/catalog/catalog_screen.dart#L102 "→ class _DemoTile extends StatelessWidget") · Stateful: [CounterScreen](../lib/features/basics/counter_screen.dart#L34 "→ class CounterScreen extends StatefulWidget") · con Riverpod: [ConsumerWidget](../lib/features/posts/posts_screens.dart#L33 "→ class PostsScreen extends ConsumerWidget") .
+
 | | `StatelessWidget` | `StatefulWidget` |
 |---|---|---|
 | ¿Tiene datos que cambian? | No | Sí (en su objeto `State`) |
@@ -72,6 +74,8 @@ class _ContadorState extends State<Contador> {
 ---
 
 ## 2. Cómo organizar `lib/`
+
+> 📂 **En este proyecto:** se usa la organización **por funcionalidad**: [lib/core/](../lib/core/) + [lib/features/](../lib/features/). Explicación en [docs/11 §0](11-configuraciones-avanzadas.md#0-arquitectura-del-proyecto).
 
 Para apps pequeñas o medianas (**recomendado para empezar**):
 
@@ -127,6 +131,8 @@ Más detalle en [lib/README.md](../lib/README.md).
 | `SafeArea` | Evita el notch, la isla dinámica y las barras del sistema |
 
 ### Layout (posicionar cosas)
+
+> 📂 **En este proyecto:** todos estos widgets funcionando en [layout_screen.dart](../lib/features/basics/layout_screen.dart) (demo *Layout*).
 | Widget | Para qué |
 |---|---|
 | `Column` / `Row` | Hijos en vertical / horizontal |
@@ -153,6 +159,8 @@ Más detalle en [lib/README.md](../lib/README.md).
 | `CircularProgressIndicator` | Indicador de carga |
 
 ### Interacción
+
+> 📂 **En este proyecto:** botones, controles, diálogos y SnackBars en [widgets_screen.dart](../lib/features/basics/widgets_screen.dart); formularios completos en [forms_screen.dart](../lib/features/intermediate/forms_screen.dart).
 | Widget | Para qué |
 |---|---|
 | `ElevatedButton`, `FilledButton`, `TextButton`, `OutlinedButton`, `IconButton` | Botones |
@@ -164,6 +172,8 @@ Más detalle en [lib/README.md](../lib/README.md).
 > 📚 Catálogo visual completo: [docs.flutter.dev/ui/widgets](https://docs.flutter.dev/ui/widgets)
 
 ### Ejemplo: tarjeta de producto
+
+> 📂 **En este proyecto:** un widget reutilizable real: [DemoSection](../lib/core/widgets/demo_scaffold.dart#L107 "→ class DemoSection") (lo usan todas las demos).
 ```dart
 class ProductoCard extends StatelessWidget {
   const ProductoCard({super.key, required this.nombre, required this.precio, this.onTap});
@@ -190,6 +200,8 @@ class ProductoCard extends StatelessWidget {
 ---
 
 ## 4. Navegación entre pantallas
+
+> 📂 **En este proyecto:** [todas las rutas](../lib/core/router/app_router.dart#L60 "→ final routerProvider") · [demo de navegación](../lib/features/intermediate/navigation_screens.dart) · [Navigator.push clásico](../lib/features/intermediate/navigation_screens.dart#L107 "→ MaterialPageRoute<void>(") .
 
 ### Opción simple: `Navigator`
 ```dart
@@ -236,6 +248,8 @@ Ventajas: URLs, deep links, redirecciones (ej. a login si no hay sesión), naveg
 
 ## 5. Gestión de estado
 
+> 📂 **En este proyecto:** `setState` en [CounterScreen](../lib/features/basics/counter_screen.dart#L73 "→ void _increment") · Riverpod `Notifier` en [TodosController](../lib/features/todos/todos_controller.dart#L33 "→ class TodosController extends Notifier") · `FutureProvider` en [postsProvider](../lib/features/posts/posts_repository.dart#L56 "→ final postsProvider") .
+
 "Estado" = datos que, al cambiar, deben redibujar la interfaz.
 
 | Nivel | Solución | Cuándo |
@@ -279,6 +293,8 @@ class ContadorTexto extends ConsumerWidget {
 ---
 
 ## 6. Paquetes (pub.dev)
+
+> 📂 **En este proyecto:** paquetes instalados y para qué se usa cada uno: [pubspec.yaml](../pubspec.yaml#L62 "→ go_router:") .
 
 Busca en [pub.dev](https://pub.dev). Antes de elegir uno revisa: **likes**, **pub points**, **popularidad**, fecha de la última versión y que soporte **Android e iOS**.
 
@@ -354,6 +370,8 @@ flutter pub outdated             # ver actualizaciones
 
 ## 8. Consumir una API (HTTP + JSON)
 
+> 📂 **En este proyecto:** versión completa y robusta en [api_client.dart](../lib/core/network/api_client.dart#L60 "→ Future<Object?> getJson") → [posts_repository.dart](../lib/features/posts/posts_repository.dart#L37 "→ Future<List<Post>> fetchPosts") → [posts_screens.dart](../lib/features/posts/posts_screens.dart#L54 "→ postsAsync.when") (demo *API REST*).
+
 ```bash
 flutter pub add http
 ```
@@ -405,6 +423,8 @@ FutureBuilder<List<Post>>(
 
 ## 9. Permisos nativos
 
+> 📂 **En este proyecto:** [permiso INTERNET ya declarado](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") para la demo de API REST.
+
 Cuando un paquete accede a hardware o datos del usuario, hay que **declararlo** en cada plataforma.
 
 ### Android → [`android/app/src/main/AndroidManifest.xml`](../android/app/src/main/AndroidManifest.xml)
@@ -435,6 +455,8 @@ La documentación de cada paquete en pub.dev indica qué permisos requiere.
 
 ## 10. Tema, colores y modo oscuro
 
+> 📂 **En este proyecto:** [AppTheme](../lib/core/theme/app_theme.dart#L27 "→ abstract final class AppTheme") · [extensión de tema propia](../lib/core/theme/app_theme.dart#L77 "→ class LevelColors") · [aplicado en MaterialApp](../lib/app.dart#L47 "→ theme: AppTheme.light()") · [selector en Ajustes](../lib/features/settings/settings_screen.dart#L45 "→ SegmentedButton<ThemeMode>") .
+
 ```dart
 MaterialApp(
   theme: ThemeData(
@@ -456,6 +478,8 @@ Text('Hola', style: textos.headlineMedium?.copyWith(color: colores.primary));
 ---
 
 ## 11. Diseño adaptable (diferentes tamaños de pantalla)
+
+> 📂 **En este proyecto:** [MediaQuery](../lib/features/advanced/responsive_screen.dart#L36 "→ MediaQuery.sizeOf") · [LayoutBuilder con breakpoints](../lib/features/advanced/responsive_screen.dart#L83 "→ final columns =") · [widgets .adaptive](../lib/features/advanced/responsive_screen.dart#L137 "→ Switch.adaptive(") .
 
 ```dart
 final ancho = MediaQuery.sizeOf(context).width;
@@ -482,6 +506,8 @@ Muchos widgets tienen constructor adaptable: `Switch.adaptive`, `Slider.adaptive
 
 ## 12. Traducciones (internacionalización)
 
+> 📂 **En este proyecto:** ya está configurado: [l10n.yaml](../l10n.yaml) · [app_es.arb](../lib/l10n/app_es.arb) · [app_en.arb](../lib/l10n/app_en.arb) · [delegates en MaterialApp](../lib/app.dart#L55 "→ localizationsDelegates:") · [demo](../lib/features/intermediate/localization_screen.dart). Guía paso a paso: [docs/11 §4](11-configuraciones-avanzadas.md#4-internacionalización-i18n-con-gen-l10n).
+
 1. `flutter pub add flutter_localizations --sdk=flutter` y `flutter pub add intl`.
 2. En `pubspec.yaml` → `flutter: generate: true`.
 3. Crea `l10n.yaml` y archivos `lib/l10n/app_es.arb`, `app_en.arb`.
@@ -493,6 +519,8 @@ Guía oficial: [docs.flutter.dev/ui/accessibility-and-internationalization/inter
 ---
 
 ## 13. Ruta de práctica sugerida (proyectos)
+
+> 📂 **En este proyecto:** los proyectos 1 (contador) y 2 (tareas con guardado) ya están hechos en la app: [counter_screen.dart](../lib/features/basics/counter_screen.dart) y [lib/features/todos/](../lib/features/todos/). La parte de API del 3 está en [lib/features/posts/](../lib/features/posts/).
 
 1. ✅ **Contador** (este proyecto): `StatefulWidget`, `setState`, hot reload.
 2. 📝 **Lista de tareas**: `TextField`, `ListView.builder`, `Checkbox`, `shared_preferences` para guardar.

@@ -1,0 +1,23 @@
+# ============================================================================
+# l10n.yaml — CONFIGURACIÓN DE TRADUCCIONES (flutter gen-l10n)
+# ============================================================================
+# Flutter lee los archivos .arb de `arb-dir` y genera la clase AppLocalizations
+# con un getter/método por cada texto. Se regenera en cada `flutter run` /
+# `flutter pub get` (porque pubspec.yaml tiene `generate: true`) o a mano con:
+#   flutter gen-l10n
+#
+# 📚 Guía: docs/11-configuraciones-avanzadas.md (sección 4)
+# ============================================================================
+
+# Carpeta con los archivos de traducción (app_es.arb, app_en.arb…).
+arb-dir: lib/l10n
+
+# Archivo "plantilla": define TODAS las claves y su descripción. Los demás
+# idiomas deben tener las mismas claves.
+template-arb-file: app_es.arb
+
+# Nombre del archivo Dart generado (se crea en lib/l10n/).
+output-localization-file: app_localizations.dart
+
+# AppLocalizations.of(context) devuelve un valor no nulo (sin necesidad de `!`).
+nullable-getter: false

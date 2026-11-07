@@ -37,6 +37,8 @@ Línea 2
 
 ## 2. Null safety (seguridad ante nulos)
 
+> 📂 **En este proyecto:** [`??` con valor por defecto](../lib/features/intermediate/navigation_screens.dart#L46 "→ result ?? 'ninguno") · [`?.` y `??` juntos](../lib/features/intermediate/async_screen.dart#L94 "→ _timer?.isActive ?? false") · [tipo nullable `Locale?`](../lib/core/settings/settings_controller.dart#L38 "→ final Locale? locale") .
+
 ```dart
 String nombre = 'Ana';     // NUNCA puede ser null
 String? apodo;             // PUEDE ser null (el ? lo permite)
@@ -52,6 +54,8 @@ late String token;         // se inicializará más tarde, antes de usarse
 ---
 
 ## 3. Colecciones
+
+> 📂 **En este proyecto:** [`for` + `if/else` dentro de una lista](../lib/features/todos/todos_controller.dart#L75 "→ if (t.id == id") t.copyWith) · [spread `...`](../lib/features/todos/todos_controller.dart#L68 "→ state = [todo, ...state]") · [`where`](../lib/features/todos/todos_controller.dart#L126 "→ todos.where((t") => !t.done)) · [`map` + `toList`](../lib/features/posts/posts_repository.dart#L41 "→ list.map") .
 
 ```dart
 // Lista (array)
@@ -87,6 +91,8 @@ final todas = [...frutas, 'kiwi'];
 
 ## 4. Funciones
 
+> 📂 **En este proyecto:** [parámetros con nombre `required`](../lib/core/widgets/demo_scaffold.dart#L26 "→ required this.explanation") · [función local](../lib/features/basics/layout_screen.dart#L33 "→ Widget box(") · [callbacks como parámetro](../lib/features/advanced/native_channel.dart#L73 "→ Future<void> _call(Future<void> Function(") action) .
+
 ```dart
 int sumar(int a, int b) => a + b;              // arrow function
 
@@ -106,6 +112,8 @@ ejecutar(() => print('¡Hecho!'));
 ---
 
 ## 5. Clases
+
+> 📂 **En este proyecto:** [clase inmutable con `copyWith`](../lib/features/todos/todo.dart#L29 "→ Todo copyWith") · [factory `fromJson`](../lib/features/todos/todo.dart#L44 "→ factory Todo.fromJson") · [`==` y `hashCode`](../lib/features/posts/post.dart#L62 "→ bool operator ==") · [getter](../lib/core/settings/settings_controller.dart#L49 "→ SharedPreferencesWithCache get _prefs") .
 
 ```dart
 class Producto {
@@ -136,6 +144,8 @@ class Producto {
 ```
 
 ### Herencia, interfaces y mixins
+
+> 📂 **En este proyecto:** [`extends` + mixin `with`](../lib/features/advanced/animations_screen.dart#L36 "→ with SingleTickerProviderStateMixin") · [`implements Exception`](../lib/core/network/api_client.dart#L38 "→ class ApiException implements Exception") · [`extends ThemeExtension`](../lib/core/theme/app_theme.dart#L77 "→ class LevelColors extends ThemeExtension") .
 ```dart
 abstract class Animal {
   String hacerSonido();
@@ -157,6 +167,8 @@ class Pato extends Animal with Volador {
 ```
 
 ### Enums
+
+> 📂 **En este proyecto:** [DemoLevel](../lib/features/catalog/demo_catalog.dart#L22 "→ enum DemoLevel") · [TodoFilter](../lib/features/todos/todo.dart#L64 "→ enum TodoFilter") · [buscar un enum por nombre](../lib/core/settings/settings_controller.dart#L60 "→ ThemeMode.values.firstWhere") .
 ```dart
 enum Estado { cargando, exito, error }
 
@@ -171,6 +183,8 @@ switch (e) {
 ---
 
 ## 6. Asincronía: `Future`, `async`, `await`, `Stream`
+
+> 📂 **En este proyecto:** [async/await + try/catch/finally](../lib/features/intermediate/async_screen.dart#L73 "→ Future<void> _load") · [Stream.periodic](../lib/features/intermediate/async_screen.dart#L55 "→ Stream.periodic") · [timeout de un Future](../lib/core/network/api_client.dart#L66 "→ .timeout(_timeout)") · [`async` en main](../lib/main.dart#L41 "→ Future<void> main") .
 
 Todo lo que tarda (internet, base de datos, archivos) es **asíncrono**.
 
@@ -211,6 +225,8 @@ await for (final n in contador()) {
 ## 7. Características modernas de Dart 3
 
 ### Records (tuplas)
+
+> 📂 **En este proyecto:** [devolver un record](../lib/features/todos/todos_controller.dart#L81 "→ (Todo, int)? remove") · [desestructurarlo](../lib/features/todos/todos_screen.dart#L51 "→ final (item, index") = removed) · [records en un Map](../lib/features/catalog/catalog_screen.dart#L37 "→ DemoLevel.basic: (l10n.levelBasic") .
 ```dart
 (String, int) obtenerUsuario() => ('Jean', 30);
 final (nombre, edad) = obtenerUsuario();
@@ -220,6 +236,8 @@ print(ubicacion().lat);
 ```
 
 ### Pattern matching y `switch` como expresión
+
+> 📂 **En este proyecto:** [validar JSON con patrones](../lib/features/posts/post.dart#L40 "→ return switch (json)") · [`switch` sobre un enum](../lib/features/todos/todos_controller.dart#L124 "→ return switch (ref.watch(todoFilterProvider))") · [patrones en un `for`](../lib/features/catalog/catalog_screen.dart#L50 "→ for (final MapEntry(key: level") .
 ```dart
 String describir(Object valor) => switch (valor) {
       int n when n < 0 => 'Negativo',
@@ -230,6 +248,8 @@ String describir(Object valor) => switch (valor) {
 ```
 
 ### Sealed classes (ideal para estados de pantalla)
+
+> 📂 **En este proyecto:** `AsyncValue` de Riverpod es una sealed class (`AsyncData`, `AsyncError`, `AsyncLoading`); se usa en [PostsScreen](../lib/features/posts/posts_screens.dart#L54 "→ child: postsAsync.when(") .
 ```dart
 sealed class Resultado {}
 class Cargando extends Resultado {}
@@ -244,7 +264,7 @@ String mostrar(Resultado r) => switch (r) {
 ```
 
 ### Dot shorthands (atajos con punto)
-Desde Dart 3.10 puedes omitir el nombre del tipo cuando el contexto ya lo indica. El `main.dart` de este proyecto lo usa:
+Desde Dart 3.10 puedes omitir el nombre del tipo cuando el contexto ya lo indica. La plantilla de `flutter create` los usa; en esta guía se escribe el nombre completo (`MainAxisAlignment.center`) para que sea más fácil de leer al aprender:
 ```dart
 colorScheme: .fromSeed(seedColor: Colors.deepPurple), // = ColorScheme.fromSeed(...)
 mainAxisAlignment: .center,                           // = MainAxisAlignment.center
@@ -264,6 +284,8 @@ import '../widgets/boton.dart';                // ruta relativa
 ---
 
 ## 9. Convenciones de estilo
+
+> 📂 **En este proyecto:** las reglas de estilo están en [analysis_options.yaml](../analysis_options.yaml); `flutter analyze` las comprueba y la [CI](../.github/workflows/flutter-ci.yml#L41 "→ dart format") verifica el formato en cada push.
 
 | Elemento | Estilo | Ejemplo |
 |---|---|---|

@@ -1,47 +1,58 @@
 # 📁 `lib/` — El código de tu app
 
-> Volver al [índice](../README.md) · Guía completa: [06 · Construir la app](../docs/06-construir-la-app.md)
+> Volver al [índice](../README.md) · Guías: [06 · Construir la app](../docs/06-construir-la-app.md) · [10 · Funcionalidades](../docs/10-funcionalidades-de-la-app.md) · [11 · Configuraciones avanzadas](../docs/11-configuraciones-avanzadas.md)
 
-Aquí vive **todo el código Dart** de la aplicación. Es la carpeta donde pasarás la mayor parte del tiempo. El mismo código se compila para **iOS y Android**.
+Aquí vive **todo el código Dart** de la aplicación. El mismo código se compila para **iOS y Android**.
 
-## Qué hay ahora
-
-| Archivo | Qué contiene |
-|---|---|
-| [`main.dart`](main.dart) | `main()` → `runApp(MyApp())`, el tema y la pantalla del contador. Comentado línea por línea |
-
-## Cómo organizarla a medida que crece
+## Estructura (organización *feature-first*)
 
 ```
 lib/
-├── main.dart          # Solo: void main() => runApp(const App());
-├── app.dart           # MaterialApp: tema, rutas, idioma
-├── screens/           # Pantallas completas      → home_screen.dart, login_screen.dart
-├── widgets/           # Piezas reutilizables     → producto_card.dart, boton_primario.dart
-├── models/            # Clases de datos          → producto.dart, usuario.dart
-├── services/          # API, BD, almacenamiento  → api_service.dart, auth_service.dart
-├── providers/         # Estado (Riverpod/Bloc)   → carrito_provider.dart
-└── utils/             # Constantes, tema, helpers → constants.dart, theme.dart
+├── main.dart              Arranque: carga preferencias, ProviderScope, runApp
+├── app.dart               MaterialApp.router: tema, idioma, rutas
+├── core/                  Infraestructura compartida (no depende de features/)
+│   ├── config/env.dart        Variables --dart-define (API_URL, FLAVOR…)
+│   ├── network/api_client.dart Cliente HTTP con timeout y errores tipados
+│   ├── router/                go_router: rutas (routes.dart) y configuración (app_router.dart)
+│   ├── settings/              Tema e idioma persistidos (Riverpod Notifier)
+│   ├── storage/               shared_preferences + provider inyectable
+│   ├── theme/                 ThemeData claro/oscuro + ThemeExtension propia
+│   └── widgets/               DemoScaffold y DemoSection (reutilizables)
+├── features/              Una carpeta por funcionalidad
+│   ├── catalog/               Pestaña "Ejemplos": datos y pantalla del catálogo
+│   ├── shell/                 Barra de navegación inferior (pestañas)
+│   ├── basics/                Demos básicas: contador, layout, widgets, listas
+│   ├── intermediate/          Formularios, navegación, asincronía, idiomas
+│   ├── posts/                 API REST: modelo, repositorio + providers, pantallas
+│   ├── advanced/              Animaciones, responsive, código nativo, isolates
+│   ├── auth/                  Sesión simulada + pantallas login/privada
+│   ├── todos/                 Pestaña "Tareas": modelo, controller, pantalla
+│   └── settings/              Pestaña "Ajustes"
+└── l10n/                  Traducciones
+    ├── app_es.arb / app_en.arb   ← los editas tú
+    └── app_localizations*.dart   ← generados por `flutter gen-l10n` (no editar)
 ```
 
-Para proyectos grandes: organización **por funcionalidad** (`lib/features/<nombre>/{data,domain,presentation}`). Ver [docs/06, sección 2](../docs/06-construir-la-app.md#2-cómo-organizar-lib).
+Mapa de cada demo con enlaces a las líneas: [docs/10](../docs/10-funcionalidades-de-la-app.md).
 
 ## Reglas
 
 - Nombres de archivo en `snake_case.dart`; clases en `UpperCamelCase`.
-- Una pantalla o widget grande por archivo.
-- Importa tus archivos con el nombre del paquete:
+- `features/` puede importar `core/`; `core/` no importa `features/` (excepto el router, que conecta las pantallas).
+- La lógica (providers, repositorios) va separada de la interfaz (pantallas): así se puede probar sin UI.
+- Importa con el nombre del paquete:
   ```dart
-  import 'package:mi_primera_app/screens/home_screen.dart';
+  import 'package:mi_primera_app/core/router/routes.dart';
   ```
 - Los archivos o clases que empiezan por `_` son privados (solo visibles en su archivo).
-- Código generado (`*.g.dart`, `*.freezed.dart`) no se edita a mano: se regenera con `dart run build_runner build`.
+- Código generado (`app_localizations*.dart`, `*.g.dart`, `*.freezed.dart`) no se edita a mano.
 
 ## Comandos relacionados
 
 ```bash
-flutter run          # ejecutar (r = hot reload, R = hot restart)
-flutter analyze      # revisar errores en lib/
-dart format lib      # formatear
-dart fix --apply     # aplicar correcciones automáticas
+flutter run                  # ejecutar (r = hot reload, R = hot restart)
+flutter analyze              # revisar errores en lib/
+dart format lib              # formatear
+dart fix --apply             # aplicar correcciones automáticas
+flutter gen-l10n             # regenerar traducciones tras editar los .arb
 ```

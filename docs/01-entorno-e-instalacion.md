@@ -84,6 +84,8 @@ Salida esperada de `flutter doctor`:
 
 ## 4. Consejos específicos para Apple Silicon (M1/M2/M3…)
 
+> 📂 **En este proyecto:** la memoria de Gradle está en [android/gradle.properties](../android/gradle.properties#L1 "→ org.gradle.jvmargs") .
+
 - **Emuladores Android**: usa siempre imágenes **ARM64 (`arm64-v8a`)**. Las `x86_64` no arrancan o van lentísimas.
 - **Rosetta 2** ya está instalado; algunas herramientas antiguas lo necesitan. Si alguna vez lo pide:
   ```bash

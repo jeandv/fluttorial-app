@@ -27,7 +27,7 @@ No abras `Runner.xcodeproj`: el workspace incluye las dependencias (Swift Packag
 
 | Archivo | Qué es |
 |---|---|
-| [`Runner/AppDelegate.swift`](Runner/AppDelegate.swift) | Punto de entrada nativo; registra plugins |
+| [`Runner/AppDelegate.swift`](Runner/AppDelegate.swift) | Punto de entrada nativo; [registra plugins](../ios/Runner/AppDelegate.swift#L38 "→ GeneratedPluginRegistrant.register") y, **en este proyecto, un `MethodChannel`** en [setMethodCallHandler](../ios/Runner/AppDelegate.swift#L46 "→ channel.setMethodCallHandler") (demo *Código nativo*) |
 | [`Runner/SceneDelegate.swift`](Runner/SceneDelegate.swift) | Gestión de la ventana |
 | `Runner/Base.lproj/Main.storyboard` | Contenedor de la vista de Flutter |
 | `Runner/GeneratedPluginRegistrant.*` | Generado por Flutter; no editar |

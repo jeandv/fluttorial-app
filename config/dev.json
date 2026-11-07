@@ -1,0 +1,5 @@
+{
+  "FLAVOR": "dev",
+  "API_URL": "https://jsonplaceholder.typicode.com",
+  "SHOW_DEBUG_BANNER": true
+}

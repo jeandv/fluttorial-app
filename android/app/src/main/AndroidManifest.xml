@@ -19,15 +19,16 @@
     <!--
       PERMISOS: van aquí, ANTES de <application>. Ejemplos:
 
-      ⚠️ INTERNET: en debug ya viene (src/debug/AndroidManifest.xml), pero en
-      RELEASE hay que declararlo aquí si la app usa la red. Descomenta cuando
-      tu app consuma una API:
-      <uses-permission android:name="android.permission.INTERNET"/>
-
       <uses-permission android:name="android.permission.CAMERA"/>
       <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
       <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     -->
+
+    <!-- INTERNET: en debug ya viene (src/debug/AndroidManifest.xml), pero en
+         RELEASE hay que declararlo aquí. Esta app lo necesita para la demo
+         "API REST" (lib/features/posts/). Sin esta línea, la versión publicada
+         no podría conectarse a internet. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:label="Mi Primera App"

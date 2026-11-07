@@ -24,6 +24,8 @@
 ## 2. Identidad de la app
 
 ### Nombre visible (el que aparece bajo el icono)
+
+> 📂 **En este proyecto:** [android:label](../android/app/src/main/AndroidManifest.xml#L34 "→ android:label=") · [CFBundleDisplayName](../ios/Runner/Info.plist#L9 "→ CFBundleDisplayName") .
 | Plataforma | Archivo | Campo |
 |---|---|---|
 | Android | [`android/app/src/main/AndroidManifest.xml`](../android/app/src/main/AndroidManifest.xml) | `android:label="Mi Primera App"` |
@@ -38,6 +40,8 @@
 > Para renombrar el ID en todos los sitios a la vez existe el paquete `change_app_package_name` (dev). Hazlo **antes** de publicar.
 
 ### Versión → [`pubspec.yaml`](../pubspec.yaml)
+
+> 📂 **En este proyecto:** [version: 1.0.0+1](../pubspec.yaml#L32 "→ version: 1.0.0+1") → usado en [versionCode/versionName](../android/app/build.gradle.kts#L56 "→ versionCode = flutter.versionCode") .
 ```yaml
 version: 1.2.0+7
 #        │ │ │ └─ build number: entero que SIEMPRE debe subir en cada subida a la tienda
@@ -99,6 +103,9 @@ storeFile=/Users/jeanrondon/upload-keystore.jks
 ```
 
 ### 3.3 Configurar `android/app/build.gradle.kts`
+
+> 📂 **En este proyecto:** ⚠️ pendiente: ahora se firma con la clave de debug → [ver línea a cambiar](../android/app/build.gradle.kts#L66 "→ signingConfig = signingConfigs.getByName(") .
+
 Arriba del archivo:
 ```kotlin
 import java.util.Properties
@@ -128,6 +135,9 @@ buildTypes {
 ```
 
 ### 3.4 Permiso de internet en release
+
+> 📂 **En este proyecto:** ✅ ya está añadido: [ver línea](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") .
+
 En [`android/app/src/main/AndroidManifest.xml`](../android/app/src/main/AndroidManifest.xml), antes de `<application>`:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>

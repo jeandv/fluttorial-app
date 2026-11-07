@@ -6,6 +6,8 @@
 
 ## 1. Rutina antes de cada commit
 
+> 📂 **En este proyecto:** GitHub ejecuta esta misma rutina en cada push: [flutter-ci.yml](../.github/workflows/flutter-ci.yml#L47 "→ run: flutter test") .
+
 ```bash
 dart format .        # 1. formatear
 flutter analyze      # 2. sin errores ni advertencias
@@ -33,6 +35,8 @@ Proporción recomendada: muchas unitarias, bastantes de widget, pocas de integra
 
 ## 3. Prueba unitaria
 
+> 📂 **En este proyecto:** [lógica de tareas con ProviderContainer](../test/features/todos/todos_controller_test.dart#L26 "→ ProviderContainer createContainer") · [función pura](../test/features/advanced/isolates_test.dart#L14 "→ countPrimes cuenta") · [modelo JSON](../test/features/posts/posts_repository_test.dart#L30 "→ group('Post.fromJson'") .
+
 ```dart
 // test/models/carrito_test.dart
 import 'package:flutter_test/flutter_test.dart';
@@ -55,6 +59,8 @@ void main() {
 ---
 
 ## 4. Prueba de widget
+
+> 📂 **En este proyecto:** [pantalla suelta](../test/widget_test.dart#L30 "→ el contador empieza en 0") · [app completa navegando entre pestañas](../test/widget_test.dart#L67 "→ arranca en el catálogo") · [helper pumpApp](../test/helpers/test_helpers.dart#L41 "→ Future<void> pumpApp") .
 
 Ver el ejemplo real comentado en [`test/widget_test.dart`](../test/widget_test.dart).
 
@@ -109,6 +115,8 @@ Ver el ejemplo real comentado en [`test/widget_test.dart`](../test/widget_test.d
 
 ## 6. Simular dependencias (mocks)
 
+> 📂 **En este proyecto:** sin paquetes extra: [MockClient de http](../test/features/posts/posts_repository_test.dart#L26 "→ ApiClient fakeApi") + [override de un provider](../test/features/posts/posts_repository_test.dart#L88 "→ apiClientProvider.overrideWithValue") + [almacenamiento en memoria](../test/helpers/test_helpers.dart#L36 "→ InMemorySharedPreferencesAsync.withData") .
+
 Para probar código que llama a una API sin usar internet:
 ```bash
 flutter pub add --dev mocktail
@@ -136,6 +144,8 @@ open coverage/html/index.html
 
 ## 8. Linter (`analysis_options.yaml`)
 
+> 📂 **En este proyecto:** [analysis_options.yaml](../analysis_options.yaml#L19 "→ include: package:flutter_lints") .
+
 El archivo [`analysis_options.yaml`](../analysis_options.yaml) activa las reglas de `flutter_lints`. Puedes añadir reglas extra:
 
 ```yaml
@@ -161,6 +171,8 @@ Catálogo de reglas: [dart.dev/lints](https://dart.dev/lints). Paquete con regla
 ---
 
 ## 9. Buenas prácticas de rendimiento
+
+> 📂 **En este proyecto:** [ListView.builder](../lib/features/basics/lists_screen.dart#L58 "→ ListView.builder(") · [child reutilizado en AnimatedBuilder](../lib/features/advanced/animations_screen.dart#L181 "→ child: const FlutterLogo") · [Future creado en initState](../lib/features/intermediate/async_screen.dart#L53 "→ _luckyNumber = _fetchLuckyNumber()") · [.select de Riverpod](../lib/features/todos/todos_screen.dart#L73 "→ todosProvider.select") · [isolates para CPU](../lib/features/advanced/isolates_screen.dart#L73 "→ await compute(countPrimes") .
 
 - Usa `const` en todos los widgets que no cambian.
 - Usa `ListView.builder` (no `ListView(children: [...])`) para listas largas.

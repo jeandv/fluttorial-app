@@ -11,12 +11,22 @@ Cuando ejecutas `flutter create mi_primera_app`, Flutter genera un proyecto con 
 ```
 mi_primera_app/
 ├── lib/                    ⭐ TU CÓDIGO DART (la app en sí)
-│   └── main.dart           ⭐ Punto de entrada: aquí arranca la app
+│   ├── main.dart           ⭐ Punto de entrada: aquí arranca la app
+│   ├── app.dart            ⭐ MaterialApp: tema, idioma y rutas
+│   ├── core/               ⭐ Infraestructura: router, tema, red, almacenamiento
+│   ├── features/           ⭐ Una carpeta por funcionalidad (demos, tareas, ajustes…)
+│   └── l10n/               🌍 Traducciones (.arb) + código generado
 ├── test/                   ⭐ Pruebas automáticas (unitarias y de widgets)
-│   └── widget_test.dart
+│   ├── widget_test.dart
+│   ├── features/           (mismas carpetas que lib/features)
+│   └── helpers/            (utilidades compartidas por los tests)
 ├── pubspec.yaml            ⭐ Configuración: nombre, versión, dependencias, assets, fuentes
 ├── pubspec.lock            🔒 Versiones exactas instaladas (generado, se sube a git)
 ├── analysis_options.yaml   🔍 Reglas del analizador / linter
+├── l10n.yaml               🌍 Configuración de `flutter gen-l10n`
+├── config/                 ⚙️ Variables por entorno (dev.json, prod.json) para --dart-define
+├── tool/                   🛠️ Scripts propios (update_doc_links.dart)
+├── .github/workflows/      🤖 Integración continua (tests en cada push a GitHub)
 ├── docs/                   📚 Esta guía
 ├── android/                🤖 Proyecto nativo Android (Gradle/Kotlin)
 ├── ios/                    🍎 Proyecto nativo iOS (Xcode/Swift)
@@ -40,15 +50,21 @@ Leyenda: ⭐ editas a menudo · 🔒/⚙️/🏗️ generado automáticamente ·
 ## 2. Carpetas y archivos principales (los que tocas a diario)
 
 ### `lib/` — tu aplicación
+
+> 📂 **En este proyecto:** arranque en [main.dart](../lib/main.dart#L41 "→ Future<void> main") · configuración global en [app.dart](../lib/app.dart#L30 "→ class MyApp") · infraestructura en [lib/core/](../lib/core/) · funcionalidades en [lib/features/](../lib/features/) · traducciones en [lib/l10n/](../lib/l10n/). Mapa completo: [docs/11 §0](11-configuraciones-avanzadas.md#0-arquitectura-del-proyecto).
 Todo el código Dart de la app. Flutter compila **solo** lo que está aquí (y en paquetes). Guía detallada: [lib/README.md](../lib/README.md).
 
 - `lib/main.dart` → contiene `void main()` que llama a `runApp(...)`. Es lo primero que se ejecuta.
 - A medida que la app crece, se organiza en subcarpetas (pantallas, widgets, modelos, servicios…). Ver estructura recomendada en [06 · Construir la app](06-construir-la-app.md#2-cómo-organizar-lib).
 
 ### `test/` — pruebas
+
+> 📂 **En este proyecto:** [widget_test.dart](../test/widget_test.dart) (pantallas y app completa) · [todos_controller_test.dart](../test/features/todos/todos_controller_test.dart) (lógica) · [posts_repository_test.dart](../test/features/posts/posts_repository_test.dart) (red falsa) · [test_helpers.dart](../test/helpers/test_helpers.dart) (utilidades).
 Archivos que terminan en `_test.dart`. Se ejecutan con `flutter test`. Guía: [test/README.md](../test/README.md).
 
 ### `pubspec.yaml` — el "package.json" de Flutter
+
+> 📂 **En este proyecto:** [versión](../pubspec.yaml#L32 "→ version: 1.0.0+1") · [dependencias](../pubspec.yaml#L52 "→ dependencies:") · [dependencias de desarrollo](../pubspec.yaml#L91 "→ dev_dependencies:") · [generación de traducciones](../pubspec.yaml#L147 "→ generate: true") .
 Define:
 - `name`, `description`, `version` (ej. `1.0.0+1` → versión `1.0.0`, build `1`).
 - `environment.sdk` → versión de Dart compatible.
@@ -64,6 +80,8 @@ Después de editarlo: `flutter pub get` (VS Code lo hace solo al guardar).
 Versiones **exactas** que se instalaron. No se edita a mano. Para apps **sí se sube a git** (asegura que todos compilan con las mismas versiones).
 
 ### `analysis_options.yaml`
+
+> 📂 **En este proyecto:** [reglas incluidas](../analysis_options.yaml#L19 "→ include: package:flutter_lints") · [carpetas excluidas](../analysis_options.yaml#L23 "→ exclude:") .
 Reglas de estilo y errores que revisa `flutter analyze` y el editor. Incluye `flutter_lints` (reglas recomendadas).
 
 ---
@@ -73,6 +91,8 @@ Reglas de estilo y errores que revisa `flutter analyze` y el editor. Incluye `fl
 Flutter genera un **proyecto nativo real** para cada plataforma. Ese proyecto "envuelve" tu código Dart. Las tocas para: nombre visible de la app, icono, permisos, firma, ID de la app, configuración nativa de plugins.
 
 ### `android/` — proyecto Android (Gradle + Kotlin)
+
+> 📂 **En este proyecto:** [applicationId](../android/app/build.gradle.kts#L42 "→ applicationId =") · [nombre visible](../android/app/src/main/AndroidManifest.xml#L34 "→ android:label=") · [permiso INTERNET](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") · [canal nativo en Kotlin](../android/app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt#L30 "→ override fun configureFlutterEngine") .
 Guía detallada: [android/README.md](../android/README.md).
 
 | Ruta | Para qué |
@@ -89,6 +109,8 @@ Guía detallada: [android/README.md](../android/README.md).
 | `android/.gradle/`, `android/app/build/` | Cachés de compilación (generados) |
 
 ### `ios/` — proyecto iOS (Xcode + Swift)
+
+> 📂 **En este proyecto:** [nombre visible](../ios/Runner/Info.plist#L9 "→ CFBundleDisplayName") · [canal nativo en Swift](../ios/Runner/AppDelegate.swift#L35 "→ func didInitializeImplicitFlutterEngine") · [registro de plugins](../ios/Runner/AppDelegate.swift#L38 "→ GeneratedPluginRegistrant.register") .
 Guía detallada: [ios/README.md](../ios/README.md).
 
 | Ruta | Para qué |
@@ -134,6 +156,8 @@ Todas están en [`.gitignore`](../.gitignore).
 ---
 
 ## 5. Carpetas que **tú** creas normalmente
+
+> 📂 **En este proyecto:** además de `lib/core` y `lib/features`, se crearon [config/](../config/) (variables por entorno), [lib/l10n/](../lib/l10n/) + [l10n.yaml](../l10n.yaml) (traducciones), [tool/](../tool/) (scripts propios) y [.github/workflows/](../.github/workflows/flutter-ci.yml) (integración continua).
 
 ```
 mi_primera_app/

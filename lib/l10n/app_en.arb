@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "My First App",
+
+  "tabExamples": "Examples",
+  "tabTodos": "Tasks",
+  "tabSettings": "Settings",
+
+  "levelBasic": "Basic",
+  "levelIntermediate": "Intermediate",
+  "levelAdvanced": "Advanced",
+
+  "greeting": "Hello, {name}!",
+
+  "todosPending": "{count, plural, =0{You have no pending tasks} =1{You have 1 pending task} other{You have {count} pending tasks}}",
+
+  "todayIs": "Today is {date}",
+
+  "settingsTheme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsLanguage": "Language",
+  "languageSystem": "System language",
+
+  "todosHint": "What do you need to do?",
+  "todosAdd": "Add",
+  "todosEmpty": "No tasks here. Add one above!",
+  "todosDeleted": "Task deleted",
+  "undo": "Undo"
+}

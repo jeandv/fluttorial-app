@@ -60,9 +60,9 @@ flutter run -d all                                  # todos a la vez
 5. Se queda escuchando para **hot reload**.
 
 ### Paso 5 — Desarrollar con hot reload
-1. Abre [`lib/main.dart`](../lib/main.dart).
-2. Cambia un texto o un color.
-3. Guarda y pulsa **`r`** en la terminal → el cambio aparece en ~1 segundo.
+1. En la app, entra en **Ejemplos → Contador** y suma unas cuantas veces.
+2. Abre [counter_screen.dart](../lib/features/basics/counter_screen.dart#L120 "→ _count > 10 ? Colors.red") y cambia `Colors.red` por `Colors.green` (o el [color del tema](../lib/core/theme/app_theme.dart#L29 "→ static const seed = Colors.indigo") por `Colors.teal`).
+3. Guarda y pulsa **`r`** en la terminal → el cambio aparece en ~1 segundo **y el contador conserva su valor**.
 4. Si algo no se actualiza, pulsa **`R`** (hot restart).
 5. Para terminar: **`q`**.
 
@@ -155,6 +155,8 @@ Este proyecto incluye [`.vscode/launch.json`](../.vscode/launch.json) con perfil
 
 ## 7. Herramientas de depuración
 
+> 📂 **En este proyecto:** [debugPrint en initState](../lib/features/basics/counter_screen.dart#L61 "→ debugPrint('CounterScreen.initState')") · [logs de navegación de go_router](../lib/core/router/app_router.dart#L74 "→ debugLogDiagnostics: true") · [errores nativos capturados](../lib/features/advanced/native_channel.dart#L77 "→ on PlatformException catch") .
+
 | Herramienta | Cómo abrirla | Para qué |
 |---|---|---|
 | **`print()` / `debugPrint()`** | En el código | Mensajes en la terminal |
@@ -193,6 +195,8 @@ Este proyecto incluye [`.vscode/launch.json`](../.vscode/launch.json) con perfil
 ---
 
 ## 9. Variables de entorno al ejecutar (`--dart-define`)
+
+> 📂 **En este proyecto:** [env.dart](../lib/core/config/env.dart#L34 "→ static const apiBaseUrl") · [config/dev.json](../config/dev.json) · [perfil de VS Code con variables](../.vscode/launch.json#L61 "→ --dart-define=API_URL") · se muestran en [Ajustes](../lib/features/settings/settings_screen.dart#L102 "→ Env.flavor") .
 
 ```bash
 flutter run --dart-define=API_URL=https://dev.miapi.com --dart-define=DEBUG_LOGS=true
