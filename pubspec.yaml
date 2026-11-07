@@ -1,0 +1,121 @@
+# ============================================================================
+# pubspec.yaml — CONFIGURACIÓN PRINCIPAL DEL PROYECTO
+# ============================================================================
+# Es el equivalente a package.json (Node) o build.gradle (Android) para Flutter.
+# Aquí defines: nombre, versión, dependencias, assets (imágenes) y fuentes.
+#
+# ⚠️ YAML depende de la INDENTACIÓN (2 espacios, nunca tabuladores).
+#    Un espacio de más o de menos rompe el archivo.
+#
+# Después de editarlo ejecuta:  flutter pub get
+# (VS Code y Android Studio lo hacen solos al guardar).
+#
+# 📚 Más: docs/02-estructura-del-proyecto.md y docs/06-construir-la-app.md
+# ============================================================================
+
+# Nombre del paquete. Se usa en los imports: package:mi_primera_app/...
+# Solo minúsculas, números y guiones bajos. NO es el nombre visible de la app
+# (ese está en AndroidManifest.xml → android:label e Info.plist →
+# CFBundleDisplayName).
+name: mi_primera_app
+description: "Mi primera app Flutter: proyecto guía para aprender a crear apps para iOS y Android."
+
+# Evita publicar este proyecto por accidente en pub.dev con `flutter pub publish`.
+# Las apps nunca se publican en pub.dev (solo los paquetes reutilizables).
+publish_to: 'none'
+
+# VERSIÓN DE LA APP: <versión visible>+<número de build>
+#   1.0.0 → versión que ve el usuario      (Android: versionName  · iOS: CFBundleShortVersionString)
+#   1     → número de build interno         (Android: versionCode  · iOS: CFBundleVersion)
+# El número de build DEBE aumentar en cada subida a Google Play / App Store.
+# Se puede sobrescribir al compilar: flutter build ipa --build-name=1.2.0 --build-number=7
+version: 1.0.0+1
+
+# Versión de Dart compatible con este proyecto (^3.13.7 = >=3.13.7 <4.0.0).
+environment:
+  sdk: ^3.13.7
+
+# ----------------------------------------------------------------------------
+# DEPENDENCIAS: paquetes que la app necesita para funcionar (se incluyen en la
+# app final). Se buscan en https://pub.dev
+#
+#   Añadir:      flutter pub add <paquete>        (ej. flutter pub add http)
+#   Quitar:      flutter pub remove <paquete>
+#   Actualizar:  flutter pub upgrade
+#   Ver nuevas:  flutter pub outdated
+#
+# Formato de versiones:
+#   ^1.2.3  → cualquier versión compatible >=1.2.3 <2.0.0 (lo habitual)
+#   1.2.3   → exactamente esa versión
+#   any     → cualquiera (evítalo)
+# ----------------------------------------------------------------------------
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Iconos estilo iOS. Se usan con la clase CupertinoIcons (ej. CupertinoIcons.heart).
+  cupertino_icons: ^1.0.8
+
+  # Ejemplos de dependencias habituales. Las versiones son orientativas: mejor
+  # usa `flutter pub add <paquete>`, que añade automáticamente la última versión.
+  # http: ^1.2.0                 # peticiones HTTP
+  # go_router: ^14.0.0           # navegación entre pantallas
+  # flutter_riverpod: ^2.5.0     # gestión de estado
+  # shared_preferences: ^2.2.0   # guardar datos simples en el dispositivo
+
+# ----------------------------------------------------------------------------
+# DEPENDENCIAS DE DESARROLLO: solo se usan al programar (tests, lints,
+# generadores de código). NO se incluyen en la app final.
+#   Añadir: flutter pub add --dev <paquete>
+# ----------------------------------------------------------------------------
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Reglas recomendadas de estilo/calidad. Se activan en analysis_options.yaml
+  # y se revisan con `flutter analyze`.
+  flutter_lints: ^6.0.0
+
+  # Ejemplos habituales (versiones orientativas; usa `flutter pub add --dev`):
+  # flutter_launcher_icons: ^0.14.0   # generar iconos de la app
+  # flutter_native_splash: ^2.4.0     # pantalla de carga nativa
+  # build_runner: ^2.4.0              # generación de código
+  # mocktail: ^1.0.0                  # mocks para tests
+
+# Más información sobre este archivo: https://dart.dev/tools/pub/pubspec
+
+# ----------------------------------------------------------------------------
+# SECCIÓN ESPECÍFICA DE FLUTTER: assets, fuentes y Material Design.
+# ⚠️ Tras añadir assets o fuentes: flutter pub get + hot restart (R).
+# ----------------------------------------------------------------------------
+flutter:
+
+  # Incluye la fuente de iconos de Material (clase Icons: Icons.add, Icons.home…).
+  uses-material-design: true
+
+  # ASSETS (imágenes, JSON, etc.). Crea la carpeta y descomenta:
+  # assets:
+  #   - assets/images/              # carpeta completa (no incluye subcarpetas)
+  #   - assets/data/config.json     # un archivo concreto
+  #
+  # Uso en Dart:  Image.asset('assets/images/logo.png')
+  #
+  # Variantes por densidad de pantalla: guarda la misma imagen en
+  # assets/images/2.0x/logo.png y assets/images/3.0x/logo.png y Flutter elegirá
+  # la adecuada. Más: https://flutter.dev/to/resolution-aware-images
+
+  # FUENTES personalizadas. Coloca los .ttf/.otf en assets/fonts/ y descomenta:
+  # fonts:
+  #   - family: Poppins                 # nombre que usarás en TextStyle(fontFamily: 'Poppins')
+  #     fonts:
+  #       - asset: assets/fonts/Poppins-Regular.ttf
+  #       - asset: assets/fonts/Poppins-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Poppins-Italic.ttf
+  #         style: italic
+  #
+  # Más: https://flutter.dev/to/font-from-package
+
+  # TRADUCCIONES: descomenta para generar código a partir de archivos .arb
+  # (ver docs/06-construir-la-app.md, sección 12).
+  # generate: true

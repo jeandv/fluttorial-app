@@ -1,0 +1,49 @@
+# ============================================================================
+# analysis_options.yaml — REGLAS DEL ANALIZADOR Y DEL LINTER
+# ============================================================================
+# El analizador de Dart revisa tu código SIN ejecutarlo y avisa de:
+#   - errores     (el código no compila)
+#   - warnings    (probables bugs)
+#   - lints       (estilo y buenas prácticas)
+#
+# Dónde ves los avisos:
+#   - En el editor (subrayados en VS Code / Android Studio, pestaña "Problems").
+#   - En la terminal:  flutter analyze
+#   - Correcciones automáticas:  dart fix --dry-run   /   dart fix --apply
+#
+# 📚 Más: docs/07-pruebas-y-calidad.md · Catálogo de reglas: https://dart.dev/lints
+# ============================================================================
+
+# Activa el conjunto de reglas recomendado para apps Flutter (paquete
+# flutter_lints, declarado en dev_dependencies de pubspec.yaml).
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  # Carpetas que el analizador NO revisa (código generado o nativo).
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+    # Si usas generación de código (json_serializable, freezed…), suele añadirse:
+    # - "**/*.g.dart"
+    # - "**/*.freezed.dart"
+
+linter:
+  # Aquí activas (true) o desactivas (false) reglas concretas además de las
+  # incluidas arriba.
+  #
+  # Para ignorar una regla solo en una línea o un archivo, en el código Dart:
+  #   // ignore: nombre_de_la_regla
+  #   // ignore_for_file: nombre_de_la_regla
+  rules:
+    # avoid_print: false               # permitir print() (desactivado por defecto en flutter_lints)
+    # prefer_single_quotes: true       # obligar a usar 'comillas simples'
+    # prefer_const_constructors: true  # sugerir const siempre que se pueda
+    # require_trailing_commas: true    # comas finales para un mejor formato
+    # always_declare_return_types: true
+
+# Más información: https://dart.dev/tools/analysis

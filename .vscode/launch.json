@@ -1,0 +1,71 @@
+{
+  // ==========================================================================
+  // .vscode/launch.json — PERFILES DE EJECUCIÓN PARA VS CODE
+  // ==========================================================================
+  // Cómo usarlos:
+  //   1. Elige el dispositivo en la barra de estado inferior derecha
+  //      (o Cmd+Shift+P → "Flutter: Select Device").
+  //   2. Abre "Run and Debug" (Cmd+Shift+D) y selecciona un perfil.
+  //   3. Pulsa F5. Al guardar un archivo se hace hot reload automático.
+  //
+  // 📚 Más: docs/04-ejecutar-y-simular.md (sección 3)
+  // ==========================================================================
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Modo normal de desarrollo: hot reload, breakpoints, asserts.
+      "name": "Debug",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart"
+    },
+    {
+      // Medir rendimiento real con DevTools (no funciona en el simulador iOS).
+      "name": "Profile",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "profile"
+    },
+    {
+      // Igual que la versión final publicada (no funciona en el simulador iOS).
+      "name": "Release",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "release"
+    },
+    {
+      // Fuerza el simulador iPhone 18 Pro (ID obtenido con `flutter devices`).
+      // Si creas otro simulador, actualiza el deviceId.
+      "name": "iPhone 18 Pro (simulador)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "9BC87A19-417D-4972-99A7-F680A71FD804"
+    },
+    {
+      // Fuerza el emulador Android (debe estar encendido).
+      "name": "Android (emulador)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "emulator-5554"
+    },
+    {
+      // Ejemplo con variables de entorno (--dart-define). Ajusta los valores.
+      "name": "Debug con variables (dart-define)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=API_URL=https://dev.ejemplo.com"]
+    }
+  ],
+  "compounds": [
+    {
+      // Lanza a la vez en iPhone y Android (los dos deben estar encendidos).
+      "name": "iPhone + Android",
+      "configurations": ["iPhone 18 Pro (simulador)", "Android (emulador)"]
+    }
+  ]
+}
