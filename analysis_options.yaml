@@ -28,6 +28,8 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
+    # Retos de aprendizaje: empiezan en rojo a propósito (ver exercises/README.md).
+    - exercises/**
     # Si usas generación de código (json_serializable, freezed…), suele añadirse:
     # - "**/*.g.dart"
     # - "**/*.freezed.dart"

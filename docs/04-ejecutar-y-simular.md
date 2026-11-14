@@ -2,6 +2,10 @@
 
 > Anterior: [03 · Comandos](03-comandos.md) · Volver al [índice](../README.md) · Siguiente: [05 · Dart esencial](05-dart-esencial.md)
 
+> 🎯 **Aprenderás:** encender un simulador o emulador, ejecutar la app con `flutter run` y ver tus cambios al instante con hot reload.
+> 📋 **Necesitas antes:** [01 · Entorno e instalación](01-entorno-e-instalacion.md) y [02 · Estructura del proyecto](02-estructura-del-proyecto.md)
+> ⏱️ **Tiempo:** ~15 min de lectura + ~20 min practicando
+
 Este es el flujo que repetirás cada vez que trabajes en una app: **encender un dispositivo → `flutter run` → editar → hot reload**.
 
 ---
@@ -65,6 +69,8 @@ flutter run -d all                                  # todos a la vez
 3. Guarda y pulsa **`r`** en la terminal → el cambio aparece en ~1 segundo **y el contador conserva su valor**.
 4. Si algo no se actualiza, pulsa **`R`** (hot restart).
 5. Para terminar: **`q`**.
+
+> **Hot reload no basta** cuando cambias `main()`, `initState()`, variables globales/estáticas, `pubspec.yaml`, assets nuevos o código nativo: en esos casos usa `R` o detén y vuelve a ejecutar `flutter run`.
 
 ---
 
@@ -155,7 +161,10 @@ Este proyecto incluye [`.vscode/launch.json`](../.vscode/launch.json) con perfil
 
 ## 7. Herramientas de depuración
 
-> 📂 **En este proyecto:** [debugPrint en initState](../lib/features/basics/counter_screen.dart#L61 "→ debugPrint('CounterScreen.initState')") · [logs de navegación de go_router](../lib/core/router/app_router.dart#L93 "→ debugLogDiagnostics: true") · [errores nativos capturados](../lib/features/advanced/native_channel.dart#L77 "→ on PlatformException catch") .
+> 📂 **En este proyecto:**
+> - [debugPrint en initState](../lib/features/basics/counter_screen.dart#L61 "→ debugPrint('CounterScreen.initState')")
+> - [logs de navegación de go_router](../lib/core/router/app_router.dart#L93 "→ debugLogDiagnostics: true") (→ lo verás en [06 §4](06-construir-la-app.md#4-navegación-entre-pantallas))
+> - [errores nativos capturados](../lib/features/advanced/native_channel.dart#L77 "→ on PlatformException catch")
 
 | Herramienta | Cómo abrirla | Para qué |
 |---|---|---|
@@ -196,7 +205,11 @@ Este proyecto incluye [`.vscode/launch.json`](../.vscode/launch.json) con perfil
 
 ## 9. Variables de entorno al ejecutar (`--dart-define`)
 
-> 📂 **En este proyecto:** [env.dart](../lib/core/config/env.dart#L36 "→ static const apiBaseUrl") · [config/dev.json](../config/dev.json) · [perfil de VS Code con variables](../.vscode/launch.json#L61 "→ --dart-define=API_URL") · se muestran en [Ajustes](../lib/features/settings/settings_screen.dart#L115 "→ Env.flavor") .
+> 📂 **En este proyecto:**
+> - [env.dart](../lib/core/config/env.dart#L36 "→ static const apiBaseUrl")
+> - [config/dev.json](../config/dev.json)
+> - [perfil de VS Code con variables](../.vscode/launch.json#L61 "→ --dart-define=API_URL")
+> - se muestran en [Ajustes](../lib/features/settings/settings_screen.dart#L115 "→ Env.flavor")
 
 ```bash
 flutter run --dart-define=API_URL=https://dev.miapi.com --dart-define=DEBUG_LOGS=true
@@ -206,10 +219,50 @@ En Dart:
 const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'https://miapi.com');
 const debugLogs = bool.fromEnvironment('DEBUG_LOGS');
 ```
-Con archivo:
-```bash
-flutter run --dart-define-from-file=config/dev.json
-```
-```json
-{ "API_URL": "https://dev.miapi.com", "DEBUG_LOGS": true }
-```
+También puedes pasar un archivo con `--dart-define-from-file=config/dev.json`. Todo el detalle (archivos por entorno, flavors, qué no guardar ahí) → lo verás en [docs/11 §6](11-configuraciones-avanzadas.md#6-entornos-con---dart-define).
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Por qué el contador conserva su valor tras un hot reload (`r`) y qué pasa con `R`?
+   <details><summary>Respuesta</summary>
+
+   Hot reload aplica el cambio de código **conservando el estado**; hot restart (`R`) reinicia la app desde `main()` y pierde el estado ([Paso 5](#paso-5--desarrollar-con-hot-reload)).
+
+   </details>
+2. En la salida de `flutter devices`, ¿qué columna usas con `-d` y para qué?
+   <details><summary>Respuesta</summary>
+
+   La **segunda columna**, el ID del dispositivo; sirve para elegir dónde ejecutar con `flutter run -d <id>` ([Paso 3](#paso-3--comprobar-que-flutter-los-ve)).
+
+   </details>
+3. ¿Por qué no debes juzgar el rendimiento de la app en modo debug?
+   <details><summary>Respuesta</summary>
+
+   Porque debug va más lento y con un banner «DEBUG»; para medir usa `--profile` en un dispositivo real ([sección 5](#5-modos-de-compilación)).
+
+   </details>
+4. ¿Qué haces si ves «Waiting for another flutter command to release the startup lock...»?
+   <details><summary>Respuesta</summary>
+
+   **Esperas**: otra ventana de `flutter` está descargando y no es un error ([sección 2](#2--la-primera-ejecución-es-lenta-normal)).
+
+   </details>
+5. ¿Qué modos de ejecución no tienen hot reload?
+   <details><summary>Respuesta</summary>
+
+   `--profile` y `--release`; solo debug lo tiene ([sección 5](#5-modos-de-compilación)).
+
+   </details>
+
+## 🏋️ Reto
+
+**Hot reload vs hot restart.** Cambia un texto de [counter_screen.dart](../lib/features/basics/counter_screen.dart) y guarda (hot reload); luego cambia algo en `main()` y observa por qué `r` no basta (usa `R`).
+
+- ✅ **Cómo saber que lo lograste:** el texto cambia con `r` conservando el valor del contador, y el cambio en `main()` solo aparece tras `R`.
+- 💡 **Pista:** `main()` está en [lib/main.dart](../lib/main.dart#L41 "→ Future<void> main"); mira la nota «Hot reload no basta» del Paso 5.
+
+## ➡️ Siguiente paso
+
+Continúa con **[05 · Dart esencial](05-dart-esencial.md)**: ya puedes ejecutar la app, ahora aprende el lenguaje con el que está escrita. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

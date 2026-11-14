@@ -2,6 +2,10 @@
 
 > Anterior: [02 · Estructura](02-estructura-del-proyecto.md) · Volver al [índice](../README.md) · Siguiente: [04 · Ejecutar y simular](04-ejecutar-y-simular.md)
 
+> 📖 **Documento de consulta:** no se lee de corrido; ábrelo cuando lo necesites.
+> 🎯 **Te sirve para:** buscar un comando de Flutter, Dart, Xcode o Android por nivel de uso, o repasar la chuleta de los 15 imprescindibles.
+> 🧭 **Ruta de aprendizaje:** [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md)
+
 Todos los comandos `flutter ...` se ejecutan **dentro de la carpeta del proyecto** (donde está `pubspec.yaml`), salvo `flutter create`, `flutter doctor`, `flutter upgrade` y similares.
 
 ```bash
@@ -19,7 +23,12 @@ flutter help -v           # incluye opciones poco comunes
 
 ## 🥇 Nivel 1 — Los que usarás todos los días
 
-> 📂 **En este proyecto:** `flutter test` ejecuta [estas pruebas](../test/) · `flutter analyze` aplica [estas reglas](../analysis_options.yaml) · los paquetes de `flutter pub add` quedan en [pubspec.yaml](../pubspec.yaml#L52 "→ dependencies:") .
+> 📂 **En este proyecto:**
+> - `flutter test` ejecuta [estas pruebas](../test/)
+> - `flutter analyze` aplica [estas reglas](../analysis_options.yaml)
+> - los paquetes de `flutter pub add` quedan en [pubspec.yaml](../pubspec.yaml#L52 "→ dependencies:")
+
+El flujo completo (encender dispositivos, ejecutar, hot reload) se explica en [04 · Ejecutar y simular](04-ejecutar-y-simular.md); aquí solo tienes las tablas de comandos.
 
 | Comando | Qué hace |
 |---|---|
@@ -53,7 +62,7 @@ flutter help -v           # incluye opciones poco comunes
 | `w` | Imprime el árbol de widgets en la terminal |
 | `t` | Imprime el árbol de renderizado |
 
-> **Hot reload no basta** cuando cambias: `main()`, `initState()`, variables globales/estáticas, `pubspec.yaml`, assets nuevos o código nativo. En esos casos usa `R` o detén y vuelve a ejecutar.
+> **Hot reload no basta** en algunos cambios (`main()`, `initState()`, `pubspec.yaml`…): usa `R`. Lista completa en [04 §1](04-ejecutar-y-simular.md#1-flujo-completo-paso-a-paso-terminal).
 
 ---
 
@@ -83,7 +92,7 @@ flutter help -v           # incluye opciones poco comunes
 ### Modos de ejecución
 | Comando | Qué hace |
 |---|---|
-| `flutter run --debug` | Por defecto: hot reload, asserts, más lento |
+| `flutter run --debug` | Por defecto: hot reload, asserts, más lento (comparativa en [04 §5](04-ejecutar-y-simular.md#5-modos-de-compilación)) |
 | `flutter run --profile` | Para medir rendimiento real (sin hot reload). Solo dispositivos físicos/emuladores |
 | `flutter run --release` | Como la versión final: rápido, sin depuración |
 
@@ -108,7 +117,7 @@ flutter help -v           # incluye opciones poco comunes
 
 ## 🥉 Nivel 3 — Importantes para compilar y publicar
 
-> 📂 **En este proyecto:** `--dart-define-from-file=config/dev.json` usa [config/dev.json](../config/dev.json) / [config/prod.json](../config/prod.json), que se leen en [env.dart](../lib/core/config/env.dart#L33 "→ abstract final class Env") .
+> 📂 **En este proyecto:** `--dart-define-from-file=config/dev.json` usa [config/dev.json](../config/dev.json) / [config/prod.json](../config/prod.json), que se leen en [env.dart](../lib/core/config/env.dart#L33 "→ abstract final class Env"). Detalle en [docs/11 §6](11-configuraciones-avanzadas.md#6-entornos-con---dart-define).
 
 | Comando | Qué produce |
 |---|---|
@@ -127,7 +136,7 @@ Opciones útiles para `build` (y `run`):
 | Opción | Uso |
 |---|---|
 | `--build-name=1.2.0 --build-number=5` | Sobrescribe la versión de `pubspec.yaml` |
-| `--dart-define=API_URL=https://...` | Pasa variables de entorno a Dart (`String.fromEnvironment('API_URL')`) |
+| `--dart-define=API_URL=https://...` | Pasa variables de entorno a Dart (`String.fromEnvironment('API_URL')`); ver [docs/11 §6](11-configuraciones-avanzadas.md#6-entornos-con---dart-define) |
 | `--dart-define-from-file=config/prod.json` | Igual, desde un archivo JSON |
 | `--flavor dev` | Usa un "sabor" (dev/staging/prod) configurado en Android/iOS |
 | `-t lib/main_dev.dart` | Usa otro archivo de entrada |
@@ -164,11 +173,12 @@ Opciones útiles para `build` (y `run`):
 
 ### Dart
 
-> 📂 **En este proyecto:** `dart run tool/update_doc_links.dart` actualiza los enlaces de esta guía → [código del script](../tool/update_doc_links.dart#L98 "→ void main("). La generación de código con `build_runner` se explica en [docs/11 §9](11-configuraciones-avanzadas.md#9-generación-de-código-build_runner).
+> 📂 **En este proyecto:** `dart run tool/update_doc_links.dart` actualiza los enlaces de esta guía → [código del script](../tool/update_doc_links.dart#L106 "→ void main("). La generación de código con `build_runner` → lo verás en [docs/11 §9](11-configuraciones-avanzadas.md#9-generación-de-código-build_runner).
+
 | Comando | Para qué |
 |---|---|
 | `dart run` | Ejecuta `bin/` o un ejecutable de un paquete |
-| `dart run build_runner build --delete-conflicting-outputs` | Generación de código (json_serializable, freezed, riverpod_generator…) |
+| `dart run build_runner build --delete-conflicting-outputs` | Generación de código para paquetes que la usan (→ lo verás en [docs/11 §9](11-configuraciones-avanzadas.md#9-generación-de-código-build_runner)) |
 | `dart run build_runner watch` | Igual, regenerando al guardar |
 | `dart devtools` | Abre DevTools manualmente |
 | `dart doc` | Genera documentación HTML del código |
@@ -178,7 +188,7 @@ Opciones útiles para `build` (y `run`):
 
 ## 🍎 Comandos de iOS / Xcode (`xcrun simctl`)
 
-> 📂 **En este proyecto:** el Bundle ID para `simctl privacy`/`uninstall` es `com.jeanrondon.miPrimeraApp`. Para probar deep links con `openurl` ver [docs/11 §1](11-configuraciones-avanzadas.md#deep-links-abrir-la-app-desde-una-url).
+> 📂 **En este proyecto:** el Bundle ID para `simctl privacy`/`uninstall` es `com.jeanrondon.miPrimeraApp`. Para probar deep links con `openurl` → lo verás en [docs/11 §1](11-configuraciones-avanzadas.md#deep-links-abrir-la-app-desde-una-url).
 
 | Comando | Para qué |
 |---|---|
@@ -258,3 +268,9 @@ flutter clean && flutter pub get      # Arreglar problemas raros
 flutter build appbundle               # Build para Google Play
 flutter build ipa                     # Build para App Store
 ```
+
+---
+
+## ➡️ Siguiente paso
+
+Vuelve a la [ruta de aprendizaje](00-ruta-de-aprendizaje.md).

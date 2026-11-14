@@ -2,6 +2,10 @@
 
 > Anterior: [11 · Configuraciones avanzadas](11-configuraciones-avanzadas.md) · Volver al [índice](../README.md) · Siguiente: [13 · Onboarding](13-onboarding.md)
 
+> 📖 **Documento de consulta:** no se lee de corrido; ábrelo cuando lo necesites.
+> 🎯 **Te sirve para:** elegir un paquete (qué usar y cuándo), comparar mapas o ver qué se pide en el mercado laboral.
+> 🧭 **Ruta de aprendizaje:** [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md)
+
 Qué paquetes usan de verdad las apps Flutter en producción, cuáles piden las empresas y cuál elegir en cada caso. Las cifras salen de datos públicos, no de opiniones; las recomendaciones están marcadas como tales.
 
 ---
@@ -53,7 +57,18 @@ Qué paquetes usan de verdad las apps Flutter en producción, cuáles piden las 
 | 24 | [`connectivity_plus`](https://pub.dev/packages/connectivity_plus) | 4,6 M | 4,1 K | 160/160 |
 | 25 | [`firebase_messaging`](https://pub.dev/packages/firebase_messaging) | 4,4 M | 4,0 K | 160/160 |
 
-**Los más "queridos" (likes):** [`get`](https://pub.dev/packages/get) (15,6 K), [`provider`](https://pub.dev/packages/provider) (11,0 K), [`shared_preferences`](https://pub.dev/packages/shared_preferences) (10,6 K), [`flutter_native_splash`](https://pub.dev/packages/flutter_native_splash) (9,8 K), [`http`](https://pub.dev/packages/http) (8,5 K), [`dio`](https://pub.dev/packages/dio) (8,4 K), [`url_launcher`](https://pub.dev/packages/url_launcher) (8,2 K), [`flutter_bloc`](https://pub.dev/packages/flutter_bloc) (8,1 K), [`flutter_launcher_icons`](https://pub.dev/packages/flutter_launcher_icons) (8,0 K), [`image_picker`](https://pub.dev/packages/image_picker) (7,8 K).
+**Los más "queridos" (likes):**
+
+- [`get`](https://pub.dev/packages/get) (15,6 K)
+- [`provider`](https://pub.dev/packages/provider) (11,0 K)
+- [`shared_preferences`](https://pub.dev/packages/shared_preferences) (10,6 K)
+- [`flutter_native_splash`](https://pub.dev/packages/flutter_native_splash) (9,8 K)
+- [`http`](https://pub.dev/packages/http) (8,5 K)
+- [`dio`](https://pub.dev/packages/dio) (8,4 K)
+- [`url_launcher`](https://pub.dev/packages/url_launcher) (8,2 K)
+- [`flutter_bloc`](https://pub.dev/packages/flutter_bloc) (8,1 K)
+- [`flutter_launcher_icons`](https://pub.dev/packages/flutter_launcher_icons) (8,0 K)
+- [`image_picker`](https://pub.dev/packages/image_picker) (7,8 K)
 
 Observaciones:
 - Los primeros puestos son **utilidades básicas** que casi todas las apps usan directa o indirectamente: `uuid`, `json_annotation`, `http`, `intl`, `path_provider`, `url_launcher`, `shared_preferences`.
@@ -67,6 +82,10 @@ Observaciones:
 > ✅ = ya lo usa este proyecto (con enlace al código). Las columnas "Cuándo elegirlo" son **recomendaciones** basadas en los datos y en la práctica habitual.
 
 ### 3.1 Gestión de estado
+**En breve:** empieza con **Riverpod**; aprende Bloc/Cubit lo justo para trabajar en equipos que lo usan. `get` solo en código heredado.
+
+<details><summary>Ver la tabla completa (6 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`flutter_riverpod`](https://pub.dev/packages/flutter_riverpod) | 4,3 M | 2,9 K | 3.5.0 | Estado global, async, caché, inyección de dependencias | ⭐ Recomendado por defecto en proyectos nuevos | ✅ [todos_controller.dart](../lib/features/todos/todos_controller.dart#L33 "→ class TodosController extends Notifier") |
@@ -76,15 +95,27 @@ Observaciones:
 | [`mobx`](https://pub.dev/packages/mobx) | 123 K | 1,3 K | 2.7.0 | Observables y reacciones | Equipos que vienen de MobX en JavaScript | — |
 | [`signals`](https://pub.dev/packages/signals) | 26 K | 714 | 7.1.0 | Señales reactivas | Experimental / proyectos pequeños | — |
 
+</details>
+
 > 💼 **Para el mercado laboral:** domina **Riverpod** y aprende **Bloc/Cubit** lo suficiente para trabajar con él. Son las dos opciones que más se repiten en las ofertas (ver §4).
 
 ### 3.2 Navegación
+**En breve:** `go_router` (oficial) por defecto; `auto_route` si prefieres rutas generadas.
+
+<details><summary>Ver la tabla completa (2 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`go_router`](https://pub.dev/packages/go_router) | 5,4 M | 5,8 K | 18.1.3 | Rutas con URL, deep links, redirects, pestañas | ⭐ Opción oficial del equipo de Flutter; recomendado por defecto | ✅ [app_router.dart](../lib/core/router/app_router.dart#L70 "→ final routerProvider") |
 | [`auto_route`](https://pub.dev/packages/auto_route) | 420 K | 3,4 K | 11.2.0 | Rutas generadas con código (tipadas) | Apps grandes que prefieren generación de código | — |
 
+</details>
+
 ### 3.3 Red y APIs
+**En breve:** `http` para APIs simples, `dio` cuando necesitas interceptores o tokens; `retrofit` encima de Dio para APIs grandes.
+
+<details><summary>Ver la tabla completa (5 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`http`](https://pub.dev/packages/http) | 14,8 M | 8,5 K | 1.6.0 | Peticiones HTTP sencillas (oficial de Dart) | APIs simples, paquetes y scripts | ✅ [api_client.dart](../lib/core/network/api_client.dart#L49 "→ class ApiClient") |
@@ -93,7 +124,13 @@ Observaciones:
 | [`chopper`](https://pub.dev/packages/chopper) | 158 K | 917 | 8.7.1 | Similar a Retrofit | Alternativa a retrofit | — |
 | [`graphql_flutter`](https://pub.dev/packages/graphql_flutter) | 236 K | 914 | 5.3.0 | Cliente GraphQL | Si tu backend es GraphQL | — |
 
+</details>
+
 ### 3.4 Modelos, JSON y generación de código
+**En breve:** `json_serializable` + `freezed` (con `build_runner`) para modelos; `equatable` si no quieres generar código.
+
+<details><summary>Ver la tabla completa (5 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`json_serializable`](https://pub.dev/packages/json_serializable) | 4,4 M | 4,0 K | 6.15.2 | Genera `fromJson`/`toJson` | ⭐ Cualquier app que consuma JSON (junto a `json_annotation`) | [ejemplo en docs/11 §9](11-configuraciones-avanzadas.md#9-generación-de-código-build_runner) |
@@ -102,7 +139,13 @@ Observaciones:
 | [`equatable`](https://pub.dev/packages/equatable) | 7,6 M | 3,6 K | 3.0.0 | `==` y `hashCode` sin generar código | Estados de Bloc y modelos simples | — |
 | [`dart_mappable`](https://pub.dev/packages/dart_mappable) | 510 K | 469 | 4.10.0 | Alternativa todo-en-uno a freezed + json_serializable | Si prefieres una sola herramienta | — |
 
+</details>
+
 ### 3.5 Almacenamiento local
+**En breve:** `shared_preferences` para ajustes, `flutter_secure_storage` para secretos, `drift` si hay muchos datos. Evita `hive` e `isar`.
+
+<details><summary>Ver la tabla completa (7 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`shared_preferences`](https://pub.dev/packages/shared_preferences) | 9,3 M | 10,6 K | 2.5.6 | Clave-valor (ajustes, flags) | ⭐ Datos pequeños y no sensibles | ✅ [preferences.dart](../lib/core/storage/preferences.dart#L50 "→ Future<SharedPreferencesWithCache> createPreferences") |
@@ -113,9 +156,15 @@ Observaciones:
 | [`hive_ce`](https://pub.dev/packages/hive_ce) | 1,4 M | 574 | 2.23.1 | Base NoSQL rápida (*community edition*) | Alternativa ligera a drift; sustituye a `hive` | — |
 | [`objectbox`](https://pub.dev/packages/objectbox) | 188 K | 1,6 K | 5.3.2 | Base de datos de objetos de alto rendimiento | Muchos datos, sincronización | — |
 
+</details>
+
 > ⚠️ **Con cuidado:** `hive` (última versión en 2022-06-30) e `isar` (última versión en 2023-04-25, 4 K descargas al mes) ya no se mantienen activamente. En proyectos nuevos usa `hive_ce` o `drift`.
 
 ### 3.6 Backend como servicio
+**En breve:** Firebase (`firebase_core` + auth, Firestore, messaging, crashlytics) es lo más común; `supabase_flutter` si prefieres SQL.
+
+<details><summary>Ver la tabla completa (7 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`firebase_core`](https://pub.dev/packages/firebase_core) | 6,1 M | 4,1 K | 5.1.0 | Base de cualquier paquete de Firebase | ⭐ El backend más común en Flutter | — |
@@ -126,9 +175,15 @@ Observaciones:
 | [`firebase_analytics`](https://pub.dev/packages/firebase_analytics) | 2,7 M | 1,3 K | 13.0.1 | Analítica de uso | Medir el uso de la app | — |
 | [`supabase_flutter`](https://pub.dev/packages/supabase_flutter) | 1,3 M | 990 | 2.18.3 | Alternativa *open source* (PostgreSQL) | Si prefieres SQL o alojarlo tú | — |
 
+</details>
+
 > Firebase requiere crear un proyecto en la consola y configurarlo con `flutterfire configure`; por eso no hay demo aquí. Guía oficial: [firebase.google.com/docs/flutter/setup](https://firebase.google.com/docs/flutter/setup).
 
 ### 3.7 Interfaz y multimedia
+**En breve:** `flutter_svg`, `cached_network_image`, `google_fonts` y `fl_chart` cubren la mayoría de interfaces.
+
+<details><summary>Ver la tabla completa (8 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`flutter_svg`](https://pub.dev/packages/flutter_svg) | 6,2 M | 5,9 K | 2.3.2 | Mostrar imágenes SVG | ⭐ Iconos e ilustraciones vectoriales | — |
@@ -140,7 +195,13 @@ Observaciones:
 | [`flutter_animate`](https://pub.dev/packages/flutter_animate) | 1,3 M | 4,3 K | 4.5.2 | Animaciones encadenadas con poco código | Microinteracciones | — |
 | [`carousel_slider`](https://pub.dev/packages/carousel_slider) | 1,0 M | 6,1 K | 5.1.2 | Carruseles de imágenes | Banners, galerías | — |
 
+</details>
+
 ### 3.8 Funciones del dispositivo
+**En breve:** `url_launcher`, `image_picker`, `share_plus` y `permission_handler` son los de uso casi universal.
+
+<details><summary>Ver la tabla completa (10 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`url_launcher`](https://pub.dev/packages/url_launcher) | 9,7 M | 8,2 K | 6.3.3 | Abrir webs, teléfono, email, SMS, mapas | ⭐ Casi cualquier app | ✅ [demo Enlaces](../lib/features/packages/links_share_screen.dart#L36 "→ Future<void> _open") |
@@ -154,7 +215,13 @@ Observaciones:
 | [`webview_flutter`](https://pub.dev/packages/webview_flutter) | 4,1 M | 4,5 K | 4.14.1 | Mostrar una web dentro de la app | Contenido web, pagos externos | — |
 | [`camera`](https://pub.dev/packages/camera) | 1,1 M | 2,6 K | 0.12.2 | Control total de la cámara | Escáneres, apps de fotos | — |
 
+</details>
+
 ### 3.9 Mapas y ubicación
+**En breve:** `flutter_map` + `latlong2` para aprender y prototipos (sin API key); `google_maps_flutter` si tu empresa ya usa Google.
+
+<details><summary>Ver la tabla completa (6 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`geolocator`](https://pub.dev/packages/geolocator) | 3,1 M | 6,1 K | 14.1.2 | Ubicación GPS y permisos | ⭐ Cualquier app con ubicación | ✅ [LocationService](../lib/features/packages/maps/map_data.dart#L117 "→ class LocationService") |
@@ -164,16 +231,28 @@ Observaciones:
 | [`geocoding`](https://pub.dev/packages/geocoding) | 784 K | 1,4 K | 5.0.1 | Dirección ↔ coordenadas | Buscadores de direcciones | — |
 | [`mapbox_maps_flutter`](https://pub.dev/packages/mapbox_maps_flutter) | 153 K | 386 | 3.34.2 | SDK de Mapbox | Mapas muy personalizados, 3D, navegación | — |
 
+</details>
+
 Detalle completo de mapas en la §6.
 
 ### 3.10 Notificaciones
+**En breve:** `flutter_local_notifications` para avisos locales y `firebase_messaging` para push remoto.
+
+<details><summary>Ver la tabla completa (3 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`firebase_messaging`](https://pub.dev/packages/firebase_messaging) | 4,4 M | 4,0 K | 17.0.1 | Push desde el servidor (FCM) | ⭐ Notificaciones remotas | — |
 | [`flutter_local_notifications`](https://pub.dev/packages/flutter_local_notifications) | 3,9 M | 7,4 K | 23.0.0 | Notificaciones locales programadas | ⭐ Recordatorios, alarmas, mostrar push en primer plano | — |
 | [`awesome_notifications`](https://pub.dev/packages/awesome_notifications) | 90 K | 3,4 K | 0.12.1 | Notificaciones locales con más diseño | Alternativa a la anterior | — |
 
+</details>
+
 ### 3.11 Arquitectura, calidad y monitorización
+**En breve:** `flutter_lints` (por defecto), `mocktail` para tests, `get_it` si no usas Riverpod, `sentry_flutter` o Crashlytics en producción.
+
+<details><summary>Ver la tabla completa (9 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`get_it`](https://pub.dev/packages/get_it) | 2,5 M | 4,7 K | 9.3.0 | Localizador de servicios (inyección de dependencias) | Proyectos con Bloc o sin Riverpod | Riverpod ya cubre la inyección con [overrides](../lib/main.dart#L50 "→ sharedPreferencesProvider.overrideWithValue")  |
@@ -186,14 +265,26 @@ Detalle completo de mapas en la §6.
 | [`logger`](https://pub.dev/packages/logger) | 3,5 M | 3,7 K | 2.8.0 | Logs bonitos por niveles | Depuración | — |
 | [`sentry_flutter`](https://pub.dev/packages/sentry_flutter) | 2,0 M | 1,1 K | 10.3.0 | Errores y rendimiento en producción | Alternativa a Crashlytics | — |
 
+</details>
+
 ### 3.12 Monetización
+**En breve:** `purchases_flutter` (RevenueCat) para suscripciones, `in_app_purchase` oficial, `google_mobile_ads` para publicidad.
+
+<details><summary>Ver la tabla completa (3 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`google_mobile_ads`](https://pub.dev/packages/google_mobile_ads) | 1,1 M | 2,5 K | 9.2.0 | Anuncios de AdMob | Apps gratuitas con publicidad | — |
 | [`in_app_purchase`](https://pub.dev/packages/in_app_purchase) | 807 K | 2,5 K | 3.3.1 | Compras dentro de la app (oficial) | Pagos de contenido digital | — |
 | [`purchases_flutter`](https://pub.dev/packages/purchases_flutter) | 680 K | 924 | 11.0.1 | RevenueCat: suscripciones simplificadas | ⭐ Suscripciones (evita escribir la validación de recibos) | — |
 
+</details>
+
 ### 3.13 Utilidades transversales
+**En breve:** `intl` para fechas e idiomas, `uuid` para identificadores, `collection` para utilidades de listas.
+
+<details><summary>Ver la tabla completa (6 paquetes)</summary>
+
 | Paquete | Descargas/30 días | Likes | Versión | Para qué | Cuándo elegirlo | En este proyecto |
 |---|---:|---:|---|---|---|---|
 | [`intl`](https://pub.dev/packages/intl) | 13,6 M | 6,1 K | 0.20.3 | Fechas, números, monedas, traducciones | ⭐ Toda app con fechas o varios idiomas | ✅ [localization_screen.dart](../lib/features/intermediate/localization_screen.dart#L121 "→ NumberFormat.simpleCurrency") |
@@ -202,6 +293,8 @@ Detalle completo de mapas en la §6.
 | [`rxdart`](https://pub.dev/packages/rxdart) | 6,3 M | 2,9 K | 0.28.0 | Streams avanzados | Programación reactiva con Streams | — |
 | [`flutter_launcher_icons`](https://pub.dev/packages/flutter_launcher_icons) | 4,1 M | 8,0 K | 0.14.4 | Genera los iconos de la app | ⭐ Antes de publicar | [docs/08](08-compilar-y-publicar.md#icono) |
 | [`flutter_native_splash`](https://pub.dev/packages/flutter_native_splash) | 2,0 M | 9,8 K | 2.4.8 | Genera la pantalla de carga nativa | Antes de publicar | [docs/08](08-compilar-y-publicar.md#pantalla-de-carga-splash) |
+
+</details>
 
 ---
 
@@ -329,7 +422,7 @@ Detalles de la demo de Dio:
 | Cancelar peticiones | [CancelToken](../lib/features/packages/dio/dio_demo_screen.dart#L49 "→ _cancelToken?.cancel('Pantalla cerrada')") |
 | Probar Dio sin internet (adaptador falso) | [_FakeAdapter](../test/features/packages/dio_client_test.dart#L22 "→ class _FakeAdapter") |
 
-**Por qué estas demos y no otras:** son de las librerías más descargadas, no requieren cuentas ni claves (salvo las teselas públicas de OSM) y apenas añaden configuración nativa. Firebase, Google Maps, pagos y notificaciones push requieren cuentas externas: están documentados arriba pero no incluidos como demo.
+**Por qué estas demos y no otras:** son de las librerías más descargadas, no requieren cuentas ni claves (salvo las teselas públicas de OSM) y apenas añaden configuración nativa. Firebase, Google Maps y notificaciones push requieren cuentas externas: están documentados arriba pero no incluidos como demo. Los pagos sí tienen demo, pero **simulada** (sin cuenta ni cobros reales): ver [14 · Pagos](14-pagos.md).
 
 ---
 
@@ -344,3 +437,9 @@ Detalles de la demo de Dio:
 - [Flutter Roadmap 2026 (Medium)](https://medium.com/@dadhishankar1/flutter-roadmap-2026-from-hello-world-to-high-paying-job-bd9af9d26642)
 - [DEV Community: Flutter State Management in 2026 — Riverpod vs Bloc vs Provider in production](https://dev.to/lycore/flutter-state-management-in-2026-riverpod-vs-bloc-vs-provider-in-production-2i53)
 - [Política de uso de teselas de OpenStreetMap](https://operations.osmfoundation.org/policies/tiles/)
+
+---
+
+## ➡️ Siguiente paso
+
+Vuelve a la [ruta de aprendizaje](00-ruta-de-aprendizaje.md).

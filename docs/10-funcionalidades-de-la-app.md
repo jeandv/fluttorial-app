@@ -2,6 +2,10 @@
 
 > Anterior: [09 · Solución de problemas](09-solucion-de-problemas.md) · Volver al [índice](../README.md) · Siguiente: [11 · Configuraciones avanzadas](11-configuraciones-avanzadas.md)
 
+> 🎯 **Aprenderás:** a recorrer el catálogo de la app, a localizar el código real de cada concepto y a añadir tu propia demo.
+> 📋 **Necesitas antes:** [06 · Construir la app](06-construir-la-app.md) y [16 · Cómo piensa Flutter](16-como-piensa-flutter.md).
+> ⏱️ **Tiempo:** ~25 min de lectura + ~20 min practicando
+
 La app es un **catálogo interactivo**: cada pantalla enseña una funcionalidad real, **funcionando**, con su código comentado línea por línea. Todos los enlaces de este documento abren el archivo (y, cuando se indica, la línea exacta).
 
 > 💡 Dentro de la app, el botón **ⓘ** de cada demo explica qué enseña y en qué archivo está su código.
@@ -20,10 +24,14 @@ La app es un **catálogo interactivo**: cada pantalla enseña una funcionalidad 
 │   ├─ INTERMEDIO                                                             │
 │   │   formularios, navegación,                                              │
 │   │   asincronía, API REST, idiomas                                         │
-│   └─ AVANZADO                                                               │
-│       animaciones, responsive, código nativo, isolates                      │
+│   ├─ AVANZADO                                                               │
+│   │   animaciones, responsive, código nativo, isolates                      │
+│   ├─ APPS REALES                                                            │
+│   │   onboarding, pago, suscripción, estudio IA, agente IA                  │
+│   └─ LIBRERÍAS                                                              │
+│       mapas, Dio, imágenes en caché, enlaces y compartir                    │
 └────────────────────────────────────────────────────────────────────────────┘
-   /login y /privado → pantalla completa (fuera de las pestañas)
+   /login, /privado y /onboarding → pantalla completa (fuera de las pestañas)
 ```
 
 | Pieza | Archivo |
@@ -114,6 +122,8 @@ La app es un **catálogo interactivo**: cada pantalla enseña una funcionalidad 
 | Validar todo y enviar | [_submit](../lib/features/intermediate/forms_screen.dart#L105 "→ void _submit") |
 
 ### 3.2 Navegación (go_router)
+La teoría está en [06 §4](06-construir-la-app.md#4-navegación-entre-pantallas) y la configuración completa en [11 §1](11-configuraciones-avanzadas.md#1-navegación-con-go_router); aquí solo ves dónde está cada pieza.
+
 📄 [lib/features/intermediate/navigation_screens.dart](../lib/features/intermediate/navigation_screens.dart) · Ruta `/ejemplos/navegacion`
 
 | Concepto | Dónde verlo |
@@ -136,6 +146,8 @@ La app es un **catálogo interactivo**: cada pantalla enseña una funcionalidad 
 | `Timer.periodic` + cancelarlo | [_toggleTimer](../lib/features/intermediate/async_screen.dart#L93 "→ void _toggleTimer") |
 
 ### 3.4 API REST (http + JSON + Riverpod)
+La lección está en [06 §8](06-construir-la-app.md#8-consumir-una-api-http--json) y las buenas prácticas del cliente en [11 §7](11-configuraciones-avanzadas.md#7-red-cliente-http-robusto).
+
 📄 Carpeta [lib/features/posts/](../lib/features/posts/) · Ruta `/ejemplos/posts`
 
 ```
@@ -153,6 +165,8 @@ ApiClient (http)  →  PostsRepository (JSON → Post)  →  postsProvider (cach
 | Tests | [posts_repository_test.dart](../test/features/posts/posts_repository_test.dart) | `MockClient`, errores, overrides |
 
 ### 3.5 Idiomas (i18n)
+Pasos de configuración: [11 §4](11-configuraciones-avanzadas.md#4-internacionalización-i18n-con-gen-l10n).
+
 📄 [lib/features/intermediate/localization_screen.dart](../lib/features/intermediate/localization_screen.dart) · Ruta `/ejemplos/idiomas`
 
 | Concepto | Dónde verlo |
@@ -193,6 +207,8 @@ ApiClient (http)  →  PostsRepository (JSON → Post)  →  postsProvider (cach
 | Widgets `.adaptive` (estilo iOS/Android) | [Switch.adaptive](../lib/features/advanced/responsive_screen.dart#L137 "→ Switch.adaptive(") |
 
 ### 4.3 Código nativo (MethodChannel)
+Tipos de canal y recomendaciones: [11 §8](11-configuraciones-avanzadas.md#8-código-nativo-platform-channels).
+
 📄 Dart: [lib/features/advanced/native_channel.dart](../lib/features/advanced/native_channel.dart) · Ruta `/ejemplos/nativo`
 
 | Lado | Dónde verlo |
@@ -214,9 +230,9 @@ ApiClient (http)  →  PostsRepository (JSON → Post)  →  postsProvider (cach
 
 ---
 
-## 4.4 🟣 Apps reales: onboarding, pagos e IA
+## 5. 🟣 Apps reales: onboarding, pagos e IA
 
-Funcionalidades que casi toda app publicada necesita. Cada una tiene su guía completa.
+Funcionalidades que casi toda app publicada necesita. Cada una tiene su guía completa, que verás más adelante en la ruta (13, 14 y 15); por ahora basta con abrir las demos.
 
 | Demo | Ruta | Qué enseña | Código | Guía |
 |---|---|---|---|---|
@@ -228,9 +244,9 @@ Funcionalidades que casi toda app publicada necesita. Cada una tiene su guía co
 
 ---
 
-## 4.5 🔷 Librerías populares
+## 6. 🔷 Librerías populares
 
-Demos de las librerías más descargadas y demandadas. La investigación completa (métricas de pub.dev, demanda laboral y comparativas) está en [12 · Librerías más usadas](12-librerias-mas-usadas.md).
+Demos de las librerías más descargadas y demandadas. La investigación completa (métricas de pub.dev, demanda laboral y comparativas) está en [12 · Librerías más usadas](12-librerias-mas-usadas.md), un documento de consulta que no hace falta leer ahora.
 
 | Demo | Ruta | Qué enseña | Código |
 |---|---|---|---|
@@ -241,9 +257,11 @@ Demos de las librerías más descargadas y demandadas. La investigación complet
 
 ---
 
-## 5. Pestañas de la app
+## 7. Pestañas de la app
 
 ### ✅ Tareas: una mini-app completa con Riverpod
+Lección de estado: [06 §5](06-construir-la-app.md#5-gestión-de-estado) · referencia de providers: [11 §2](11-configuraciones-avanzadas.md#2-gestión-de-estado-con-riverpod-3).
+
 📄 Carpeta [lib/features/todos/](../lib/features/todos/) · Ruta `/tareas`
 
 | Pieza | Dónde verlo |
@@ -254,7 +272,7 @@ Demos de las librerías más descargadas y demandadas. La investigación complet
 | No mutar el estado (crear listas nuevas) | [add](../lib/features/todos/todos_controller.dart#L58 "→ void add") |
 | Borrar y deshacer (devolver un *record*) | [remove](../lib/features/todos/todos_controller.dart#L81 "→ (Todo, int)? remove") |
 | Providers derivados | [filteredTodosProvider](../lib/features/todos/todos_controller.dart#L122 "→ final filteredTodosProvider") · [pendingCountProvider](../lib/features/todos/todos_controller.dart#L132 "→ final pendingCountProvider") |
-| `ref.watch` vs `ref.read` | [build de TodosScreen](../lib/features/todos/todos_screen.dart#L69 "→ final todos = ref.watch") |
+| `ref.watch` vs `ref.read` | [watch en build](../lib/features/todos/todos_screen.dart#L69 "→ final todos = ref.watch") · [read en un callback](../lib/features/todos/todos_screen.dart#L43 "→ ref.read(todosProvider.notifier).add") |
 | `.select` (redibujar menos) | [select](../lib/features/todos/todos_screen.dart#L73 "→ todosProvider.select") |
 | `ValueListenableBuilder` | [botón Añadir](../lib/features/todos/todos_screen.dart#L110 "→ ValueListenableBuilder(") |
 | SnackBar "Deshacer" | [_remove](../lib/features/todos/todos_screen.dart#L47 "→ void _remove") |
@@ -273,10 +291,55 @@ Demos de las librerías más descargadas y demandadas. La investigación complet
 
 ---
 
-## 6. Cómo añadir tu propia demo (ejercicio)
+## 8. Cómo añadir tu propia demo (ejercicio)
 
 1. Crea `lib/features/<nivel>/mi_demo_screen.dart` usando [DemoScaffold](../lib/core/widgets/demo_scaffold.dart#L22 "→ class DemoScaffold") como base.
 2. Añade la constante de ruta en [routes.dart](../lib/core/router/routes.dart).
 3. Registra la ruta como hija de `/ejemplos` en [app_router.dart](../lib/core/router/app_router.dart#L134 "→ routes: [") .
 4. Añade un `Demo(...)` a la lista [demos](../lib/features/catalog/demo_catalog.dart#L44 "→ const demos").
 5. Hot restart (`R`) y aparecerá en el catálogo.
+
+**🏋️ Reto: tu propia demo.** Sigue los 5 pasos anteriores para añadir una demo titulada `Mi demo` al catálogo (nivel básico) que se abra al tocarla y use `DemoScaffold`.
+
+- ✅ **Cómo saber que lo lograste:** `flutter test exercises/e04_mi_demo_test.dart` pasa a verde, y ves `Mi demo` en el catálogo y se abre al tocarla.
+- 💡 **Pista:** copia la estructura de una demo existente, por ejemplo [counter_screen.dart](../lib/features/basics/counter_screen.dart), y fíjate en cómo declara su entrada [demo_catalog.dart](../lib/features/catalog/demo_catalog.dart#L44 "→ const demos").
+- 🔑 **Solución (inténtalo antes):** [e04_mi_demo](../exercises/solutions/e04_mi_demo.md)
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Qué dos archivos tocas, además de la pantalla nueva, para que una demo aparezca en el catálogo y se abra?
+   <details><summary>Respuesta</summary>
+
+   La lista de demos ([demo_catalog.dart](../lib/features/catalog/demo_catalog.dart)) y el router, donde registras la ruta como hija de `/ejemplos` (paso 3), además de la constante en `routes.dart`.
+
+   </details>
+2. ¿Por qué `/login` y `/onboarding` se ven a pantalla completa, sin la barra inferior?
+   <details><summary>Respuesta</summary>
+
+   Son rutas fuera de las pestañas: se registran con `parentNavigatorKey`, así que se abren sobre todo el shell. Ver [11 §1](11-configuraciones-avanzadas.md#1-navegación-con-go_router).
+
+   </details>
+3. En el contador, ¿qué pasa si cambias `_count` sin llamar a `setState`?
+   <details><summary>Respuesta</summary>
+
+   El valor cambia en memoria, pero Flutter no vuelve a ejecutar `build()`, así que la pantalla no muestra el nuevo número. `setState` es lo que pide el redibujado.
+
+   </details>
+4. ¿Por qué la demo de animaciones usa `constraints.maxWidth` en lugar de animar hacia `double.infinity`?
+   <details><summary>Respuesta</summary>
+
+   Un ancho infinito no se puede interpolar con uno finito, por lo que hay que usar el ancho real que da `LayoutBuilder`. La [prueba de regresión](../test/features/advanced/animations_test.dart#L23 "→ AnimatedContainer se expande y se contrae") lo protege.
+
+   </details>
+5. En la pestaña Tareas, ¿cuándo usas `ref.watch` y cuándo `ref.read`?
+   <details><summary>Respuesta</summary>
+
+   `ref.watch` dentro de `build` (redibuja al cambiar); `ref.read` en callbacks como el del botón Añadir (lee una vez). Ver [watch](../lib/features/todos/todos_screen.dart#L69 "→ final todos = ref.watch") y [read](../lib/features/todos/todos_screen.dart#L43 "→ ref.read(todosProvider.notifier).add").
+
+   </details>
+
+## ➡️ Siguiente paso
+
+Continúa con **[07 · Pruebas y calidad](07-pruebas-y-calidad.md)**: ya conoces el código de la app, ahora aprende a comprobar que funciona. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

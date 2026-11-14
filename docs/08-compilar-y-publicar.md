@@ -2,6 +2,10 @@
 
 > Anterior: [07 · Pruebas y calidad](07-pruebas-y-calidad.md) · Volver al [índice](../README.md) · Siguiente: [09 · Solución de problemas](09-solucion-de-problemas.md)
 
+> 🎯 **Aprenderás:** qué debe estar listo antes de publicar y cómo firmar, compilar y subir tu app a Google Play y App Store.
+> 📋 **Necesitas antes:** [04 · Ejecutar y simular](04-ejecutar-y-simular.md) y [07 · Pruebas y calidad](07-pruebas-y-calidad.md)
+> ⏱️ **Tiempo:** ~20 min de lectura + ~60 min practicando
+
 ---
 
 ## 1. Checklist antes de publicar
@@ -12,7 +16,7 @@
 - [ ] **Pantalla de carga** (splash).
 - [ ] **Versión** correcta en `pubspec.yaml`.
 - [ ] **Permisos** declarados (y textos explicativos en iOS).
-- [ ] Permiso **INTERNET** en el `AndroidManifest.xml` principal si la app usa red.
+- [ ] Permiso **INTERNET** en el `AndroidManifest.xml` principal si la app usa red ([06 §9](06-construir-la-app.md#9-permisos-nativos)).
 - [ ] Firma de **release** configurada en Android.
 - [ ] Probada en modo `--release` en un **dispositivo real**.
 - [ ] `flutter analyze` y `flutter test` sin errores.
@@ -138,10 +142,7 @@ buildTypes {
 
 > 📂 **En este proyecto:** ✅ ya está añadido: [ver línea](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") .
 
-En [`android/app/src/main/AndroidManifest.xml`](../android/app/src/main/AndroidManifest.xml), antes de `<application>`:
-```xml
-<uses-permission android:name="android.permission.INTERNET"/>
-```
+Sin este permiso en el `AndroidManifest.xml` **principal**, la app en release no carga datos de internet. Cómo declararlo: [06 §9](06-construir-la-app.md#9-permisos-nativos).
 
 ### 3.5 Compilar
 ```bash
@@ -213,21 +214,12 @@ Opción B — **Xcode**: `open build/ios/archive/Runner.xcarchive` → *Distribu
 
 ## 6. Entornos (dev / prod)
 
-Opción sencilla con `--dart-define-from-file`:
-```
-config/
-├── dev.json     { "API_URL": "https://dev.api.com" }
-└── prod.json    { "API_URL": "https://api.com" }
-```
+Un archivo JSON por entorno (`config/dev.json`, `config/prod.json`):
 ```bash
 flutter run --dart-define-from-file=config/dev.json
 flutter build appbundle --dart-define-from-file=config/prod.json
 ```
-```dart
-const apiUrl = String.fromEnvironment('API_URL');
-```
-
-Opción avanzada: **flavors** (apps distintas instalables a la vez, p. ej. "MiApp Dev" y "MiApp"). Requiere configurar `productFlavors` en Gradle y *schemes* en Xcode. Guía: [docs.flutter.dev/deployment/flavors](https://docs.flutter.dev/deployment/flavors).
+Detalle (lectura en Dart, flavors, qué no guardar ahí) → lo verás en [docs/11 §6](11-configuraciones-avanzadas.md#6-entornos-con---dart-define).
 
 ---
 
@@ -247,3 +239,49 @@ Guarda `build/symbols` de cada versión: lo necesitas para leer errores (`flutte
 - **fastlane** para automatizar subidas a ambas tiendas.
 
 📚 Guías oficiales: [Android](https://docs.flutter.dev/deployment/android) · [iOS](https://docs.flutter.dev/deployment/ios)
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Por qué el *build number* (`+7` en `1.2.0+7`) debe subir siempre?
+   <details><summary>Respuesta</summary>
+
+   Porque **siempre debe subir en cada subida a la tienda**; se mapea a `versionCode` en Android y `CFBundleVersion` en iOS ([Versión](#2-identidad-de-la-app)).
+
+   </details>
+2. ¿Qué pasa si pierdes el `.jks` de firma de Android?
+   <details><summary>Respuesta</summary>
+
+   No podrás actualizar la app; Google Play App Signing permite recuperarlo, pero es un trámite. Por eso se guarda en un lugar seguro y **nunca** se sube a git ([3.1](#31-crear-la-clave-de-firma-una-sola-vez-por-app)).
+
+   </details>
+3. ¿Por qué conviene definir el ID de la app antes de publicar?
+   <details><summary>Respuesta</summary>
+
+   Porque **no se puede cambiar** tras publicar ([checklist](#1-checklist-antes-de-publicar)).
+
+   </details>
+4. ¿Qué compilas para Google Play y qué para instalar a mano en Android?
+   <details><summary>Respuesta</summary>
+
+   `flutter build appbundle` (`.aab`) para Google Play; `flutter build apk --release` (`.apk`) para instalar a mano ([3.5](#35-compilar)).
+
+   </details>
+5. ¿Qué guardas tras compilar con `--obfuscate` y por qué?
+   <details><summary>Respuesta</summary>
+
+   La carpeta `build/symbols` de cada versión, porque la necesitas para leer los errores con `flutter symbolize` ([sección 7](#7-ofuscación-y-símbolos-opcional-recomendado-en-release)).
+
+   </details>
+
+## 🏋️ Reto
+
+**¿Qué te falta para publicar?** Recorre la [checklist de la sección 1](#1-checklist-antes-de-publicar) con esta app y anota qué falta, sin cambiar nada.
+
+- ✅ **Cómo saber que lo lograste:** tienes una lista escrita de lo que falta (por ejemplo, la firma de release, que hoy usa la clave de debug).
+- 💡 **Pista:** los cuadros «📂 En este proyecto» de la sección 3 indican qué está hecho y qué está pendiente.
+
+## ➡️ Siguiente paso
+
+¡Has completado la ruta! Vuelve al mapa en [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md) y, para practicar lo que te falte, abre los retos pendientes en [exercises/README.md](../exercises/README.md).

@@ -2,6 +2,10 @@
 
 > Anterior: [14 · Pagos](14-pagos.md) · Volver al [índice](../README.md)
 
+> 🎯 **Aprenderás:** a integrar Claude en una app Flutter de forma segura (proxy propio en producción) y a entender el bucle de un agente con herramientas.
+> 📋 **Necesitas antes:** [05 · Dart esencial](05-dart-esencial.md) (`async`/`await` y *streams*, que se usan en el streaming y en el bucle del agente) y [11 · Configuraciones avanzadas](11-configuraciones-avanzadas.md) (Riverpod, HTTP y `--dart-define`).
+> ⏱️ **Tiempo:** ~20 min de lectura + ~20 min practicando
+
 Cómo integrar modelos de IA generativa (aquí, **Claude** de Anthropic) en una app Flutter: generar consejos, documentos e imágenes, y construir **agentes** que usan las funciones de tu app para cumplir lo que pide el usuario.
 
 > 📱 **En la app:** *Ejemplos → Apps reales → Estudio IA* y *Agente IA*. Sin configurar nada funcionan en **modo demo** (respuestas de ejemplo). La §2 explica cómo activar la IA real.
@@ -32,7 +36,7 @@ Cómo integrar modelos de IA generativa (aquí, **Claude** de Anthropic) en una 
 | **Proxy propio** ✅ | La app llama a TU servidor; el servidor añade la key y llama a Anthropic. Ahí también controlas límites por usuario, autenticación y costes. | **Producción** |
 | **Key en la app** ⚠️ | `--dart-define` con la key | **Solo para aprender en tu ordenador** |
 
-Ambas están soportadas: [Env.aiProxyUrl](../lib/core/config/env.dart#L67 "→ static const aiProxyUrl") y [Env.anthropicApiKey](../lib/core/config/env.dart#L70 "→ static const anthropicApiKey").
+Ambas están soportadas: [Env.aiProxyUrl](../lib/core/config/env.dart#L67 "→ static const aiProxyUrl") y [Env.anthropicApiKey](../lib/core/config/env.dart#L70 "→ static const anthropicApiKey"). Cómo se leen estas variables en tiempo de compilación está en [11 · §6 Entornos con `--dart-define`](11-configuraciones-avanzadas.md#6-entornos-con---dart-define); aquí solo verás lo propio de la IA.
 
 ### Activar la IA real en tu ordenador (aprendizaje)
 1. Crea una cuenta en [platform.claude.com](https://platform.claude.com), añade saldo y crea una **API key**.
@@ -60,10 +64,10 @@ Dart **no tiene SDK oficial** de Anthropic, así que se llama a la API REST con 
 | Detalle | Código |
 |---|---|
 | Endpoint `POST /v1/messages` | [_endpoint](../lib/features/ai/claude_client.dart#L83 "→ Uri get _endpoint") |
-| Cabeceras: `x-api-key`, `anthropic-version: 2026-10-21` | [_headers](../lib/features/ai/claude_client.dart#L85 "→ Map<String, String> get _headers") |
+| Cabeceras: `x-api-key`, `anthropic-version: 2026-10-21` y `anthropic-beta: server-side-fallback-2026-07-01` (necesaria para usar `fallbacks`) | [_headers](../lib/features/ai/claude_client.dart#L85 "→ Map<String, String> get _headers") |
 | Modelo `claude-opus-5-5` | [defaultModel](../lib/features/ai/claude_client.dart#L73 "→ static const defaultModel") |
 | `output_config.effort` (low/medium/high…) | [buildBody](../lib/features/ai/claude_client.dart#L107 "→ 'output_config': {'effort': effort}") |
-| `fallbacks: "default"`: si el modelo rechaza la petición por seguridad, Anthropic la reintenta con el modelo adecuado | [fallbacks](../lib/features/ai/claude_client.dart#L106 "→ 'fallbacks': 'default'") |
+| `fallbacks: "default"`: si el modelo rechaza la petición por seguridad, Anthropic la reintenta con el modelo adecuado (**exige** la cabecera `anthropic-beta` de la fila anterior) | [fallbacks](../lib/features/ai/claude_client.dart#L106 "→ 'fallbacks': 'default'") |
 | Comprobar `stop_reason == "refusal"` **antes** de leer el contenido | [refusal](../lib/features/ai/claude_client.dart#L149 "→ if (json['stop_reason'] == 'refusal')") |
 | Streaming con Server-Sent Events (solo `text_delta`) | [streamText](../lib/features/ai/claude_client.dart#L160 "→ Stream<String> streamText") |
 | Ignorar los bloques de razonamiento (`thinking`) al mostrar texto | [textOf](../lib/features/ai/claude_client.dart#L214 "→ static String textOf") |
@@ -98,10 +102,10 @@ AiStudioScreen ──> AiService (interfaz)
 |---|---|
 | Prompt con `system` (rol) y formato pedido (lista Markdown) | [tips](../lib/features/ai/ai_service.dart#L85 "→ static const _mentor") |
 | `effort: 'low'` para respuestas rápidas | [effort low](../lib/features/ai/ai_service.dart#L94 "→ effort: 'low'") |
-| Consumir el stream y acumular texto con `setState` | [startStream](../lib/features/ai/ai_studio_screen.dart#L101 "→ void startStream") |
-| Cancelar la suscripción en `dispose` y con "Detener" | [dispose](../lib/features/ai/ai_studio_screen.dart#L102 "→ _sub?.cancel("); // ⚠️) |
+| Consumir el stream y acumular texto con `setState` (→ los *streams* los viste en [05 §6](05-dart-esencial.md#6-asincronía-future-async-await-stream)) | [startStream](../lib/features/ai/ai_studio_screen.dart#L101 "→ void startStream") |
+| Cancelar la suscripción en `dispose` y con "Detener" | [dispose](../lib/features/ai/ai_studio_screen.dart#L124 "→ _sub?.cancel(); // ⚠️") |
 | Renderizar Markdown (`flutter_markdown_plus`) | [MarkdownBody](../lib/features/ai/ai_studio_screen.dart#L149 "→ MarkdownBody(data: output") |
-| Reutilizar la lógica con un **mixin** | [_StreamingText](../lib/features/ai/ai_studio_screen.dart#L95 "→ mixin _StreamingText") |
+| Reutilizar la lógica con un **mixin** (→ [05 · Herencia, interfaces y mixins](05-dart-esencial.md#herencia-interfaces-y-mixins)) | [_StreamingText](../lib/features/ai/ai_studio_screen.dart#L95 "→ mixin _StreamingText") |
 
 ### 4.2 Documentos
 Tipos predefinidos con instrucciones específicas: descripción para la tienda, notas de versión, política de privacidad (marcada como borrador legal), README y email de soporte → [DocKind](../lib/features/ai/ai_service.dart#L26 "→ enum DocKind"). Se pueden **copiar** y **compartir** (`share_plus`).
@@ -135,7 +139,7 @@ usuario: "Añade comprar leche"
 |---|---|
 | Definir herramientas con JSON Schema (`strict: true`) | [definitions](../lib/features/ai/todo_agent.dart#L82 "→ static const definitions") |
 | Descripciones que dicen **cuándo** usarlas | [list_todos](../lib/features/ai/todo_agent.dart#L84 "→ 'name': 'list_todos'") |
-| Ejecutar la herramienta en la app | [execute](../lib/features/ai/todo_agent.dart#L146 "→ (String, bool") execute) |
+| Ejecutar la herramienta en la app | [execute](../lib/features/ai/todo_agent.dart#L146 "→ (String, bool) execute") |
 | El bucle con límite de pasos | [send](../lib/features/ai/todo_agent.dart#L221 "→ final checkpoint = _messages.length") |
 | Guardar la respuesta del asistente **sin modificar** (incluye bloques de razonamiento) | [assistant](../lib/features/ai/todo_agent.dart#L237 "→ _messages.add({'role': 'assistant', 'content': content})") |
 | Todos los `tool_result` en **un solo** mensaje, con su `tool_use_id` | [results](../lib/features/ai/todo_agent.dart#L265 "→ _messages.add({'role': 'user', 'content': results})") |
@@ -198,3 +202,44 @@ usuario: "Añade comprar leche"
 - [todo_agent_test.dart](../test/features/ai/todo_agent_test.dart): el bucle completo (`tool_use` → ejecutar → `tool_result` → respuesta), que el contenido del asistente se reenvía intacto y que un error deshace el turno.
 
 📚 Documentación oficial: [docs de la API de Claude](https://platform.claude.com/docs) · [uso de herramientas](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview).
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Por qué no se debe publicar una app con la API key dentro y qué se hace en producción?
+   <details><summary>Respuesta</summary>
+
+   Cualquiera puede extraer la key del archivo de la app y gastar tu saldo. En producción la app llama a **tu servidor** (proxy), que añade la key y llama a Anthropic; ahí también controlas límites, autenticación y costes. Ver la §2 de este documento.
+
+   </details>
+2. ¿Quién ejecuta realmente una herramienta (*tool*): el modelo o tu app?
+   <details><summary>Respuesta</summary>
+
+   Tu app. El modelo solo te pide usarla (`tool_use`); tú la ejecutas con [execute](../lib/features/ai/todo_agent.dart#L146 "→ (String, bool) execute") y le devuelves el resultado como `tool_result`.
+
+   </details>
+3. ¿Qué pasa si el bucle del agente no tiene límite de pasos?
+   <details><summary>Respuesta</summary>
+
+   Podría repetirse sin parar y gastar saldo. Por eso el bucle en [send](../lib/features/ai/todo_agent.dart#L221 "→ final checkpoint = _messages.length") limita los pasos (aquí, 8), como pide la sección de reglas de seguridad.
+
+   </details>
+4. ¿Por qué aquí no existe una herramienta "borrar tarea"?
+   <details><summary>Respuesta</summary>
+
+   Por el principio de **mínimo privilegio**: solo se dan las herramientas necesarias. Las acciones destructivas, además, deberían pedir confirmación humana.
+
+   </details>
+
+## 🏋️ Reto
+
+**Una herramienta nueva para el agente.** Añade `clear_completed` a `TodoToolbox`: borra las tareas completadas y devuelve cuántas borró.
+
+- ✅ **Cómo saber que lo lograste:** `flutter test exercises/e05_agente_herramienta_test.dart` pasa a verde.
+- 💡 **Pista:** una herramienta tiene tres piezas: su entrada en [definitions](../lib/features/ai/todo_agent.dart#L82 "→ static const definitions"), un caso en [execute](../lib/features/ai/todo_agent.dart#L146 "→ (String, bool) execute") y la función de la app que hace el trabajo, que `TodoToolbox` recibe como `list`, `add` y `toggle`. Como borrar es destructivo, repasa las reglas de seguridad de la §5.
+- 🔑 **Solución (inténtalo antes):** [e05_agente_herramienta](../exercises/solutions/e05_agente_herramienta.md)
+
+## ➡️ Siguiente paso
+
+Continúa con **[08 · Compilar y publicar](08-compilar-y-publicar.md)**: ya sabes qué puede hacer tu app; ahora toca llevarla a las tiendas. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

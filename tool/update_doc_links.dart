@@ -13,6 +13,10 @@
 //   También convierte marcadores escritos a mano con esta forma:
 //     [texto](@L lib/ruta/archivo.dart :: texto a buscar)
 //   (la ruta es relativa a la raíz del proyecto).
+//   El texto a buscar puede llevar paréntesis (hasta 2 niveles), siempre que
+//   estén balanceados:
+//     (@L lib/a.dart :: if (!mounted) return;)   ✓
+//     (@L lib/a.dart :: Widget box()             ✗ (termina antes del "(")
 //
 // CÓMO SE USA (desde la raíz del proyecto)
 //   dart run tool/update_doc_links.dart
@@ -40,7 +44,11 @@ List<File> _markdownFiles() => [
 ];
 
 /// Marcador nuevo: (@L ruta :: patrón)
-final _marker = RegExp(r'\(@L (\S+) :: (.*?)\)(?=[\s|.,;]|$)', multiLine: true);
+/// El patrón admite paréntesis balanceados (hasta 2 niveles). Cortar en el
+/// primer ")" dejaba restos de código como texto visible en el Markdown.
+final _marker = RegExp(
+  r'\(@L (\S+) :: ((?:[^()\n]|\((?:[^()\n]|\([^()\n]*\))*\))*)\)',
+);
 
 /// Enlace ya resuelto: (ruta#L12 "→ patrón")
 final _resolved = RegExp(r'\(([^)\s]+?)#L\d+ "→ ([^"]+)"\)');
@@ -109,6 +117,10 @@ void main() {
       _resolved,
       (m) => _link(mdPath, _toRoot(mdPath, m[1]!), m[2]!),
     );
+    // Si sigue habiendo un "(@L", el marcador está sin cerrar o sin balancear.
+    if (text.contains('(@L ')) {
+      _errors.add('$mdPath → marcador "(@L" sin cerrar o sin balancear');
+    }
 
     if (text != original) {
       file.writeAsStringSync(text);

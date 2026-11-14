@@ -2,6 +2,10 @@
 
 > Anterior: [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md) · Volver al [índice](../README.md) · Siguiente: [12 · Librerías más usadas](12-librerias-mas-usadas.md)
 
+> 🎯 **Aprenderás:** cómo está montada la infraestructura de la app (router, estado, tema, i18n, entornos, red) y cómo replicarla en tus proyectos.
+> 📋 **Necesitas antes:** [06 · Construir la app](06-construir-la-app.md) (§4 navegación y §5 estado) y [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md).
+> ⏱️ **Tiempo:** ~35 min de lectura + ~20 min practicando
+
 Cómo está montada la "infraestructura" de esta app y cómo replicarla en tus proyectos. Cada sección enlaza al código real (los enlaces `#L` abren la línea exacta).
 
 ---
@@ -107,7 +111,7 @@ Para enlaces `https://` (Universal Links / App Links) también hay que publicar 
 1. **`ProviderScope`** envuelve la app → [main.dart](../lib/main.dart#L47 "→ ProviderScope(") .
 2. **`ref.watch`** dentro de `build` (redibuja) · **`ref.read`** en callbacks (una vez) → [TodosScreen](../lib/features/todos/todos_screen.dart#L69 "→ final todos = ref.watch") .
 3. **Nunca mutes el estado**: crea uno nuevo → [add](../lib/features/todos/todos_controller.dart#L68 "→ state = [todo, ...state]") .
-4. **`ref.listen`** para reaccionar sin redibujar (navegar, mostrar SnackBars) → [ref.listen](../lib/core/router/app_router.dart#L74 "→ ref.listen(") .
+4. **`ref.listen`** para reaccionar a un cambio **sin redibujar** (efectos: mostrar un SnackBar, navegar, avisar a otro objeto). Aquí el router lo usa para enterarse de que cambió la sesión y volver a evaluar `redirect` → [ref.listen](../lib/core/router/app_router.dart#L74 "→ ref.listen(") .
 5. **`.select`** para redibujar solo si cambia una parte → [select](../lib/features/todos/todos_screen.dart#L73 "→ todosProvider.select") .
 6. **`ref.onDispose`** para liberar recursos → [ApiClient](../lib/core/network/api_client.dart#L93 "→ ref.onDispose(client.close)") .
 
@@ -184,7 +188,7 @@ flutter gen-l10n        # regenerar a mano (también se hace en flutter run / pu
 |---|---|
 | Ajustes y datos pequeños | `shared_preferences` (este proyecto) |
 | Tokens, contraseñas | `flutter_secure_storage` (Keychain / Keystore) |
-| Muchos datos, consultas, relaciones | `drift` (SQL tipado) · `sqflite` · `isar` / `hive_ce` |
+| Muchos datos, consultas, relaciones | `drift` (SQL tipado) · `sqflite` · `hive_ce` |
 | Archivos (imágenes, PDFs) | `path_provider` + `dart:io` |
 | Sincronización en la nube | Firebase Firestore · Supabase |
 
@@ -199,6 +203,13 @@ flutter run --dart-define-from-file=config/dev.json
 flutter build appbundle --dart-define-from-file=config/prod.json
 flutter run --dart-define=API_URL=https://staging.miapi.com --dart-define=FLAVOR=staging
 ```
+En Dart, cada variable se lee con un constructor `const` (se resuelve al compilar) y puede llevar valor por defecto; para booleanos usa `bool.fromEnvironment`:
+```dart
+const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'https://miapi.com');
+const debugLogs = bool.fromEnvironment('DEBUG_LOGS');
+```
+Un archivo JSON sirve para agrupar un entorno (`{ "API_URL": "https://dev.miapi.com", "DEBUG_LOGS": true }`).
+
 | Configuración | Dónde |
 |---|---|
 | Leer valores (`String.fromEnvironment`) | [apiBaseUrl](../lib/core/config/env.dart#L36 "→ static const apiBaseUrl") |
@@ -209,7 +220,7 @@ flutter run --dart-define=API_URL=https://staging.miapi.com --dart-define=FLAVOR
 
 ⚠️ No guardes **secretos** aquí: se pueden extraer del binario.
 
-**Flavors** (apps distintas instalables a la vez: "MiApp Dev" y "MiApp"): requieren `productFlavors` en [build.gradle.kts](../android/app/build.gradle.kts) y *schemes* en Xcode → [docs.flutter.dev/deployment/flavors](https://docs.flutter.dev/deployment/flavors).
+**Flavors** (apps distintas instalables a la vez: "MiApp Dev" y "MiApp"): requieren `productFlavors` en [build.gradle.kts](../android/app/build.gradle.kts) y *schemes* en Xcode, y se eligen con `--flavor dev` (y, si usas otro archivo de entrada, `-t lib/main_dev.dart`) → [docs.flutter.dev/deployment/flavors](https://docs.flutter.dev/deployment/flavors).
 
 ---
 
@@ -224,7 +235,7 @@ flutter run --dart-define=API_URL=https://staging.miapi.com --dart-define=FLAVOR
 | Timeout | [_timeout](../lib/core/network/api_client.dart#L57 "→ static const _timeout") |
 | Errores unificados (`ApiException`) | [getJson](../lib/core/network/api_client.dart#L60 "→ Future<Object?> getJson") |
 | Cliente inyectable para tests (`MockClient`) | [fakeApi](../test/features/posts/posts_repository_test.dart#L26 "→ ApiClient fakeApi") |
-| Permiso INTERNET en Android release | [AndroidManifest.xml](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") |
+| Permiso INTERNET en Android release | Ver [06 §9](06-construir-la-app.md#9-permisos-nativos) |
 
 Para APIs más complejas: [`dio`](https://pub.dev/packages/dio) (interceptores para tokens, reintentos, subida de archivos) o [`retrofit`](https://pub.dev/packages/retrofit) (genera el cliente a partir de una interfaz).
 
@@ -278,6 +289,8 @@ Compara con el [Post escrito a mano](../lib/features/posts/post.dart#L25 "→ cl
 
 ## 10. Pruebas avanzadas
 
+Lo básico (unitarias, de widget, mocks, cobertura) está en [07 · Pruebas y calidad](07-pruebas-y-calidad.md); aquí solo las técnicas avanzadas de este proyecto.
+
 | Técnica | Dónde |
 |---|---|
 | Helpers compartidos (`pumpApp`, preferencias en memoria) | [test_helpers.dart](../test/helpers/test_helpers.dart) |
@@ -307,3 +320,50 @@ Los enlaces con `#L` apuntan a una línea concreta. Si editas el código y las l
 dart run tool/update_doc_links.dart
 ```
 El script ([tool/update_doc_links.dart](../tool/update_doc_links.dart)) vuelve a buscar el texto de cada enlace (el que aparece al pasar el ratón, tras `→`) y corrige el número de línea.
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Por qué el router se crea dentro de un `Provider`?
+   <details><summary>Respuesta</summary>
+
+   Para poder leer otros providers, por ejemplo la sesión, y re-evaluar el `redirect` cuando cambia. Ver [routerProvider](../lib/core/router/app_router.dart#L70 "→ final routerProvider") y [authListenable](../lib/core/router/app_router.dart#L73 "→ final authListenable").
+
+   </details>
+2. ¿Para qué sirve `ref.listen` y en qué se diferencia de `ref.watch`?
+   <details><summary>Respuesta</summary>
+
+   `ref.listen` reacciona a un cambio sin redibujar (efectos como un SnackBar o navegar); `ref.watch` dentro de `build` sí redibuja el widget (§2, regla 4).
+
+   </details>
+3. ¿Por qué nunca debes mutar el estado de un `Notifier`?
+   <details><summary>Respuesta</summary>
+
+   El `Notifier` avisa a los widgets al asignar un estado nuevo (`state = [todo, ...state]`); mutar la lista en sitio no dispara ese aviso. Ver [add](../lib/features/todos/todos_controller.dart#L68 "→ state = [todo, ...state]").
+
+   </details>
+4. ¿Qué hace el patrón *override* con `sharedPreferencesProvider`?
+   <details><summary>Respuesta</summary>
+
+   El provider lanza error por defecto y `main` lo sobrescribe con el objeto ya inicializado; los tests lo sobrescriben con preferencias en memoria. Así el resto del código lo lee como si fuera síncrono.
+
+   </details>
+5. ¿Por qué no debes guardar secretos en `--dart-define`?
+   <details><summary>Respuesta</summary>
+
+   Los valores quedan dentro del binario y se pueden extraer de él (§6).
+
+   </details>
+
+## 🏋️ Reto
+
+**Completar todas las tareas.** Añade `completeAll()` a `TodosController`: marca todas las tareas como hechas **sin mutar el estado** y persiste el resultado, como hacen `toggle` y `clearCompleted`.
+
+- ✅ **Cómo saber que lo lograste:** `flutter test exercises/e02_todos_completar_todas_test.dart` pasa a verde.
+- 💡 **Pista:** mira cómo [add](../lib/features/todos/todos_controller.dart#L58 "→ void add") crea una lista nueva y llama a [_save](../lib/features/todos/todos_controller.dart#L51 "→ Future<void> _save"); haz lo mismo con una lista de tareas copiadas.
+- 🔑 **Solución (inténtalo antes):** [e02_todos_completar_todas](../exercises/solutions/e02_todos_completar_todas.md)
+
+## ➡️ Siguiente paso
+
+Continúa con **[17 · Calidad de producción](17-calidad-de-produccion.md)**: con la infraestructura clara, aprende accesibilidad, errores globales y rendimiento. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

@@ -2,6 +2,10 @@
 
 > Anterior: [04 · Ejecutar y simular](04-ejecutar-y-simular.md) · Volver al [índice](../README.md) · Siguiente: [06 · Construir la app](06-construir-la-app.md)
 
+> 🎯 **Aprenderás:** leer y escribir el Dart que usa Flutter: variables, null safety, colecciones, funciones, clases, `async`/`await` y records.
+> 📋 **Necesitas antes:** [01 · Entorno e instalación](01-entorno-e-instalacion.md) (para ejecutar código; en [dartpad.dev](https://dartpad.dev) no necesitas nada).
+> ⏱️ **Tiempo:** ~25 min de lectura + ~20 min practicando
+
 Flutter se programa en **Dart**. Si conoces JavaScript, Java, Kotlin, Swift o C#, Dart te resultará familiar. Puedes practicar sin instalar nada en [dartpad.dev](https://dartpad.dev).
 
 ---
@@ -55,7 +59,11 @@ late String token;         // se inicializará más tarde, antes de usarse
 
 ## 3. Colecciones
 
-> 📂 **En este proyecto:** [`for` + `if/else` dentro de una lista](../lib/features/todos/todos_controller.dart#L75 "→ if (t.id == id") t.copyWith) · [spread `...`](../lib/features/todos/todos_controller.dart#L68 "→ state = [todo, ...state]") · [`where`](../lib/features/todos/todos_controller.dart#L126 "→ todos.where((t") => !t.done)) · [`map` + `toList`](../lib/features/posts/posts_repository.dart#L41 "→ list.map") .
+> 📂 **En este proyecto:**
+> - [`for` + `if/else` dentro de una lista](../lib/features/todos/todos_controller.dart#L75 "→ if (t.id == id) t.copyWith")
+> - [spread `...`](../lib/features/todos/todos_controller.dart#L68 "→ state = [todo, ...state]")
+> - [`where`](../lib/features/todos/todos_controller.dart#L126 "→ todos.where((t) => !t.done)")
+> - [`map` + `toList`](../lib/features/posts/posts_repository.dart#L41 "→ list.map")
 
 ```dart
 // Lista (array)
@@ -91,7 +99,7 @@ final todas = [...frutas, 'kiwi'];
 
 ## 4. Funciones
 
-> 📂 **En este proyecto:** [parámetros con nombre `required`](../lib/core/widgets/demo_scaffold.dart#L26 "→ required this.explanation") · [función local](../lib/features/basics/layout_screen.dart#L33 "→ Widget box(") · [callbacks como parámetro](../lib/features/advanced/native_channel.dart#L73 "→ Future<void> _call(Future<void> Function(") action) .
+> 📂 **En este proyecto:** [parámetros con nombre `required`](../lib/core/widgets/demo_scaffold.dart#L26 "→ required this.explanation") · [función local](../lib/features/basics/layout_screen.dart#L33 "→ Widget box(") · [callbacks como parámetro](../lib/features/advanced/native_channel.dart#L73 "→ Future<void> _call(Future<void> Function() action)") .
 
 ```dart
 int sumar(int a, int b) => a + b;              // arrow function
@@ -145,7 +153,7 @@ class Producto {
 
 ### Herencia, interfaces y mixins
 
-> 📂 **En este proyecto:** [`extends` + mixin `with`](../lib/features/advanced/animations_screen.dart#L36 "→ with SingleTickerProviderStateMixin") · [`implements Exception`](../lib/core/network/api_client.dart#L38 "→ class ApiException implements Exception") · [`extends ThemeExtension`](../lib/core/theme/app_theme.dart#L77 "→ class LevelColors extends ThemeExtension") .
+> 📂 **En este proyecto:** [`extends` + mixin `with`](../lib/features/advanced/animations_screen.dart#L36 "→ with SingleTickerProviderStateMixin") (un mixin de Flutter para animaciones; → lo verás en [10 · Funcionalidades](10-funcionalidades-de-la-app.md)) · [`implements Exception`](../lib/core/network/api_client.dart#L38 "→ class ApiException implements Exception") · [`extends ThemeExtension`](../lib/core/theme/app_theme.dart#L77 "→ class LevelColors extends ThemeExtension") (tus propios valores dentro del tema; → lo verás en [11 §3](11-configuraciones-avanzadas.md#3-tema-avanzado)) .
 ```dart
 abstract class Animal {
   String hacerSonido();
@@ -226,7 +234,7 @@ await for (final n in contador()) {
 
 ### Records (tuplas)
 
-> 📂 **En este proyecto:** [devolver un record](../lib/features/todos/todos_controller.dart#L81 "→ (Todo, int)? remove") · [desestructurarlo](../lib/features/todos/todos_screen.dart#L51 "→ final (item, index") = removed) · [records en un Map](../lib/features/catalog/catalog_screen.dart#L37 "→ DemoLevel.basic: (l10n.levelBasic") .
+> 📂 **En este proyecto:** [devolver un record](../lib/features/todos/todos_controller.dart#L81 "→ (Todo, int)? remove") · [desestructurarlo](../lib/features/todos/todos_screen.dart#L51 "→ final (item, index) = removed") · [records en un Map](../lib/features/catalog/catalog_screen.dart#L37 "→ DemoLevel.basic: (l10n.levelBasic") .
 ```dart
 (String, int) obtenerUsuario() => ('Jean', 30);
 final (nombre, edad) = obtenerUsuario();
@@ -237,7 +245,7 @@ print(ubicacion().lat);
 
 ### Pattern matching y `switch` como expresión
 
-> 📂 **En este proyecto:** [validar JSON con patrones](../lib/features/posts/post.dart#L40 "→ return switch (json)") · [`switch` sobre un enum](../lib/features/todos/todos_controller.dart#L124 "→ return switch (ref.watch(todoFilterProvider))") · [patrones en un `for`](../lib/features/catalog/catalog_screen.dart#L52 "→ for (final MapEntry(key: level") .
+> 📂 **En este proyecto:** [validar JSON con patrones](../lib/features/posts/post.dart#L40 "→ return switch (json)") · [`switch` sobre un enum](../lib/features/todos/todos_controller.dart#L124 "→ return switch (ref.watch(todoFilterProvider))") (el `ref.watch` es de Riverpod, → lo verás en [06 §5](06-construir-la-app.md#5-gestión-de-estado); aquí fíjate solo en el `switch`) · [patrones en un `for`](../lib/features/catalog/catalog_screen.dart#L52 "→ for (final MapEntry(key: level") .
 ```dart
 String describir(Object valor) => switch (valor) {
       int n when n < 0 => 'Negativo',
@@ -249,7 +257,7 @@ String describir(Object valor) => switch (valor) {
 
 ### Sealed classes (ideal para estados de pantalla)
 
-> 📂 **En este proyecto:** `AsyncValue` de Riverpod es una sealed class (`AsyncData`, `AsyncError`, `AsyncLoading`); se usa en [PostsScreen](../lib/features/posts/posts_screens.dart#L54 "→ child: postsAsync.when(") .
+> 📂 **En este proyecto:** `AsyncValue` es una sealed class de Riverpod (`AsyncData`, `AsyncError`, `AsyncLoading`) que representa "cargando / dato / error" (→ lo verás en [06 §5](06-construir-la-app.md#5-gestión-de-estado)); se usa en [PostsScreen](../lib/features/posts/posts_screens.dart#L54 "→ child: postsAsync.when(") .
 ```dart
 sealed class Resultado {}
 class Cargando extends Resultado {}
@@ -300,3 +308,50 @@ import '../widgets/boton.dart';                // ruta relativa
 ---
 
 📚 Más: [Tour del lenguaje Dart](https://dart.dev/language) · [Effective Dart](https://dart.dev/effective-dart) · [DartPad](https://dartpad.dev)
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Cuándo usarías `final` y cuándo `const`?
+   <details><summary>Respuesta</summary>
+
+   `final` se asigna una sola vez y puede calcularse al ejecutar (`DateTime.now()`); `const` exige un valor conocido al compilar. Usa `final` por defecto y `const` para valores fijos, también en widgets (§1).
+
+   </details>
+2. ¿Qué pasa si usas `apodo!.length` y `apodo` es `null`?
+   <details><summary>Respuesta</summary>
+
+   La app falla en ejecución: `!` solo dice "confía en mí, no es null". Prefiere `?.` y `??` (§2).
+
+   </details>
+3. ¿Por qué `copyWith` crea un objeto nuevo en vez de modificar el existente?
+   <details><summary>Respuesta</summary>
+
+   Porque los objetos inmutables (campos `final`) no se pueden cambiar; devolver una copia con otros valores es la forma de "modificarlos" (§5).
+
+   </details>
+4. ¿Qué ventaja tiene una `sealed class` en un `switch`?
+   <details><summary>Respuesta</summary>
+
+   El compilador avisa si olvidas algún caso (§7), por eso es ideal para estados de pantalla como cargando / éxito / fallo.
+
+   </details>
+5. ¿En qué se diferencia un `Future` de un `Stream`?
+   <details><summary>Respuesta</summary>
+
+   Un `Future` entrega un único valor más adelante; un `Stream` entrega varios valores a lo largo del tiempo (§6).
+
+   </details>
+
+## 🏋️ Reto
+
+**Cuenta tareas con un record.** Crea `countTodos(List<Todo> todos)` en `lib/features/todos/todo_stats.dart`: devuelve un *record* con campos con nombre `pending` y `done`. [`Todo`](../lib/features/todos/todo.dart#L16 "→ class Todo") es el modelo de una tarea y tiene un campo `done`.
+
+- ✅ **Cómo saber que lo lograste:** `flutter test exercises/e03_records_contar_tareas_test.dart` pasa a verde.
+- 💡 **Pista:** el tipo de retorno es `({int pending, int done})` (§7, Records); recorre la lista y cuenta con `where`.
+- 🔑 **Solución (inténtalo antes):** [e03_records_contar_tareas](../exercises/solutions/e03_records_contar_tareas.md)
+
+## ➡️ Siguiente paso
+
+Continúa con **[06 · Construir la app](06-construir-la-app.md)**: ya tienes el Dart necesario para entender widgets, pantallas y estado. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

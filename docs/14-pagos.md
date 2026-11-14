@@ -2,6 +2,10 @@
 
 > Anterior: [13 · Onboarding](13-onboarding.md) · Volver al [índice](../README.md) · Siguiente: [15 · IA y agentes](15-ia-y-agentes.md)
 
+> 🎯 **Aprenderás:** a decidir cómo cobrar según lo que vendes (compra integrada o pasarela), a leer la interfaz del checkout y del paywall de la app y a seguir el flujo seguro con Stripe.
+> 📋 **Necesitas antes:** [11 · Configuraciones avanzadas](11-configuraciones-avanzadas.md) (Riverpod, entornos con `--dart-define`) y [13 · Onboarding](13-onboarding.md).
+> ⏱️ **Tiempo:** ~15 min de lectura + ~10 min practicando
+
 Cobrar dentro de una app tiene **reglas de las tiendas, de seguridad y de experiencia de usuario** que conviene conocer antes de escribir código. Este documento explica cuál usar en cada caso, cómo diseñar la interfaz y cómo implementarlo de verdad.
 
 > 📱 **En la app:** *Ejemplos → Apps reales → Pago (checkout)* y *Suscripción (paywall)*. Están en **modo demo**: no se cobra nada y ningún dato sale del teléfono.
@@ -182,3 +186,43 @@ final isPro = result.customerInfo.entitlements.active.containsKey('pro');
 ## 6. Tests
 
 📄 [payments_test.dart](../test/features/payments/payments_test.dart): marcas, Luhn, formato, caducidad, CVV, formateadores y las respuestas de la pasarela simulada. La lógica de pagos debe ser la parte **más probada** de una app.
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. Vendes una versión Pro dentro de la app. ¿Puedes cobrarla con Stripe?
+   <details><summary>Respuesta</summary>
+
+   No: el contenido o las funciones digitales usadas en la app exigen la compra integrada de Apple / Google; con Stripe, las tiendas rechazarán o retirarán tu app. Ver [§1](#1-primero-la-regla-más-importante-qué-vendes).
+
+   </details>
+2. ¿Por qué los precios se guardan en céntimos enteros y no con `double`?
+   <details><summary>Respuesta</summary>
+
+   Porque en coma flotante `0.1 + 0.2 != 0.3`; con enteros no hay errores de redondeo. Ver [PaymentRequest](../lib/features/payments/payment_gateway.dart#L70 "→ final int amountCents").
+
+   </details>
+3. ¿Qué pasa si el botón de pagar no se desactiva mientras se procesa el pago?
+   <details><summary>Respuesta</summary>
+
+   Un doble toque puede cobrar dos veces. La demo lo evita con [onPressed: _processing ? null](../lib/features/payments/checkout_screen.dart#L230 "→ onPressed: _processing ? null : _pay").
+
+   </details>
+4. ¿Por qué el importe lo calcula el servidor y la entrega se confirma por webhook?
+   <details><summary>Respuesta</summary>
+
+   Porque nunca te puedes fiar del precio que envía la app ni de que la app diga "pagado": el servidor calcula el importe y el webhook de Stripe confirma el pago antes de entregar nada.
+
+   </details>
+
+## 🏋️ Reto
+
+**Las tarjetas de prueba.** Prueba en el checkout simulado cada tarjeta de la tabla de [Tarjetas de prueba](#tarjetas-de-prueba-las-de-stripe-en-modo-test) y anota el mensaje que devuelve cada una.
+
+- ✅ **Cómo saber que lo lograste:** tienes los 4 mensajes anotados y puedes explicar cuál de ellos viene de [FakePaymentGateway](../lib/features/payments/payment_gateway.dart#L107 "→ class FakePaymentGateway") y por qué la UI no necesita cambiar.
+- 💡 **Pista:** los chips de la demo rellenan el número por ti; usa cualquier fecha futura y cualquier CVV.
+
+## ➡️ Siguiente paso
+
+Continúa con **[15 · IA y agentes](15-ia-y-agentes.md)**: ya sabes cobrar; ahora verás cómo integrar un modelo de IA y construir un agente con herramientas. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

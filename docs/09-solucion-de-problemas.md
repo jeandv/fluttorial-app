@@ -2,6 +2,10 @@
 
 > Anterior: [08 · Compilar y publicar](08-compilar-y-publicar.md) · Volver al [índice](../README.md) · Siguiente: [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md)
 
+> 📖 **Documento de consulta:** no se lee de corrido; ábrelo cuando lo necesites.
+> 🎯 **Te sirve para:** buscar la causa y la solución de un error de instalación, iOS, Android, ejecución o dependencias, o para liberar espacio en disco.
+> 🧭 **Ruta de aprendizaje:** [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md)
+
 **Primero, siempre:**
 ```bash
 flutter doctor -v
@@ -62,7 +66,7 @@ Y lee el error **desde abajo hacia arriba**: la causa real suele estar en las ú
 | `Execution failed for task ':app:checkDebugAarMetadata'` | Subir `compileSdk` o actualizar Flutter/plugins |
 | El emulador no arranca o va muy lento | Usar imagen **arm64-v8a**; Device Manager → *Cold Boot Now*; o `emulator -avd <nombre> -no-snapshot-load` |
 | `adb: device offline` / no se detecta | `adb kill-server && adb start-server` |
-| La app en release no carga datos de internet | Falta `<uses-permission android:name="android.permission.INTERNET"/>` en el manifest **main** |
+| La app en release no carga datos de internet | Falta el permiso INTERNET en el manifest **main** → [06 §9](06-construir-la-app.md#9-permisos-nativos) |
 | No conecta a `localhost` desde el emulador | Usar `http://10.0.2.2:<puerto>` o `adb reverse tcp:<puerto> tcp:<puerto>` |
 | `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | Firma distinta a la instalada → `adb uninstall com.jeanrondon.mi_primera_app` |
 
@@ -70,12 +74,17 @@ Y lee el error **desde abajo hacia arriba**: la causa real suele estar en las ú
 
 ## 5. Dart / Flutter en tiempo de ejecución
 
-> 📂 **En este proyecto:** soluciones aplicadas en el código: [comprobar `mounted` tras un await](../lib/features/basics/widgets_screen.dart#L77 "→ if (!mounted") return;) · [no usar context tras un await](../lib/features/intermediate/async_screen.dart#L69 "→ no usamos `context` después") · [Expanded contra el overflow](../lib/features/basics/layout_screen.dart#L91 "→ Expanded(child: box('1'") · [GridView dentro de ListView](../lib/features/advanced/responsive_screen.dart#L101 "→ shrinkWrap: true") · [capturar MissingPluginException](../lib/features/advanced/native_channel.dart#L80 "→ on MissingPluginException") .
+> 📂 **En este proyecto:** soluciones aplicadas en el código (las demos se explican en [10 · Funcionalidades de la app](10-funcionalidades-de-la-app.md) → lo verás allí):
+> - [comprobar `mounted` tras un await](../lib/features/basics/widgets_screen.dart#L77 "→ if (!mounted) return;")
+> - [no usar context tras un await](../lib/features/intermediate/async_screen.dart#L69 "→ no usamos `context` después")
+> - [Expanded contra el overflow](../lib/features/basics/layout_screen.dart#L91 "→ Expanded(child: box('1'")
+> - [GridView dentro de ListView](../lib/features/advanced/responsive_screen.dart#L101 "→ shrinkWrap: true")
+> - [capturar MissingPluginException](../lib/features/advanced/native_channel.dart#L80 "→ on MissingPluginException")
 
 | Error en pantalla/terminal | Significado | Solución |
 |---|---|---|
 | Franja amarilla y negra **`RenderFlex overflowed by X pixels`** | El contenido no cabe en `Row`/`Column` | Envolver en `Expanded`/`Flexible`, usar `SingleChildScrollView`, o reducir tamaños |
-| Pantalla roja **`Cannot interpolate between finite constraints and unbounded constraints`** | Una animación va hacia un tamaño infinito (`width: double.infinity` en `AnimatedContainer`) | Animar hacia un número real: medirlo con `LayoutBuilder` (`constraints.maxWidth`) → [ejemplo corregido](../lib/features/advanced/animations_screen.dart#L111 "→ width: _expanded ? constraints.maxWidth") |
+| Pantalla roja **`Cannot interpolate between finite constraints and unbounded constraints`** | Una animación va hacia un tamaño infinito (`width: double.infinity` en `AnimatedContainer`) | Animar hacia un número real: medirlo con `LayoutBuilder` (`constraints.maxWidth`) → [ejemplo corregido](../lib/features/advanced/animations_screen.dart#L111 "→ width: _expanded ? constraints.maxWidth") (→ lo verás en [10](10-funcionalidades-de-la-app.md)) |
 | `Vertical viewport was given unbounded height` | `ListView` dentro de `Column` sin altura | Envolver el `ListView` en `Expanded`, o `shrinkWrap: true` |
 | `Null check operator used on a null value` | Se usó `!` sobre algo `null` | Revisar la variable; usar `?.` / `??` |
 | `setState() called after dispose()` | `setState` tras salir de la pantalla (p. ej. al terminar un `Future`) | `if (!mounted) return;` antes de `setState` |
@@ -83,7 +92,7 @@ Y lee el error **desde abajo hacia arriba**: la causa real suele estar en las ú
 | `A RenderFlex/Box was not laid out` | Problema de restricciones de tamaño | Ver [Understanding constraints](https://docs.flutter.dev/ui/layout/constraints) |
 | `Unable to load asset` | Asset no registrado en `pubspec.yaml` o ruta incorrecta | Revisar `flutter: assets:`, `flutter pub get` y hot restart |
 | `MissingPluginException` | Plugin nativo añadido con la app ya corriendo | Detener (`q`) y ejecutar de nuevo `flutter run` |
-| Hot reload no muestra el cambio | Cambio en `main()`, `initState`, globales o código nativo | `R` (hot restart) o reiniciar `flutter run` |
+| Hot reload no muestra el cambio | Es un cambio que hot reload no aplica | `R` (hot restart) o reiniciar `flutter run`; lista de casos en [04 §1](04-ejecutar-y-simular.md#1-flujo-completo-paso-a-paso-terminal) |
 
 ---
 
@@ -116,3 +125,9 @@ Y lee el error **desde abajo hacia arriba**: la causa real suele estar en las ú
 - [GitHub Issues de Flutter](https://github.com/flutter/flutter/issues).
 - [Discord de Flutter](https://discord.gg/flutter) · [r/FlutterDev](https://reddit.com/r/FlutterDev).
 - Al preguntar, incluye siempre la salida de `flutter doctor -v`.
+
+---
+
+## ➡️ Siguiente paso
+
+Vuelve a la [ruta de aprendizaje](00-ruta-de-aprendizaje.md).

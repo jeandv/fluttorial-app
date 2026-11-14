@@ -60,6 +60,7 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
 
 | # | Documento | Qué aprenderás |
 |---|---|---|
+| 00 | [**Ruta de aprendizaje**](docs/00-ruta-de-aprendizaje.md) | **Empieza aquí:** en qué orden leer la guía, qué es de consulta y los retos de cada etapa |
 | 01 | [Entorno e instalación](docs/01-entorno-e-instalacion.md) | Qué hay instalado en la Mac, para qué sirve cada herramienta, cómo verificar y actualizar |
 | 02 | [Estructura del proyecto](docs/02-estructura-del-proyecto.md) | Qué es cada carpeta y archivo, qué se edita, qué es generado, qué se sube a git |
 | 03 | [Comandos](docs/03-comandos.md) | Todos los comandos: diarios, comunes, de compilación, poco usados, `xcrun simctl`, `adb`, `gradlew` |
@@ -75,6 +76,10 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
 | 13 | [**Onboarding**](docs/13-onboarding.md) | Tipos de onboarding, flujo de primer uso con el router, buenas prácticas, librerías |
 | 14 | [**Pagos**](docs/14-pagos.md) | Compra integrada vs. pasarela, interfaz de checkout, Stripe, Apple/Google Pay, suscripciones con RevenueCat |
 | 15 | [**IA y agentes**](docs/15-ia-y-agentes.md) | Claude por API, seguridad de la API key, streaming, documentos, imágenes, agentes con herramientas, costes |
+| 16 | [**Cómo piensa Flutter**](docs/16-como-piensa-flutter.md) | Modelos mentales: árboles de widgets, constraints, rebuilds, keys, ciclo de vida, event loop, slivers |
+| 17 | [**Calidad de producción**](docs/17-calidad-de-produccion.md) | Accesibilidad, ciclo de vida de la app, errores globales, rendimiento con DevTools, golden tests |
+
+> 🧭 **¿Primera vez aquí?** No leas el índice en orden: sigue la [ruta de aprendizaje](docs/00-ruta-de-aprendizaje.md). Los retos con test están en [`exercises/`](exercises/README.md).
 
 > 🔗 **Enlaces al código:** en los documentos, los recuadros **📂 En este proyecto** y las tablas enlazan a la línea exacta (`archivo.dart#L42`). Funcionan en GitHub y en VS Code (vista previa del Markdown: `Cmd+Shift+V`). Si el código cambia: `dart run tool/update_doc_links.dart`.
 
@@ -152,8 +157,5 @@ Con variables de entorno: `flutter run --dart-define-from-file=config/dev.json`.
 - El lenguaje Dart: [dart.dev/language](https://dart.dev/language)
 - Riverpod: [riverpod.dev](https://riverpod.dev) · go_router: [pub.dev/packages/go_router](https://pub.dev/packages/go_router)
 - Practicar Dart y Flutter en el navegador: [dartpad.dev](https://dartpad.dev)
-<<<<<<< HEAD
 - Codelab oficial "Tu primera app Flutter": [docs.flutter.dev/get-started/codelab](https://docs.flutter.dev/get-started/codelab)
-=======
 - Canal de YouTube de Flutter (serie *Widget of the Week*): [youtube.com/@flutterdev](https://www.youtube.com/@flutterdev)
->>>>>>> 83b9d26 (feat: turn app into documented Flutter showcase with demos, tests and guides)

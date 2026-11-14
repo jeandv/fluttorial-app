@@ -2,6 +2,10 @@
 
 > Anterior: [01 · Entorno](01-entorno-e-instalacion.md) · Volver al [índice](../README.md) · Siguiente: [03 · Comandos](03-comandos.md)
 
+> 🎯 **Aprenderás:** qué carpetas edita un desarrollador a diario, cuáles genera Flutter y cuáles no se suben a git.
+> 📋 **Necesitas antes:** [01 · Entorno e instalación](01-entorno-e-instalacion.md)
+> ⏱️ **Tiempo:** ~10 min de lectura + ~10 min practicando
+
 Cuando ejecutas `flutter create mi_primera_app`, Flutter genera un proyecto con **una carpeta por plataforma** y una carpeta `lib/` con tu código Dart. **El 95 % de tu tiempo lo pasarás en `lib/`, `test/`, `assets/` y `pubspec.yaml`.**
 
 ---
@@ -51,11 +55,18 @@ Leyenda: ⭐ editas a menudo · 🔒/⚙️/🏗️ generado automáticamente ·
 
 ### `lib/` — tu aplicación
 
-> 📂 **En este proyecto:** arranque en [main.dart](../lib/main.dart#L41 "→ Future<void> main") · configuración global en [app.dart](../lib/app.dart#L30 "→ class MyApp") · infraestructura en [lib/core/](../lib/core/) · funcionalidades en [lib/features/](../lib/features/) · traducciones en [lib/l10n/](../lib/l10n/). Mapa completo: [docs/11 §0](11-configuraciones-avanzadas.md#0-arquitectura-del-proyecto).
+> 📂 **En este proyecto:**
+> - arranque en [main.dart](../lib/main.dart#L41 "→ Future<void> main")
+> - configuración global en [app.dart](../lib/app.dart#L30 "→ class MyApp")
+> - infraestructura en [lib/core/](../lib/core/)
+> - funcionalidades en [lib/features/](../lib/features/)
+> - traducciones en [lib/l10n/](../lib/l10n/)
+> - mapa completo → lo verás en [docs/11 §0](11-configuraciones-avanzadas.md#0-arquitectura-del-proyecto)
+
 Todo el código Dart de la app. Flutter compila **solo** lo que está aquí (y en paquetes). Guía detallada: [lib/README.md](../lib/README.md).
 
 - `lib/main.dart` → contiene `void main()` que llama a `runApp(...)`. Es lo primero que se ejecuta.
-- A medida que la app crece, se organiza en subcarpetas (pantallas, widgets, modelos, servicios…). Ver estructura recomendada en [06 · Construir la app](06-construir-la-app.md#2-cómo-organizar-lib).
+- A medida que la app crece, se organiza en subcarpetas (pantallas, widgets, modelos, servicios…). La estructura recomendada → lo verás en [06 · Construir la app](06-construir-la-app.md#2-cómo-organizar-lib).
 
 ### `test/` — pruebas
 
@@ -64,7 +75,12 @@ Archivos que terminan en `_test.dart`. Se ejecutan con `flutter test`. Guía: [t
 
 ### `pubspec.yaml` — el "package.json" de Flutter
 
-> 📂 **En este proyecto:** [versión](../pubspec.yaml#L32 "→ version: 1.0.0+1") · [dependencias](../pubspec.yaml#L52 "→ dependencies:") · [dependencias de desarrollo](../pubspec.yaml#L130 "→ dev_dependencies:") · [generación de traducciones](../pubspec.yaml#L186 "→ generate: true") .
+> 📂 **En este proyecto:**
+> - [versión](../pubspec.yaml#L32 "→ version: 1.0.0+1")
+> - [dependencias](../pubspec.yaml#L52 "→ dependencies:")
+> - [dependencias de desarrollo](../pubspec.yaml#L130 "→ dev_dependencies:")
+> - [generación de traducciones](../pubspec.yaml#L186 "→ generate: true")
+
 Define:
 - `name`, `description`, `version` (ej. `1.0.0+1` → versión `1.0.0`, build `1`).
 - `environment.sdk` → versión de Dart compatible.
@@ -92,7 +108,12 @@ Flutter genera un **proyecto nativo real** para cada plataforma. Ese proyecto "e
 
 ### `android/` — proyecto Android (Gradle + Kotlin)
 
-> 📂 **En este proyecto:** [applicationId](../android/app/build.gradle.kts#L42 "→ applicationId =") · [nombre visible](../android/app/src/main/AndroidManifest.xml#L42 "→ android:label=") · [permiso INTERNET](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") · [canal nativo en Kotlin](../android/app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt#L30 "→ override fun configureFlutterEngine") .
+> 📂 **En este proyecto:**
+> - [applicationId](../android/app/build.gradle.kts#L42 "→ applicationId =")
+> - [nombre visible](../android/app/src/main/AndroidManifest.xml#L42 "→ android:label=")
+> - [permiso INTERNET](../android/app/src/main/AndroidManifest.xml#L31 "→ android.permission.INTERNET") (qué es y por qué: [06 §9](06-construir-la-app.md#9-permisos-nativos))
+> - [canal nativo en Kotlin](../android/app/src/main/kotlin/com/jeanrondon/mi_primera_app/MainActivity.kt#L30 "→ override fun configureFlutterEngine")
+
 Guía detallada: [android/README.md](../android/README.md).
 
 | Ruta | Para qué |
@@ -101,7 +122,7 @@ Guía detallada: [android/README.md](../android/README.md).
 | `android/app/src/main/AndroidManifest.xml` | **Nombre visible** (`android:label`), **permisos** (`<uses-permission>`), deep links |
 | `android/app/src/main/kotlin/.../MainActivity.kt` | Actividad nativa que aloja Flutter (casi nunca se toca) |
 | `android/app/src/main/res/` | **Iconos** (`mipmap-*`), pantalla de carga (`drawable/launch_background.xml`), estilos |
-| `android/app/src/debug/AndroidManifest.xml` | Permisos solo en modo debug (INTERNET para hot reload) |
+| `android/app/src/debug/AndroidManifest.xml` | Permisos solo en modo debug (INTERNET para hot reload; ver [06 §9](06-construir-la-app.md#9-permisos-nativos)) |
 | `android/build.gradle.kts` / `settings.gradle.kts` | Configuración global de Gradle y versiones de plugins |
 | `android/gradle.properties` | Memoria de Gradle, flags de AndroidX |
 | `android/local.properties` | Rutas locales al SDK de Android y Flutter (**no se sube a git**) |
@@ -157,7 +178,11 @@ Todas están en [`.gitignore`](../.gitignore).
 
 ## 5. Carpetas que **tú** creas normalmente
 
-> 📂 **En este proyecto:** además de `lib/core` y `lib/features`, se crearon [config/](../config/) (variables por entorno), [lib/l10n/](../lib/l10n/) + [l10n.yaml](../l10n.yaml) (traducciones), [tool/](../tool/) (scripts propios) y [.github/workflows/](../.github/workflows/flutter-ci.yml) (integración continua).
+> 📂 **En este proyecto:** además de `lib/core` y `lib/features`, se crearon:
+> - [config/](../config/) (variables por entorno)
+> - [lib/l10n/](../lib/l10n/) + [l10n.yaml](../l10n.yaml) (traducciones)
+> - [tool/](../tool/) (scripts propios)
+> - [.github/workflows/](../.github/workflows/flutter-ci.yml) (integración continua)
 
 ```
 mi_primera_app/
@@ -170,7 +195,7 @@ mi_primera_app/
 └── l10n/ o lib/l10n/  # Traducciones (archivos .arb)
 ```
 
-Recuerda registrar `assets/` y `fonts/` en `pubspec.yaml` → ver [06 · Construir la app](06-construir-la-app.md#7-assets-imágenes-y-fuentes).
+Recuerda registrar `assets/` y `fonts/` en `pubspec.yaml` → lo verás en [06 · Construir la app](06-construir-la-app.md#7-assets-imágenes-y-fuentes).
 
 ---
 
@@ -181,3 +206,49 @@ Recuerda registrar `assets/` y `fonts/` en `pubspec.yaml` → ver [06 · Constru
 ❌ **No** (ya lo ignora `.gitignore`): `build/`, `.dart_tool/`, `android/local.properties`, `android/key.properties`, `*.jks`/`*.keystore`, `ios/Pods/`, `.idea/`.
 
 ⚠️ **Nunca** subas claves de firma (`.jks`, `key.properties`) ni archivos con secretos (`.env` con API keys).
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿En qué carpetas y archivos pasarás el 95 % de tu tiempo?
+   <details><summary>Respuesta</summary>
+
+   En `lib/`, `test/`, `assets/` y `pubspec.yaml` (ver la introducción y el [mapa rápido](#1-mapa-rápido)).
+
+   </details>
+2. ¿Por qué `pubspec.lock` se sube a git en una app?
+   <details><summary>Respuesta</summary>
+
+   Porque guarda las versiones **exactas** instaladas y así todos compilan con las mismas ([`pubspec.lock`](#pubspeclock)).
+
+   </details>
+3. ¿Qué abres en Xcode: `Runner.xcworkspace` o el `.xcodeproj`?
+   <details><summary>Respuesta</summary>
+
+   El **`ios/Runner.xcworkspace`**, según la tabla de la carpeta `ios/` ([sección 3](#3-carpetas-de-plataforma-las-tocas-de-vez-en-cuando)).
+
+   </details>
+4. ¿Qué pasa si borras `build/` o `.dart_tool/`?
+   <details><summary>Respuesta</summary>
+
+   Nada grave: son carpetas **generadas**, no se suben a git y `flutter clean` las limpia ([sección 4](#4-carpetas-generadas-no-se-editan-no-se-suben-a-git)).
+
+   </details>
+5. ¿Qué archivos no deben subirse nunca a git y por qué?
+   <details><summary>Respuesta</summary>
+
+   Las claves de firma (`.jks`, `key.properties`) y los archivos con secretos como `.env` con API keys, porque exponen credenciales ([sección 6](#6-qué-subo-a-git-y-qué-no)).
+
+   </details>
+
+## 🏋️ Reto
+
+**El mapa de memoria.** Sin mirar, dibuja el árbol de carpetas de un proyecto Flutter y marca qué se edita, qué se genera y qué no se sube a git.
+
+- ✅ **Cómo saber que lo lograste:** al compararlo con la [sección 1](#1-mapa-rápido) y la [sección 4](#4-carpetas-generadas-no-se-editan-no-se-suben-a-git), acertaste qué carpetas se editan y cuáles son generadas.
+- 💡 **Pista:** empieza por `lib/`, `test/`, `pubspec.yaml` y las carpetas de plataforma; después añade las generadas (`build/`, `.dart_tool/`).
+
+## ➡️ Siguiente paso
+
+Continúa con **[04 · Ejecutar y simular la app](04-ejecutar-y-simular.md)**: ya sabes dónde está cada cosa, ahora toca arrancar la app y ver cambios al instante con hot reload. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).

@@ -2,6 +2,10 @@
 
 > Volver al [índice](../README.md) · Siguiente: [02 · Estructura del proyecto](02-estructura-del-proyecto.md)
 
+> 🎯 **Aprenderás:** qué piezas necesita tu Mac para crear apps Flutter, en qué orden instalarlas y cómo comprobar con `flutter doctor` que todo funciona.
+> 📋 **Necesitas antes:** Nada: es el punto de partida.
+> ⏱️ **Tiempo:** ~10 min de lectura + ~60 min instalando y verificando
+
 Este documento resume **qué necesitas en tu Mac** para crear apps Flutter para iOS y Android, y cómo comprobar que todo funciona. Está basado en la instalación real de este equipo (MacBook Pro M2 Pro, 16 GB, macOS 26).
 
 ---
@@ -119,3 +123,43 @@ brew upgrade cocoapods   # actualiza CocoaPods
 | Android | Google Play Console | 25 USD (pago único) | Publicar en Google Play |
 
 Detalle completo de publicación en [08 · Compilar y publicar](08-compilar-y-publicar.md).
+
+---
+
+## ✅ Comprueba que entendiste
+
+1. ¿Por qué no instalas Dart por separado?
+   <details><summary>Respuesta</summary>
+
+   Porque el Dart SDK viene **dentro** de Flutter (`~/development/flutter/bin/cache/dart-sdk`). Ver la tabla de la [sección 1](#1-piezas-del-entorno-y-para-qué-sirve-cada-una).
+
+   </details>
+2. ¿Qué imágenes de emulador Android debes usar en un Mac con Apple Silicon y por qué?
+   <details><summary>Respuesta</summary>
+
+   Las **ARM64 (`arm64-v8a`)**: las `x86_64` no arrancan o van lentísimas ([sección 4](#4-consejos-específicos-para-apple-silicon-m1m2m3)).
+
+   </details>
+3. ¿Qué comando te da el detalle de rutas y versiones, y qué debe decir al final si todo está bien?
+   <details><summary>Respuesta</summary>
+
+   `flutter doctor -v`; debe terminar con `No issues found!` ([sección 3](#3-verificar-que-todo-está-bien)).
+
+   </details>
+4. ¿Qué pasa si pruebas en tu iPhone solo con un Apple ID gratuito?
+   <details><summary>Respuesta</summary>
+
+   Puedes probar, pero la app **caduca en 7 días**. Para publicar en App Store/TestFlight necesitas el Apple Developer Program (99 USD/año); ver [sección 6](#6-cuentas-necesarias-solo-para-publicar).
+
+   </details>
+
+## 🏋️ Reto
+
+**Lee tu `flutter doctor`.** Ejecuta `flutter doctor -v` y explica con tus palabras qué comprueba cada sección. Resuelve cada ✗ con ayuda de [09 · Solución de problemas](09-solucion-de-problemas.md).
+
+- ✅ **Cómo saber que lo lograste:** todo sale en verde, o sabes explicar por qué un punto no aplica a tu caso.
+- 💡 **Pista:** compara tu salida con la «Salida esperada» de la [sección 3](#3-verificar-que-todo-está-bien).
+
+## ➡️ Siguiente paso
+
+Continúa con **[02 · Estructura del proyecto](02-estructura-del-proyecto.md)**: con el entorno listo, toca saber qué hay en cada carpeta del proyecto. Ruta completa: [00 · Ruta de aprendizaje](00-ruta-de-aprendizaje.md).
